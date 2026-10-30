@@ -1,0 +1,3075 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    117782,       3065]
+NotebookOptionsPosition[     95900,       2745]
+NotebookOutlinePosition[     96305,       2761]
+CellTagsIndexPosition[     96262,       2758]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Rigorous Visual Testing Notebook for the OPF Scale-Recursive Measurement \
+Framework\
+\>", "Title",ExpressionUUID->"748affcf-b786-b04b-b237-6ef4a92b6987"],
+
+Cell[TextData[{
+ "This notebook restructures the supplied OPF draft into a ",
+ StyleBox["verification-first, visual, and explicitly falsifiable",
+  FontWeight->Bold],
+ " Wolfram Language workflow. It does ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " assume the framework is physically established. Instead, it separates: "
+}], "Text",ExpressionUUID->"0c1daa0a-7ea4-cb44-bb08-a9a21baaa00d"],
+
+Cell[TextData[StyleBox["definitions",
+ FontWeight->Bold]], "Item",ExpressionUUID->"d1b2160a-52b6-2f44-a6d5-ee67215c6492"],
+
+Cell[TextData[StyleBox["derived mathematics",
+ FontWeight->Bold]], "Item",ExpressionUUID->"b674d919-5f74-8d47-8fd4-77ea1e59b7bc"],
+
+Cell[TextData[StyleBox["computational checks",
+ FontWeight->Bold]], "Item",ExpressionUUID->"80a81792-64e3-f543-92bc-457fbd8ae7f9"],
+
+Cell[TextData[StyleBox["failure modes",
+ FontWeight->Bold]], "Item",ExpressionUUID->"0e6a6e98-94bd-1f4d-a703-f40d4803e6b5"],
+
+Cell[TextData[StyleBox["interpretive risks",
+ FontWeight->Bold]], "Item",ExpressionUUID->"c536003b-0357-a246-8920-6f802e4d8c11"],
+
+Cell[TextData[StyleBox["possible better structuring",
+ FontWeight->Bold]], "Item",ExpressionUUID->"afb5e07d-88d3-f544-beff-\
+9f7213d4888b"],
+
+Cell[TextData[{
+ "The goal is to test what is ",
+ StyleBox["actually supported",
+  FontSlant->Italic],
+ " by the formalism versus what is still heuristic, ambiguous, or \
+metaphysical. "
+}], "Text",ExpressionUUID->"99d08322-9e6e-0e41-9e41-9a036d472b7b"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"121863b2-886d-cf43-97cc-b76d535a9019"],
+
+Cell[CellGroupData[{
+
+Cell["0. Executive testing principles", "Section",ExpressionUUID->"84aba47e-6340-4c46-9930-31ef7b035c2b"],
+
+Cell["\<\
+We distinguish five layers that were partially conflated in the original \
+draft:\
+\>", "Text",ExpressionUUID->"2ba4d553-5b32-cd41-b9b8-bcaae09231e1"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["Symbolic formalization",
+  FontWeight->Bold],
+ " \[LongDash] what equations are actually defined."
+}], "Text",ExpressionUUID->"d0a9ccfe-3a0c-f647-b673-7042f4ea5942"],
+
+Cell[TextData[{
+ "2. ",
+ StyleBox["Mathematical well-posedness",
+  FontWeight->Bold],
+ " \[LongDash] boundedness, fixed points, coercivity, variational consistency."
+}], "Text",ExpressionUUID->"51697b04-90be-8742-9a8d-7084d6601962"],
+
+Cell[TextData[{
+ "3. ",
+ StyleBox["Dynamical behavior",
+  FontWeight->Bold],
+ " \[LongDash] stability, linear modes, resonances, bifurcations."
+}], "Text",ExpressionUUID->"75ea1dc9-7aa1-9942-8db5-925cc3971296"],
+
+Cell[TextData[{
+ "4. ",
+ StyleBox["Measurement construction",
+  FontWeight->Bold],
+ " \[LongDash] how observables are extracted from symbolic states."
+}], "Text",ExpressionUUID->"30941ef9-b824-0a4a-9765-151a3a47fadb"],
+
+Cell[TextData[{
+ "5. ",
+ StyleBox["Interpretation",
+  FontWeight->Bold],
+ " \[LongDash] whether phrases like \"self-measurement\", \"information\", or \
+\"energy\" are literal, derived, or metaphorical."
+}], "Text",ExpressionUUID->"56bb6166-606a-884d-86c2-3beea03209d4"],
+
+Cell["This notebook tests each separately. ", "Text",ExpressionUUID->"3354239e-fc5f-1248-8bbd-ba20617f4369"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"3cefd50c-b94c-0a4b-a194-519698bf2042"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["1. Clean initialization and rigor fixes", "Section",ExpressionUUID->"85a96a1b-a35d-f047-99b6-14551364f623"],
+
+Cell[CellGroupData[{
+
+Cell["Purpose", "Subsection",ExpressionUUID->"fd4690bf-7983-164e-9a68-70559d86f455"],
+
+Cell["\<\
+The original notebook had at least three rigor problems immediately: \
+\>", "Text",ExpressionUUID->"c0ff14c8-aad4-5e4e-b0ed-e97f0330eb57"],
+
+Cell[TextData[{
+ "a context/shadowing issue with ",
+ Cell[BoxData[Cell["VariationalD",
+   Background->None,ExpressionUUID->"d307f731-1eae-bf49-acd2-ba4cda78e263"]], 
+  "InlineCode",ExpressionUUID->"dfbf468b-039c-204f-b92b-8c2eef8303b1"]
+}], "Item",ExpressionUUID->"340b3eb6-5c55-3943-ba8f-04b95f96edc1"],
+
+Cell[TextData[{
+ "misuse of ",
+ ButtonBox["Reduce",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/Reduce"],
+ " option ",
+ ButtonBox["MaxExtraConditions",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/MaxExtraConditions"]
+}], "Item",ExpressionUUID->"c5da1bca-5356-4c4c-8644-30f71cf74d2b"],
+
+Cell[TextData[{
+ "invalid use of ",
+ ButtonBox["Join",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/Join"],
+ " on logical assumptions"
+}], "Item",ExpressionUUID->"61a9cf66-d2ab-e34f-8636-afae713343b8"],
+
+Cell["This section repairs those before doing any science. ", "Text",ExpressionUUID->"bf6e9f74-ac68-5a45-96ee-ac196a5355a7"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Remove", "[", "\"\<Global`VariationalD\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<VariationalMethods`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Assumptions", "=", 
+    RowBox[{"And", " ", "@@", " ", 
+     RowBox[{"{", "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{"alpha", ">", "0"}], ",", 
+       RowBox[{"beta", ">", "0"}], ",", 
+       RowBox[{"gamma", ">", "0"}], ",", "\[IndentingNewLine]", "   ", 
+       RowBox[{"eta", ">", "0"}], ",", 
+       RowBox[{"zeta", ">", "0"}], ",", 
+       RowBox[{"xi", ">", "0"}], ",", "\[IndentingNewLine]", "   ", 
+       RowBox[{"delta", " ", "\[Element]", " ", "Reals"}], ",", 
+       RowBox[{"lambda", " ", "\[Element]", " ", "Reals"}], ",", 
+       "\[IndentingNewLine]", "   ", 
+       RowBox[{"x", " ", "\[Element]", " ", "Reals"}], ",", 
+       RowBox[{"sigma", " ", "\[Element]", " ", "Reals"}], ",", 
+       "\[IndentingNewLine]", "   ", 
+       RowBox[{"phi", ">", "1"}]}], "\[IndentingNewLine]", "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"assumptionList", "=", 
+   RowBox[{"{", "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{"alpha", ">", "0"}], ",", 
+     RowBox[{"beta", ">", "0"}], ",", 
+     RowBox[{"gamma", ">", "0"}], ",", "\[IndentingNewLine]", "   ", 
+     RowBox[{"eta", ">", "0"}], ",", 
+     RowBox[{"zeta", ">", "0"}], ",", 
+     RowBox[{"xi", ">", "0"}], ",", "\[IndentingNewLine]", "   ", 
+     RowBox[{"delta", " ", "\[Element]", " ", "Reals"}], ",", 
+     RowBox[{"lambda", " ", "\[Element]", " ", "Reals"}], ",", 
+     "\[IndentingNewLine]", "   ", 
+     RowBox[{"x", " ", "\[Element]", " ", "Reals"}], ",", 
+     RowBox[{"sigma", " ", "\[Element]", " ", "Reals"}], ",", 
+     "\[IndentingNewLine]", "   ", 
+     RowBox[{"phi", ">", "1"}]}], "\[IndentingNewLine]", "}"}]}], 
+  ";"}]}], "Input",ExpressionUUID->"f0b7e419-02a0-9746-9645-cb87183e8cca"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Sanity checks", "Subsection",ExpressionUUID->"9bc2285b-6f97-294b-89a2-8907ca431b4c"],
+
+Cell[BoxData[
+ RowBox[{"{", "\[IndentingNewLine]", " ", 
+  RowBox[{
+   RowBox[{"Context", "[", "VariationalMethods`VariationalD", "]"}], ",", 
+   "\[IndentingNewLine]", " ", 
+   RowBox[{"MemberQ", "[", 
+    RowBox[{
+     RowBox[{"Names", "[", "\"\<Global`*\>\"", "]"}], 
+     ",", "\"\<VariationalD\>\""}], "]"}]}], "\[IndentingNewLine]", 
+  "}"}]], "Input",ExpressionUUID->"ff218ed6-635e-ee42-b366-548ec357de4d"],
+
+Cell["Expected: ", "Text",ExpressionUUID->"81ccf330-cbd8-c74d-a630-75e35f482ae1"],
+
+Cell[TextData[{
+ Cell[BoxData[Cell["VariationalD",
+   Background->None,ExpressionUUID->"9602c36d-0f79-bc42-a30b-8628f093db19"]], 
+  "InlineCode",ExpressionUUID->"8d047658-93a6-7d47-bafc-3f84955b8028"],
+ " resolves to ",
+ Cell[BoxData[Cell["VariationalMethods`VariationalD",
+   Background->None,ExpressionUUID->"8c561729-08c7-7a45-a41d-fd45b73df458"]], 
+  "InlineCode",ExpressionUUID->"667ed52a-4054-b244-954d-822ba635dc48"]
+}], "Item",ExpressionUUID->"ee8f2d1f-94a9-5e49-b6f1-c7ff753ef1b0"],
+
+Cell[TextData[{
+ "no conflicting ",
+ Cell[BoxData[Cell["Global`VariationalD",
+   Background->None,ExpressionUUID->"dd529df0-f33b-b94d-9b5f-1c1fd5a5a70d"]], 
+  "InlineCode",ExpressionUUID->"238bdf82-1c73-ff41-9a5e-10cd7aeafb8a"],
+ " remains"
+}], "Item",ExpressionUUID->"969915a0-b48e-e24b-aca3-fe6a0ef21bb7"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"78f8aab7-b72f-d646-9ae1-40770b2aae98"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "2. Explicit ontology map: what the symbols ",
+ StyleBox["are",
+  FontSlant->Italic]
+}], "Section",ExpressionUUID->"089256c3-1ae5-7c4f-a163-b785a9af5922"],
+
+Cell["Before testing equations, define the status of each object. ", "Text",ExpressionUUID->"77d462eb-fef6-a641-b98a-63e46081df00"],
+
+Cell[BoxData[
+ PaneBox[
+  PaneBox[
+   StyleBox[
+    TagBox[
+     TagBox[GridBox[{
+        {
+         TagBox["\<\"Symbol\"\>",
+          HoldForm], 
+         TagBox["\<\"Intended meaning\"\>",
+          HoldForm], 
+         TagBox["\<\"Mathematical type\"\>",
+          HoldForm], 
+         TagBox["\<\"Empirical status\"\>",
+          HoldForm]},
+        {Cell[BoxData[Cell["rho[x,sigma]",
+           Background->None,ExpressionUUID->
+           "980f1cb5-b855-fc42-8342-0c1244eeeee9"]], "InlineCode",
+          ExpressionUUID->
+          "36da56aa-642a-7041-b2c6-5380946996b3"], "\<\"information density\"\
+\>", "\<\"scalar field\"\>", "\<\"hypothetical\"\>"},
+        {Cell[BoxData[Cell["chi[x,sigma]",
+           Background->None,ExpressionUUID->
+           "85387bf4-b5e8-2f43-9250-652b83f760cf"]], "InlineCode",
+          ExpressionUUID->
+          "69006054-3e79-c545-8160-0030b8cbdda7"], "\<\"field \
+complexity\"\>", "\<\"scalar field\"\>", "\<\"hypothetical\"\>"},
+        {Cell[BoxData[Cell["res[x,sigma]",
+           Background->None,ExpressionUUID->
+           "fdfc6a80-0318-c749-aed1-f45ce28064b0"]], "InlineCode",
+          ExpressionUUID->
+          "a4ab3af9-19e1-9e41-bfa8-386192c5a610"], "\<\"observational \
+resolution\"\>", "\<\"scalar field\"\>", "\<\"hypothetical\"\>"},
+        {
+         StyleBox["sigma", 
+          "TI"], "\<\"logarithmic scale coordinate\"\>", "\<\"continuous \
+variable\"\>", "\<\"formal modeling choice\"\>"},
+        {
+         StyleBox["x", 
+          "TI"], "\<\"spatial coordinate\"\>", "\<\"continuous variable\"\>", \
+"\<\"standard\"\>"},
+        {Cell[BoxData[Cell["lagrangianDensity",
+           Background->None,ExpressionUUID->
+           "4ebf81c3-6fcc-fb42-9366-41059f5e2b87"]], "InlineCode",
+          ExpressionUUID->
+          "c1bdf180-011b-8942-a06b-d86c7b4859fc"], "\<\"OPF test Lagrangian\"\
+\>", "\<\"scalar density\"\>", "\<\"constructed ansatz\"\>"}
+       },
+       GridBoxAlignment->{
+        "Columns" -> {Left, Left, Right, {Left}}, "Rows" -> {{Baseline}}},
+       GridBoxDividers->{
+        "Columns" -> {{False}}, "Rows" -> {False, True, {False}, False}},
+       GridBoxSpacings->{"Columns" -> {
+           Offset[0.27999999999999997`], {
+            Offset[2.0999999999999996`]}, 
+           Offset[0.27999999999999997`]}, "Rows" -> {
+           Offset[0.2], {
+            Offset[0.4]}, 
+           Offset[0.2]}}],
+      {None, OutputFormsDump`HeadedColumns}],
+     Function[BoxForm`e$, 
+      TableForm[
+      BoxForm`e$, 
+       TableHeadings -> {
+        None, {"Symbol", "Intended meaning", "Mathematical type", 
+          "Empirical status"}}]]], "Text",
+    StripOnInput->False,
+    ShowStringCharacters->False],
+   ImageMargins->{{0, 0}, {5, 5}}],
+  ImageMargins->{{0, 0}, {5, 5}}]], "TextTableForm", \
+"Text",ExpressionUUID->"160570f9-c764-4c4c-80bd-fa6c0df6edd7"],
+
+Cell[CellGroupData[{
+
+Cell["Important interpretive note", "Subsection",ExpressionUUID->"25e93503-720b-b245-bfc6-68074ac5f6fc"],
+
+Cell["Nothing in the equations alone proves that: ", "Text",ExpressionUUID->"1afc7aee-8136-f642-a3fd-0f0d4e348003"],
+
+Cell["information is energy", "Item",ExpressionUUID->"9bc653c6-4395-1b4a-b534-7dfef222fd4e"],
+
+Cell["consciousness is a field", "Item",ExpressionUUID->"c3f11630-4461-2d4c-9a93-9bd7fc22373f"],
+
+Cell["self-measurement is physical measurement", "Item",ExpressionUUID->"54ab97f8-c245-0849-a364-c882c81fcd0a"],
+
+Cell["scale recursion implies ontology", "Item",ExpressionUUID->"89120c3c-0756-d047-914d-94b308eefc3b"],
+
+Cell["\<\
+Those require additional bridges, not just symbolic consistency. \
+\>", "Text",ExpressionUUID->"30e07beb-7ced-074d-8fa7-cc01f4f7cf5c"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"a52f1fbb-43f1-be4c-88a1-c52a2b6e7a1a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["3. Define the candidate Lagrangian density", "Section",ExpressionUUID->"ae189da8-c701-2348-9298-b871cad0af7d"],
+
+Cell["\<\
+This reproduces the intended extended Layer 1 model in a testable way. \
+\>", "Text",ExpressionUUID->"cd4679b9-8415-a24a-b1c2-496585406c98"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lagrangianDensity", "=", "\[IndentingNewLine]", "  ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"rho", "[", 
+      RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+     RowBox[{"Log", "[", 
+      RowBox[{"chi", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}], "]"}]}], "+", 
+    "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"chi", "[", 
+      RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+     RowBox[{
+      RowBox[{"res", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}], "^", "2"}]}], "+", 
+    "\[IndentingNewLine]", "  ", 
+    RowBox[{"alpha", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"rho", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+      "2"}]}], "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"beta", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"chi", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+      "2"}]}], "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"gamma", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"res", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+      "2"}]}], "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"eta", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"rho", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", "2"}]}], 
+    "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"zeta", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"chi", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", "2"}]}], 
+    "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"xi", " ", 
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"res", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", "2"}]}], 
+    "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"delta", " ", 
+     RowBox[{"rho", "[", 
+      RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+     RowBox[{"chi", "[", 
+      RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+     RowBox[{"res", "[", 
+      RowBox[{"x", ",", "sigma"}], "]"}]}], "+", "\[IndentingNewLine]", "  ", 
+    RowBox[{"lambda", " ", 
+     RowBox[{
+      RowBox[{"rho", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}], "^", "2"}]}]}]}], ";"}]], "Input",E\
+xpressionUUID->"3f4e86bf-07d8-2544-931d-5aab51bfaf51"],
+
+Cell[CellGroupData[{
+
+Cell["Visual decomposition of the Lagrangian", "Subsection",ExpressionUUID->"a59bc7be-cab9-9e42-af3f-ec57e3e2b0d8"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"terms", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\"\<EntropyLike\>\"", "->", 
+       RowBox[{
+        RowBox[{"rho", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+        RowBox[{"Log", "[", 
+         RowBox[{"chi", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], "]"}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<ResolutionCoupling\>\"", "->", 
+       RowBox[{
+        RowBox[{"chi", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+        RowBox[{
+         RowBox[{"res", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], "^", "2"}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<ScaleRegularizationRho\>\"", "->", 
+       RowBox[{"alpha", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"rho", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<ScaleRegularizationChi\>\"", "->", 
+       RowBox[{"beta", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"chi", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<ScaleRegularizationRes\>\"", "->", 
+       RowBox[{"gamma", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"res", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<SpatialRegularizationRho\>\"", "->", 
+       RowBox[{"eta", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"rho", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<SpatialRegularizationChi\>\"", "->", 
+       RowBox[{"zeta", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"chi", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<SpatialRegularizationRes\>\"", "->", 
+       RowBox[{"xi", " ", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"res", "[", 
+            RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}], "^", 
+         "2"}]}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<CubicCoupling\>\"", "->", 
+       RowBox[{"delta", " ", 
+        RowBox[{"rho", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+        RowBox[{"chi", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}], " ", 
+        RowBox[{"res", "[", 
+         RowBox[{"x", ",", "sigma"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"\"\<Confinement\>\"", "->", 
+       RowBox[{"lambda", " ", 
+        RowBox[{
+         RowBox[{"rho", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], "^", "2"}]}]}]}], 
+     "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Dataset", "[", "\[IndentingNewLine]", " ", 
+  RowBox[{"KeyValueMap", "[", "\[IndentingNewLine]", "   ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<Term\>\"", "->", "#1"}], ",", 
+       RowBox[{"\"\<Expression\>\"", "->", "#2"}]}], "|>"}], " ", "&"}], ",", 
+    "terms"}], "\[IndentingNewLine]", " ", "]"}], "\[IndentingNewLine]", 
+  "]"}]}], "Input",ExpressionUUID->"160c7e49-b00a-f945-883e-2c97bde46633"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["First structural critique", "Subsection",ExpressionUUID->"1221ef4e-c66e-4a40-b676-b8939f826d8f"],
+
+Cell["A better structure would separate:", "Text",ExpressionUUID->"af5b10b8-3982-184d-b460-9f0050658daa"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["core potential",
+  FontWeight->Bold],
+ " ",
+ Cell[BoxData[Cell["V[rho, chi, res]",
+   Background->None,ExpressionUUID->"8e079688-97a2-2643-8930-fd642f5afa73"]], 
+  "InlineCode",ExpressionUUID->"b7d194cd-6931-1142-a7db-886f234d2d68"],
+ "2. ",
+ StyleBox["gradient terms",
+  FontWeight->Bold],
+ " in ",
+ StyleBox["x", "TI"],
+ "3. ",
+ StyleBox["scale-gradient terms",
+  FontWeight->Bold],
+ " in ",
+ StyleBox["sigma", "TI"],
+ "4. ",
+ StyleBox["measurement functional",
+  FontWeight->Bold],
+ "instead of mixing ontology and regularization in one expression. "
+}], "Text",ExpressionUUID->"3b4e2771-f79f-c243-89ab-024008183149"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"6e3db7a0-ce32-584a-8003-d09b9dbf8d7a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["4. Euler\[Dash]Lagrange equations, done correctly", "Section",ExpressionUUID->"a5c3ae73-c7e9-8b44-ae4b-2537889f255f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"eulerRho", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"VariationalMethods`VariationalD", "[", 
+        RowBox[{"lagrangianDensity", ",", 
+         RowBox[{"rho", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "sigma"}], "}"}]}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", "$Assumptions"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"eulerChi", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"VariationalMethods`VariationalD", "[", 
+        RowBox[{"lagrangianDensity", ",", 
+         RowBox[{"chi", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "sigma"}], "}"}]}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", "$Assumptions"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"eulerRes", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"VariationalMethods`VariationalD", "[", 
+        RowBox[{"lagrangianDensity", ",", 
+         RowBox[{"res", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "sigma"}], "}"}]}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", "$Assumptions"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fieldEquations", "=", 
+   RowBox[{"Thread", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eulerRho", ",", "eulerChi", ",", "eulerRes"}], "}"}], "==", 
+     "0"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"fieldEquations", " ", "//", " ", "TableForm"}]}], "Input",Expression\
+UUID->"c0d220e4-1d83-1d4e-a2a7-6fef645451d8"],
+
+Cell[CellGroupData[{
+
+Cell["Rigor test", "Subsection",ExpressionUUID->"613b6238-fcee-7544-ad25-0e8565d64fe6"],
+
+Cell["\<\
+If the derivative terms disappear from the Euler\[Dash]Lagrange equations, \
+that means the variational construction has been mishandled or simplification \
+assumptions are too aggressive. \
+\>", "Text",ExpressionUUID->"53af4598-3060-1342-bf85-e95000f1248b"],
+
+Cell[BoxData[
+ RowBox[{"ContainsAny", "[", 
+  RowBox[{
+   RowBox[{"ToString", " ", "/@", " ", "fieldEquations"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Derivative\>\"", ",", "\"\<rho'\>\"", ",", "\"\<chi'\>\"", 
+     ",", "\"\<res'\>\"", ",", "\"\<D[\>\""}], "}"}]}], "]"}]], "Input",Expres\
+sionUUID->"a49157b7-5c0f-ff42-b1cd-c3967cdcfbf0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Interpretation", "Subsection",ExpressionUUID->"26dd7dee-fb12-5747-92e8-2b01c1992fa2"],
+
+Cell[TextData[{
+ "If this returns ",
+ ButtonBox["False",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/False"],
+ ", then the current derived equations are not representing the intended \
+regularized field theory. "
+}], "Text",ExpressionUUID->"fbc2d300-fbb3-d641-be7b-6a714a510338"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"9622f271-304b-744a-b0fc-75989d20097f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["5. Independent manual variational cross-check", "Section",ExpressionUUID->"fc5d181c-40f7-c340-b627-06f8485a0e94"],
+
+Cell["\<\
+To avoid trusting a single symbolic route, compute the Euler expressions \
+manually. \
+\>", "Text",ExpressionUUID->"40e66115-52f6-a641-8019-0dc9e54dce9f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"manualEL", "[", 
+     RowBox[{"expr_", ",", "field_"}], "]"}], ":=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{"expr", ",", 
+         RowBox[{"field", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}]}], "]"}], "-", 
+       "\[IndentingNewLine]", "   ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"expr", ",", 
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"field", "[", 
+              RowBox[{"x", ",", "sigma"}], "]"}], ",", "x"}], "]"}]}], "]"}], 
+         ",", "x"}], "]"}], "-", "\[IndentingNewLine]", "   ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{"expr", ",", 
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"field", "[", 
+              RowBox[{"x", ",", "sigma"}], "]"}], ",", "sigma"}], "]"}]}], 
+          "]"}], ",", "sigma"}], "]"}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", "$Assumptions"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"manualRho", "=", 
+   RowBox[{"manualEL", "[", 
+    RowBox[{"lagrangianDensity", ",", "rho"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"manualChi", "=", 
+   RowBox[{"manualEL", "[", 
+    RowBox[{"lagrangianDensity", ",", "chi"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"manualRes", "=", 
+    RowBox[{"manualEL", "[", 
+     RowBox[{"lagrangianDensity", ",", "res"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"crossCheck", "=", 
+    RowBox[{"Simplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", "   ", 
+        RowBox[{
+         RowBox[{"eulerRho", "-", "manualRho"}], ",", "\[IndentingNewLine]", 
+         "   ", 
+         RowBox[{"eulerChi", "-", "manualChi"}], ",", "\[IndentingNewLine]", 
+         "   ", 
+         RowBox[{"eulerRes", "-", "manualRes"}]}], "\[IndentingNewLine]", 
+        "  ", "}"}], "==", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", "$Assumptions"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "crossCheck"}], "Input",Expr\
+essionUUID->"2e5ddc73-b760-7f48-a586-09e696b68055"],
+
+Cell[TextData[{
+ "Expected: ",
+ Cell[BoxData[Cell["{True, True, True}",
+   Background->None,ExpressionUUID->"823259de-9cb4-c14d-8436-175caf619ff8"]], 
+  "InlineCode",ExpressionUUID->"41df1fec-6441-2348-9016-861e933b399f"],
+ "If not true, the derivation pipeline is not yet rigorous. "
+}], "Text",ExpressionUUID->"38dd5beb-4d9a-e743-9d90-3aa1b481bffe"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"d1225be4-eae2-4049-bc68-9440c78c1f5b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["6. Homogeneous stationary sector", "Section",ExpressionUUID->"1efcd312-6928-f640-a1ea-1458e0b9425f"],
+
+Cell["\<\
+This is where the original notebook tried to define fixed points. \
+\>", "Text",ExpressionUUID->"e876a010-d321-174a-bde7-dfe64a0e5f59"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"homogeneousRules", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"rho", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "rho0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{"chi", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "chi0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{"res", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "res0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"1", ",", "0"}], "]"}], "[", "rho", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "1"}], "]"}], "[", "rho", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"1", ",", "0"}], "]"}], "[", "chi", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "1"}], "]"}], "[", "chi", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"1", ",", "0"}], "]"}], "[", "res", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "1"}], "]"}], "[", "res", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"2", ",", "0"}], "]"}], "[", "rho", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "2"}], "]"}], "[", "rho", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"2", ",", "0"}], "]"}], "[", "chi", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "2"}], "]"}], "[", "chi", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"2", ",", "0"}], "]"}], "[", "res", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Derivative", "[", 
+          RowBox[{"0", ",", "2"}], "]"}], "[", "res", "]"}], "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", "0"}]}], 
+     "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"homogeneousEquations", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"fieldEquations", " ", "/.", " ", "homogeneousRules"}], ",", 
+     RowBox[{"Assumptions", "->", 
+      RowBox[{"chi0", ">", "0"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"homogeneousEquations", " ", "//", " ", "TableForm"}]}], "Input",Expr\
+essionUUID->"2a3c1ce7-59c1-de47-ab8b-e7a0ae904cac"],
+
+Cell[CellGroupData[{
+
+Cell["Solve fixed points correctly", "Subsection",ExpressionUUID->"25f14201-7a4d-9743-a570-b29b1cedf283"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"fixedPoints", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"Reduce", "[", 
+       RowBox[{"homogeneousEquations", ",", 
+        RowBox[{"{", 
+         RowBox[{"rho0", ",", "chi0", ",", "res0"}], "}"}], ",", "Reals"}], 
+       "]"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", 
+       RowBox[{"chi0", ">", "0"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "fixedPoints"}], "Input",Exp\
+ressionUUID->"607d76f8-fb41-ae46-81fd-3c80b759a73c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Better alternative structure", "Subsection",ExpressionUUID->"9b019f73-91b5-b14e-bc0f-b45226d90b51"],
+
+Cell["\<\
+A more transparent route is to define the homogeneous potential directly: \
+\>", "CodeText",ExpressionUUID->"ba9444b9-1eaf-1840-9eba-75b5977f1e5d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"potential", "[", 
+     RowBox[{"rhoVar_", ",", "chiVar_", ",", "resVar_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"rhoVar", " ", 
+      RowBox[{"Log", "[", "chiVar", "]"}]}], "+", 
+     RowBox[{"chiVar", " ", 
+      RowBox[{"resVar", "^", "2"}]}], "+", 
+     RowBox[{"delta", " ", "rhoVar", " ", "chiVar", " ", "resVar"}], "+", 
+     RowBox[{"lambda", " ", 
+      RowBox[{"rhoVar", "^", "2"}]}]}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"stationaryConditions", "=", 
+    RowBox[{"Thread", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"Grad", "[", 
+       RowBox[{
+        RowBox[{"potential", "[", 
+         RowBox[{"rho0", ",", "chi0", ",", "res0"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"rho0", ",", "chi0", ",", "res0"}], "}"}]}], "]"}], "==", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{"stationaryConditions", ",", 
+   RowBox[{"Reduce", "[", 
+    RowBox[{"stationaryConditions", ",", 
+     RowBox[{"{", 
+      RowBox[{"rho0", ",", "chi0", ",", "res0"}], "}"}], ",", "Reals"}], 
+    "]"}]}], "}"}]}], "Input",ExpressionUUID->"dcae9728-3194-5344-91db-\
+f913927cc53d"],
+
+Cell["This avoids mixing PDE and homogeneous algebra prematurely. ", "Text",ExpressionUUID->"ad589130-a153-0849-aff1-7c7079c76ea4"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"c61cac71-7837-1c48-bdb5-fe49769a35d8"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["7. Hessian-based stability test at fixed points", "Section",ExpressionUUID->"4c0bf968-d301-fc42-9cc3-bb6f8e1a40e0"],
+
+Cell["A fixed point is not enough. We need local curvature. ", "Text",ExpressionUUID->"9edbcd20-030f-4241-bd8d-31a2deabdc56"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"hessian", "=", 
+   RowBox[{"D", "[", 
+    RowBox[{
+     RowBox[{"potential", "[", 
+      RowBox[{"rho0", ",", "chi0", ",", "res0"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"rho0", ",", "chi0", ",", "res0"}], "}"}], ",", "2"}], 
+      "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"hessian", " ", "//", " ", "MatrixForm"}]}], "Input",ExpressionUUID->\
+"9a817990-abae-4545-a673-b5e8dc34bd20"],
+
+Cell["Evaluate at each fixed-point branch if possible. ", "Text",ExpressionUUID->"997f0602-6ceb-1b42-a388-923f8b267a7c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"fixedPointRules", "=", 
+    RowBox[{"Solve", "[", 
+     RowBox[{"stationaryConditions", ",", 
+      RowBox[{"{", 
+       RowBox[{"rho0", ",", "chi0", ",", "res0"}], "}"}], ",", "Reals"}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"stabilityData", "=", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"<|", "\[IndentingNewLine]", "    ", 
+       RowBox[{
+        RowBox[{"\"\<FixedPoint\>\"", "->", 
+         RowBox[{"fixedPointRules", "[", 
+          RowBox[{"[", "k", "]"}], "]"}]}], ",", "\[IndentingNewLine]", 
+        "    ", 
+        RowBox[{"\"\<Hessian\>\"", "->", 
+         RowBox[{"Simplify", "[", 
+          RowBox[{"hessian", " ", "/.", " ", 
+           RowBox[{"fixedPointRules", "[", 
+            RowBox[{"[", "k", "]"}], "]"}]}], "]"}]}], ",", 
+        "\[IndentingNewLine]", "    ", 
+        RowBox[{"\"\<Eigenvalues\>\"", "->", 
+         RowBox[{"Simplify", "[", 
+          RowBox[{"Eigenvalues", "[", 
+           RowBox[{"hessian", " ", "/.", " ", 
+            RowBox[{"fixedPointRules", "[", 
+             RowBox[{"[", "k", "]"}], "]"}]}], "]"}], "]"}]}]}], 
+       "\[IndentingNewLine]", "  ", "|>"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"{", 
+       RowBox[{"k", ",", 
+        RowBox[{"Length", "[", "fixedPointRules", "]"}]}], "}"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Dataset", "[", "stabilityData", "]"}]}], "Input",ExpressionUUID->\
+"b0b4a035-a5b2-0341-9387-1cc04c0bec78"],
+
+Cell[CellGroupData[{
+
+Cell["Interpretation", "Subsection",ExpressionUUID->"d49d1190-849d-834c-8d77-9581ab43b069"],
+
+Cell["all positive eigenvalues: strict local minimum", "Item",ExpressionUUID->"86f62016-9b65-0741-9865-fc549928f777"],
+
+Cell["one or more zero eigenvalues: flat direction or marginality", "Item",ExpressionUUID->"413438d2-5c26-454d-aa8c-2df7ba7f5f6a"],
+
+Cell["negative eigenvalue: instability", "Item",ExpressionUUID->"f1a85dd3-d39b-854e-b0f0-fec0570241af"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"408cc538-44d1-254f-867b-b6b8922f5b2c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["8. Boundedness-below analysis", "Section",ExpressionUUID->"42c734ec-a355-194d-ba73-4d6fba815aea"],
+
+Cell["\<\
+This is one of the most important tests because your own probe report claims \
+the original potential fails here. \
+\>", "Text",ExpressionUUID->"4968e63e-5bda-9e4c-afd1-868a802920cf"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"originalPotential", "[", 
+    RowBox[{"rhoVar_", ",", "chiVar_", ",", "resVar_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"rhoVar", " ", 
+     RowBox[{"Log", "[", "chiVar", "]"}]}], "+", 
+    RowBox[{"chiVar", " ", 
+     RowBox[{"resVar", "^", "2"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"extendedPotential", "[", 
+    RowBox[{"rhoVar_", ",", "chiVar_", ",", "resVar_"}], "]"}], ":=", 
+   RowBox[{"potential", "[", 
+    RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "]"}]}], 
+  ";"}]}], "Input",ExpressionUUID->"76f4adda-d920-924f-b6ca-96f9ab84838b"],
+
+Cell[CellGroupData[{
+
+Cell["Symbolic rays through field space", "Subsection",ExpressionUUID->"7e1d84a8-921d-314c-b884-38bd66056a63"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"rayTests", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rhoVar", "->", "t"}], ",", 
+        RowBox[{"chiVar", "->", "1"}], ",", 
+        RowBox[{"resVar", "->", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rhoVar", "->", 
+         RowBox[{"-", "t"}]}], ",", 
+        RowBox[{"chiVar", "->", "1"}], ",", 
+        RowBox[{"resVar", "->", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rhoVar", "->", "t"}], ",", 
+        RowBox[{"chiVar", "->", 
+         RowBox[{"Exp", "[", 
+          RowBox[{"-", "t"}], "]"}]}], ",", 
+        RowBox[{"resVar", "->", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rhoVar", "->", "t"}], ",", 
+        RowBox[{"chiVar", "->", 
+         RowBox[{"1", "/", "t"}]}], ",", 
+        RowBox[{"resVar", "->", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"rhoVar", "->", "t"}], ",", 
+        RowBox[{"chiVar", "->", "1"}], ",", 
+        RowBox[{"resVar", "->", "t"}]}], "}"}]}], "\[IndentingNewLine]", 
+     "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"boundednessTable", "=", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"<|", "\[IndentingNewLine]", "    ", 
+       RowBox[{
+        RowBox[{"\"\<Ray\>\"", "->", "ray"}], ",", "\[IndentingNewLine]", 
+        "    ", 
+        RowBox[{"\"\<OriginalAsymptotic\>\"", "->", 
+         RowBox[{"FullSimplify", "[", 
+          RowBox[{"Asymptotic", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"originalPotential", "[", 
+              RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "]"}], " ", "/.",
+              " ", "ray"}], ",", 
+            RowBox[{"t", "->", "Infinity"}]}], "]"}], "]"}]}], ",", 
+        "\[IndentingNewLine]", "    ", 
+        RowBox[{"\"\<ExtendedAsymptotic\>\"", "->", 
+         RowBox[{"FullSimplify", "[", 
+          RowBox[{"Asymptotic", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"extendedPotential", "[", 
+              RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "]"}], " ", "/.",
+              " ", "ray"}], ",", 
+            RowBox[{"t", "->", "Infinity"}]}], "]"}], "]"}]}]}], 
+       "\[IndentingNewLine]", "  ", "|>"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"{", 
+       RowBox[{"ray", ",", "rayTests"}], "}"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Dataset", "[", "boundednessTable", "]"}]}], "Input",ExpressionUUID->\
+"ea8294ef-2933-db43-b539-1ed9417edbd1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Visual scan", "Subsection",ExpressionUUID->"9e849453-233d-ce43-99ab-2bb39866722d"],
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"chiSlice", "=", "1"}], "}"}], ",", "\[IndentingNewLine]", " ", 
+   RowBox[{"ContourPlot", "[", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"Evaluate", "[", 
+      RowBox[{"extendedPotential", "[", 
+       RowBox[{"rhoVar", ",", "chiSlice", ",", "resVar"}], "]"}], "]"}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"{", 
+      RowBox[{"rhoVar", ",", 
+       RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"resVar", ",", 
+       RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", "\[IndentingNewLine]", 
+     "  ", 
+     RowBox[{"PlotLegends", "->", "Automatic"}], ",", "\[IndentingNewLine]", 
+     "  ", 
+     RowBox[{"FrameLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<rho\>\"", ",", "\"\<res\>\""}], "}"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{
+     "PlotLabel", "->", "\"\<Extended potential slice at chi = 1\>\""}]}], 
+    "\[IndentingNewLine]", " ", "]"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",ExpressionUUID->"aed6315c-5975-0440-a8ef-a06638d5aac0"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"4ea58b46-95fc-1f46-bbd5-7c29c15edd9c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["9. Scale ansatz, repaired", "Section",ExpressionUUID->"c53a3aa3-687f-0847-a3db-2c330f92efd0"],
+
+Cell["\<\
+The original notebook attempted a separable scale ansatz but misused \
+assumptions. \
+\>", "Text",ExpressionUUID->"f44e2e20-61c0-fe4a-9b1c-535978c9cce2"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"scaleAnsatz", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"rho", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{
+        RowBox[{"rhoS", "[", "x", "]"}], " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"a", " ", "sigma"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+      "   ", 
+      RowBox[{
+       RowBox[{"chi", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{
+        RowBox[{"chiS", "[", "x", "]"}], " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"b", " ", "sigma"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+      "   ", 
+      RowBox[{
+       RowBox[{"res", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{
+        RowBox[{"resS", "[", "x", "]"}], " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"c", " ", "sigma"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+     "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"scaleReducedEquations", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"fieldEquations", " ", "/.", " ", "scaleAnsatz"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", 
+       RowBox[{"(", 
+        RowBox[{"$Assumptions", "&&", 
+         RowBox[{
+          RowBox[{"chiS", "[", "x", "]"}], ">", "0"}]}], ")"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"scaleReducedEquations", " ", "//", " ", "TableForm"}]}], "Input",Exp\
+ressionUUID->"13ea932f-f946-394a-9070-6b8709bad474"],
+
+Cell[CellGroupData[{
+
+Cell["Exponent consistency extractor", "Subsection",ExpressionUUID->"71f52685-b589-b546-ac05-0e8c33ea6e2a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"expPowers", "[", "expr_", "]"}], ":=", 
+   RowBox[{"DeleteDuplicates", " ", "@", " ", 
+    RowBox[{"Cases", "[", 
+     RowBox[{"expr", ",", 
+      RowBox[{
+       RowBox[{"E", "^", 
+        RowBox[{"(", 
+         RowBox[{"k_.", " ", "sigma"}], ")"}]}], ":>", "k"}], ",", 
+      "Infinity"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"scalePowers", "=", 
+   RowBox[{"expPowers", " ", "/@", " ", 
+    RowBox[{"(", 
+     RowBox[{"Subtract", " ", "@@@", " ", "scaleReducedEquations"}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Dataset", "[", 
+  RowBox[{"MapIndexed", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<Equation\>\"", "->", 
+        RowBox[{"First", "[", "#2", "]"}]}], ",", 
+       RowBox[{"\"\<Powers\>\"", "->", "#1"}]}], "|>"}], " ", "&"}], ",", 
+    "scalePowers"}], "]"}], "]"}]}], "Input",ExpressionUUID->"3ba3475b-1750-\
+9b4d-a9dc-0126ca65ed3e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Better interpretation", "Subsection",ExpressionUUID->"90226917-ab26-4f4a-8506-d58fc29f8022"],
+
+Cell[TextData[{
+ "Scale invariance should be formulated explicitly, e.g. via weighted \
+homogeneity under ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         RowBox[{"(", 
+           RowBox[{"\[Rho]", ",", "\[Chi]", ",", 
+             StyleBox["r", "TI"], 
+             StyleBox["e", "TI"], 
+             StyleBox["s", "TI"]}], ")"}], "\[RightTeeArrow]", 
+         RowBox[{"(", 
+           RowBox[{
+             SuperscriptBox[
+              StyleBox["s", "TI"], 
+              SubscriptBox[
+               StyleBox["w", "TI"], "\[Rho]"]], "\[Rho]", ",", 
+             SuperscriptBox[
+              StyleBox["s", "TI"], 
+              SubscriptBox[
+               StyleBox["w", "TI"], "\[Chi]"]], "\[Chi]", ",", 
+             SuperscriptBox[
+              StyleBox["s", "TI"], 
+              SubscriptBox[
+               StyleBox["w", "TI"], 
+               StyleBox["r", "TI"]]], 
+             StyleBox["r", "TI"], 
+             StyleBox["e", "TI"], 
+             StyleBox["s", "TI"]}], ")"}]}], TraditionalForm], "errors" -> {},
+      "input" -> 
+     "(\\rho, \\chi, res) \\mapsto (s^{w_\\rho}\\rho, s^{w_\\chi}\\chi, \
+s^{w_r}res)", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "5dfde316-110c-bd43-bdf8-036a3c982bea"],
+ "rather than only via an exponential ansatz in ",
+ StyleBox["sigma", "TI"],
+ ". "
+}], "Text",ExpressionUUID->"e48ccfbd-c56d-e947-a574-7800c317dabf"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"88fa5a69-e72b-e540-a116-9746e8f3c618"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["10. Weighted homogeneity test of the potential", "Section",ExpressionUUID->"1ea58965-a35f-e64e-8199-285681bd69ca"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"weightedDegree", "[", 
+     RowBox[{"expr_", ",", "vars_", ",", "weights_", ",", "s_"}], "]"}], ":=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{"expr", " ", "/.", " ", 
+      RowBox[{"Thread", "[", 
+       RowBox[{"vars", "->", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"s", "^", "weights"}], " ", "vars"}], ")"}]}], "]"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"weights", "=", 
+    RowBox[{"{", 
+     RowBox[{"wrho", ",", "wchi", ",", "wres"}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"homogeneityEquation", "=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"weightedDegree", "[", 
+        RowBox[{
+         RowBox[{"extendedPotential", "[", 
+          RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "]"}], ",", 
+         "vars", ",", "weights", ",", "s"}], "]"}], "==", 
+       RowBox[{
+        RowBox[{"s", "^", "d"}], " ", 
+        RowBox[{"extendedPotential", "[", 
+         RowBox[{"rhoVar", ",", "chiVar", ",", "resVar"}], "]"}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"Assumptions", "->", 
+       RowBox[{"s", ">", "0"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "homogeneityEquation"}], \
+"Input",ExpressionUUID->"a7de26b6-f0d8-1c4b-bb4d-860b183a7472"],
+
+Cell["\<\
+This usually exposes that the mixture of logarithms and polynomial terms \
+obstructs strict homogeneity unless special reinterpretations are used. \
+\>", "Text",ExpressionUUID->"d1d42ed2-4844-3649-9cd4-0c6c276a9fe4"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"fba8e637-a9f7-ba4e-b765-600ee4106e7f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["11. Linearization around a background", "Section",ExpressionUUID->"a8369b6e-c4cc-c44b-93a7-8b291676e12c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Clear", "[", 
+    RowBox[{"epsilon", ",", "u", ",", "v", ",", "w"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"perturbationRules", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"rho", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"rho0", "+", 
+        RowBox[{"epsilon", " ", 
+         RowBox[{"u", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}]}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"chi", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"chi0", "+", 
+        RowBox[{"epsilon", " ", 
+         RowBox[{"v", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}]}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"res", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"res0", "+", 
+        RowBox[{"epsilon", " ", 
+         RowBox[{"w", "[", 
+          RowBox[{"x", ",", "sigma"}], "]"}]}]}]}]}], "\[IndentingNewLine]", 
+     "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"linearizedEquations", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Normal", " ", "@", " ", 
+      RowBox[{"Series", "[", "\[IndentingNewLine]", "    ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Subtract", " ", "@@@", " ", "fieldEquations"}], ")"}], " ",
+          "/.", " ", "perturbationRules"}], ",", "\[IndentingNewLine]", 
+        "    ", 
+        RowBox[{"{", 
+         RowBox[{"epsilon", ",", "0", ",", "1"}], "}"}]}], 
+       "\[IndentingNewLine]", "  ", "]"}]}], " ", "/.", " ", 
+     RowBox[{"Equal", "->", "Subtract"}]}], " ", "//", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Coefficient", "[", 
+       RowBox[{"#", ",", "epsilon", ",", "1"}], "]"}], " ", "&"}], " ", "/@", 
+     " ", 
+     RowBox[{"Range", "[", 
+      RowBox[{"0", ",", "0"}], "]"}]}]}]}], ";"}]}], "Input",ExpressionUUID->\
+"3c439bed-0aae-584e-9144-54025229d61d"],
+
+Cell["\<\
+Because the previous line is awkward, use a clearer construction: \
+\>", "CodeText",ExpressionUUID->"53db02cf-bd25-a043-8953-7778fcef95cc"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"linearizedResiduals", "=", 
+    RowBox[{"Coefficient", "[", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{"Normal", " ", "@", " ", 
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"Subtract", " ", "@@@", " ", "fieldEquations"}], ")"}], 
+          " ", "/.", " ", "perturbationRules"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"epsilon", ",", "0", ",", "1"}], "}"}]}], "]"}]}], ",", 
+      "\[IndentingNewLine]", "   ", "epsilon", ",", "1"}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"linearizedResiduals", " ", "//", " ", "TableForm"}]}], "Input",Expre\
+ssionUUID->"9c7dfcd9-e1b2-904b-b174-eb1d30757e3c"],
+
+Cell[CellGroupData[{
+
+Cell["Plane-wave mode test", "Subsection",ExpressionUUID->"565796ab-7a21-a048-b87e-1d599c923b52"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"modeRules", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"u", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"uAmp", " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"I", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"kx", " ", "x"}], "+", 
+            RowBox[{"ks", " ", "sigma"}]}], ")"}]}], "]"}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"v", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"vAmp", " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"I", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"kx", " ", "x"}], "+", 
+            RowBox[{"ks", " ", "sigma"}]}], ")"}]}], "]"}]}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"w", "[", 
+        RowBox[{"x", ",", "sigma"}], "]"}], "->", 
+       RowBox[{"wAmp", " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"I", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"kx", " ", "x"}], "+", 
+            RowBox[{"ks", " ", "sigma"}]}], ")"}]}], "]"}]}]}]}], 
+     "\[IndentingNewLine]", "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"modeMatrix", "=", 
+    RowBox[{"Normal", " ", "@", " ", 
+     RowBox[{
+      RowBox[{"CoefficientArrays", "[", "\[IndentingNewLine]", "    ", 
+       RowBox[{
+        RowBox[{"Simplify", "[", 
+         RowBox[{
+          RowBox[{"linearizedResiduals", " ", "/.", " ", "modeRules"}], " ", "/.",
+           " ", 
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{"I", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"kx", " ", "x"}], "+", 
+               RowBox[{"ks", " ", "sigma"}]}], ")"}]}], "]"}], "->", "1"}]}], 
+         "]"}], ",", "\[IndentingNewLine]", "    ", 
+        RowBox[{"{", 
+         RowBox[{"uAmp", ",", "vAmp", ",", "wAmp"}], "}"}]}], 
+       "\[IndentingNewLine]", "  ", "]"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"modeMatrix", " ", "//", " ", "MatrixForm"}]}], "Input",ExpressionUUI\
+D->"c7cf6241-0489-0943-864e-cbc57e7f0d0d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Dispersion condition", "Subsection",ExpressionUUID->"a19a4abe-fb48-d244-907d-68696aed5109"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"dispersionCondition", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Det", "[", "modeMatrix", "]"}], "==", "0"}], ",", 
+     RowBox[{"Assumptions", "->", "$Assumptions"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", "dispersionCondition"}], "Input",ExpressionUUI\
+D->"b7d6bbf6-54f5-4049-b359-93321d12b864"],
+
+Cell["\<\
+This is the mathematically appropriate place to discuss stable frequencies or \
+neutral modes. \
+\>", "Text",ExpressionUUID->"8ae62e1a-a45c-cc40-bede-1cb8329ab263"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"dfb9dd4e-174c-9f4d-a10c-99641d4ee9ac"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["12. Visual modal diagnostics", "Section",ExpressionUUID->"752d53f4-7cff-774b-a416-eb78728b3b12"],
+
+Cell["\<\
+For a numeric parameter choice, visualize the determinant over wave-number \
+space. \
+\>", "Text",ExpressionUUID->"a256e2ee-681f-b740-8330-c873c39cb4fb"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"numericPars", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"alpha", "->", "1"}], ",", 
+      RowBox[{"beta", "->", "1"}], ",", 
+      RowBox[{"gamma", "->", "1"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"eta", "->", "1"}], ",", 
+      RowBox[{"zeta", "->", "1"}], ",", 
+      RowBox[{"xi", "->", "1"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"delta", "->", "1"}], ",", 
+      RowBox[{"lambda", "->", "1"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"rho0", "->", "1"}], ",", 
+      RowBox[{"chi0", "->", "1"}], ",", 
+      RowBox[{"res0", "->", "0"}]}], "\[IndentingNewLine]", "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Plot3D", "[", "\[IndentingNewLine]", " ", 
+  RowBox[{
+   RowBox[{"Evaluate", "[", 
+    RowBox[{"Re", "[", 
+     RowBox[{"Det", "[", 
+      RowBox[{"modeMatrix", " ", "/.", " ", "numericPars"}], "]"}], "]"}], 
+    "]"}], ",", "\[IndentingNewLine]", " ", 
+   RowBox[{"{", 
+    RowBox[{"kx", ",", 
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"ks", ",", 
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", "\[IndentingNewLine]", " ", 
+   RowBox[{"PlotRange", "->", "All"}], ",", "\[IndentingNewLine]", " ", 
+   RowBox[{"Mesh", "->", "None"}], ",", "\[IndentingNewLine]", " ", 
+   RowBox[{"AxesLabel", "->", 
+    RowBox[{"{", 
+     RowBox[{"\"\<kx\>\"", ",", "\"\<ks\>\"", ",", "\"\<det\>\""}], "}"}]}], ",",
+    "\[IndentingNewLine]", " ", 
+   RowBox[{
+   "PlotLabel", 
+    "->", "\"\<Mode determinant over spatial and scale wave numbers\>\""}]}], 
+  "\[IndentingNewLine]", "]"}]}], "Input",ExpressionUUID->"416a345c-8b33-1d4d-\
+a602-48b5dc3d2eba"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"bd256554-7fa1-f249-ae9f-8a43bd488172"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["13. Measurement kernel construction", "Section",ExpressionUUID->"b702d165-2d5c-8046-b51b-21ea22a43637"],
+
+Cell["\<\
+The original notebook mentions a self-measurement kernel, but this concept \
+needs operational definition.\
+\>", "Text",ExpressionUUID->"0f9cb937-3990-e440-a816-1c8da31484aa"],
+
+Cell["A minimal testable version is: ", "CodeText",ExpressionUUID->"ea31eff9-6764-a143-a4e7-36d8fb5a4f9b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"measurementKernel", "[", 
+    RowBox[{"state_", ",", "kernel_"}], "]"}], ":=", 
+   RowBox[{"kernel", "[", "state", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"selfMeasurementEquation", "[", 
+    RowBox[{"state_", ",", "kernel_"}], "]"}], ":=", 
+   RowBox[{"state", "==", 
+    RowBox[{"measurementKernel", "[", 
+     RowBox[{"state", ",", "kernel"}], "]"}]}]}], ";"}]}], "Input",ExpressionU\
+UID->"46e888b7-b412-584f-bd74-e6bee854194f"],
+
+Cell[CellGroupData[{
+
+Cell["Example: Gaussian smoothing as a self-map", "Subsection",ExpressionUUID->"96f06973-2bc6-a947-a7bc-8146979536fb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"gaussianKernel", "[", "f_", "]"}], ":=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", "x", "}"}], ",", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Exp", "[", 
+         RowBox[{"-", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"x", "-", "y"}], ")"}], "^", "2"}]}], "]"}], " ", 
+        RowBox[{"f", "[", "y", "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", "Infinity"}], ",", "Infinity"}], "}"}], ",", 
+       "\[IndentingNewLine]", "   ", 
+       RowBox[{"Method", "->", 
+        RowBox[{"{", 
+         RowBox[{"\"\<GlobalAdaptive\>\"", ",", 
+          RowBox[{"\"\<SymbolicProcessing\>\"", "->", "0"}]}], "}"}]}]}], 
+      "]"}]}], "]"}]}], ";"}]], "Input",ExpressionUUID->"c6d1081e-7a66-7a47-\
+b266-6c4d87b9b6d2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conceptual critique", "Subsection",ExpressionUUID->"156b9fc3-a55e-a446-baed-3bf50fed0127"],
+
+Cell["A physical measurement map should specify: ", "Text",ExpressionUUID->"b5a722b7-24c8-6b4d-9ac3-e36fd51bae16"],
+
+Cell["domain", "Item",ExpressionUUID->"e19f68b3-8e0d-af45-8fc4-6404f1832cdf"],
+
+Cell["codomain", "Item",ExpressionUUID->"39754b1c-ace6-ed43-9ef9-d9ac89407a33"],
+
+Cell["conserved quantities", "Item",ExpressionUUID->"1f341c68-2979-3d46-a9e4-47b410c2ad42"],
+
+Cell["\<\
+whether it is linear, positive, contractive, or completely positive\
+\>", "Item",ExpressionUUID->"12bd2edc-6f29-5846-81fc-c440937ddf30"],
+
+Cell["whether fixed points are unique", "Item",ExpressionUUID->"492dfcba-c713-7847-8a53-80279b5a1e97"],
+
+Cell["\<\
+Without this, \"self-measurement\" risks being only a metaphor. \
+\>", "Text",ExpressionUUID->"7102c7aa-23bf-e34d-a3b1-307efc579691"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"3d4d5434-2d46-dd49-a4c3-87c8bb46f948"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["14. Ratio scans including golden-ratio candidates", "Section",ExpressionUUID->"46028e68-97e1-214d-ae37-2ba3d8ba5f1d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"goldenRatio", "=", 
+   RowBox[{"N", "[", 
+    RowBox[{"GoldenRatio", ",", "50"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"goldenAngle", "=", 
+    RowBox[{"N", "[", 
+     RowBox[{
+      RowBox[{"2", " ", "Pi", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"1", "/", "GoldenRatio"}]}], ")"}]}], ",", "50"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"<|", "\[IndentingNewLine]", " ", 
+  RowBox[{
+   RowBox[{"\"\<GoldenRatio\>\"", "->", "goldenRatio"}], ",", 
+   "\[IndentingNewLine]", " ", 
+   RowBox[{"\"\<GoldenAngle\>\"", "->", "goldenAngle"}], ",", 
+   "\[IndentingNewLine]", " ", 
+   RowBox[{"\"\<GoldenAngleDegrees\>\"", "->", 
+    RowBox[{"N", "[", 
+     RowBox[{
+      RowBox[{"goldenAngle", " ", 
+       RowBox[{"180", "/", "Pi"}]}], ",", "30"}], "]"}]}]}], 
+  "\[IndentingNewLine]", "|>"}]}], "Input",ExpressionUUID->"c387c4d2-6b73-\
+a34c-b26e-9347c8891ca6"],
+
+Cell[CellGroupData[{
+
+Cell["Rational approximation diagnostics", "Subsection",ExpressionUUID->"886711b6-247f-d44a-a1a7-18465f5835e9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Table", "[", "\[IndentingNewLine]", " ", 
+   RowBox[{
+    RowBox[{"<|", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{"\"\<n\>\"", "->", "n"}], ",", "\[IndentingNewLine]", "   ", 
+      RowBox[{"\"\<ContinuedFractionTerm\>\"", "->", 
+       RowBox[{"ContinuedFraction", "[", 
+        RowBox[{"GoldenRatio", ",", "n"}], "]"}]}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{"\"\<Convergent\>\"", "->", 
+       RowBox[{"FromContinuedFraction", "[", 
+        RowBox[{"ContinuedFraction", "[", 
+         RowBox[{"GoldenRatio", ",", "n"}], "]"}], "]"}]}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{"\"\<Error\>\"", "->", 
+       RowBox[{"Abs", "[", 
+        RowBox[{"GoldenRatio", "-", 
+         RowBox[{"FromContinuedFraction", "[", 
+          RowBox[{"ContinuedFraction", "[", 
+           RowBox[{"GoldenRatio", ",", "n"}], "]"}], "]"}]}], "]"}]}]}], 
+     "\[IndentingNewLine]", " ", "|>"}], ",", "\[IndentingNewLine]", " ", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "1", ",", "8"}], "}"}]}], "\[IndentingNewLine]", "]"}],
+   " ", "//", " ", "Dataset"}]], "Input",ExpressionUUID->"e228b205-a8f1-2f4b-\
+9905-dc3ff7a24db0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Important warning", "Subsection",ExpressionUUID->"b483439c-7ea7-124d-90f7-223c35fb33d9"],
+
+Cell["\<\
+Finding a good fit to the golden ratio in a spectrum is not by itself \
+evidence of ontology. It may reflect: \
+\>", "Text",ExpressionUUID->"8d774c95-cefc-194a-931e-abbcbd2e7f79"],
+
+Cell["quasiperiodicity", "Item",ExpressionUUID->"96257b18-3d36-bc48-9d8c-a95d5ddb2b2d"],
+
+Cell["extremal packing", "Item",ExpressionUUID->"cf8bcd4e-f3e8-e54b-b490-ede2b28d06a0"],
+
+Cell["Diophantine robustness", "Item",ExpressionUUID->"5266526d-35c3-ec46-a41d-4c2b3ee65c52"],
+
+Cell["model tuning", "Item",ExpressionUUID->"e01407ae-176d-d44e-8eaa-5dbb0c03fec3"],
+
+Cell["numerology if no null model is used", "Item",ExpressionUUID->"aa7d4dd0-9bf7-184b-ac9c-e443e99b4c67"],
+
+Cell["\<\
+A rigorous notebook must compare against null distributions. \
+\>", "Text",ExpressionUUID->"7ecb10a6-ebfc-2d4e-9763-2946fa176ffa"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"9377597d-6cce-e240-94e2-1f3bdc19aa89"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["15. Claim-evidence ledger for your reported probes", "Section",ExpressionUUID->"d8074a04-00da-c34c-bc55-7d16e7b2dff5"],
+
+Cell["\<\
+This section converts your claims into auditable test targets. \
+\>", "Text",ExpressionUUID->"13222447-15bd-a047-a905-4af622199326"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"claimLedger", "=", 
+    RowBox[{"Dataset", "[", 
+     RowBox[{"{", "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Probe\>\"", "->", "\"\<Equation Foundry\>\""}], ",", 
+         RowBox[{"\"\<Claim\>\"", 
+          "->", "\"\<2046 equations generated and scored\>\""}], ",", 
+         RowBox[{"\"\<NeededEvidence\>\"", 
+          "->", "\"\<source generator, scoring function, reproducible \
+parameter grid, raw results table\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", 
+          "->", "\"\<unverified in current notebook\>\""}]}], "|>"}], ",", 
+       "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Probe\>\"", "->", "\"\<Equation Foundry\>\""}], ",", 
+         RowBox[{"\"\<Claim\>\"", 
+          "->", "\"\<KL potential rediscovered as winner\>\""}], ",", 
+         RowBox[{"\"\<NeededEvidence\>\"", 
+          "->", "\"\<explicit search space and ranking table\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", 
+          "->", "\"\<plausible but not yet reproduced here\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Probe\>\"", "->", "\"\<Equation Foundry\>\""}], ",", 
+         RowBox[{"\"\<Claim\>\"", 
+          "->", "\"\<original potential scored zero\>\""}], ",", 
+         RowBox[{"\"\<NeededEvidence\>\"", 
+          "->", "\"\<boundedness, equilibrium, homogeneity tests applied \
+automatically\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", 
+          "->", "\"\<partially consistent with current symbolic \
+analysis\>\""}]}], "|>"}], ",", "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Probe\>\"", "->", "\"\<Torus-Koopman\>\""}], ",", 
+         RowBox[{"\"\<Claim\>\"", 
+          "->", "\"\<DMD recovered golden-ratio-related frequencies\>\""}], ",", 
+         RowBox[{"\"\<NeededEvidence\>\"", 
+          "->", "\"\<time series generator, DMD code, residual analysis, null \
+comparison\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", 
+          "->", "\"\<not yet reproduced here\>\""}]}], "|>"}], ",", 
+       "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Probe\>\"", 
+          "->", "\"\<Hyperdimensional Self-Measurement\>\""}], ",", 
+         RowBox[{"\"\<Claim\>\"", 
+          "->", "\"\<encoded fixed point remains a fixed point\>\""}], ",", 
+         RowBox[{"\"\<NeededEvidence\>\"", 
+          "->", "\"\<encoding map, operator, similarity metric, \
+reproducibility test\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", 
+          "->", "\"\<not yet reproduced here\>\""}]}], "|>"}]}], 
+      "\[IndentingNewLine]", "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "claimLedger"}], "Input",Exp\
+ressionUUID->"48ca3bc1-17a0-134a-b0bd-4f863b05f87b"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"c0168209-201d-8541-bd5d-32d9b2337778"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["16. How the original notebook could be misunderstood", "Section",ExpressionUUID->"2f568008-5d2b-894a-afd0-c11416df8660"],
+
+Cell[CellGroupData[{
+
+Cell["Common misunderstanding modes", "Subsection",ExpressionUUID->"0e244636-c03d-7641-8da1-b0546d49813c"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["Confusing symbolic consistency with physical truth",
+  FontWeight->Bold],
+ "2. ",
+ StyleBox["Treating suggestive terminology as derivation",
+  FontWeight->Bold],
+ "3. ",
+ StyleBox["Equating fixed points with conscious or ontological states",
+  FontWeight->Bold],
+ "4. ",
+ StyleBox["Reading scale coordinates as literal sub-Planckian physics without \
+renormalization structure",
+  FontWeight->Bold],
+ "5. ",
+ StyleBox["Treating golden-ratio recurrence as deep necessity rather than one \
+possible quasiperiodic marker",
+  FontWeight->Bold],
+ "6. ",
+ StyleBox["Assuming measurement kernels are physical instruments rather than \
+abstract operators",
+  FontWeight->Bold]
+}], "Text",ExpressionUUID->"83b6ba7a-376f-474d-80f8-7209c96e670a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Better wording discipline", "Subsection",ExpressionUUID->"ab873399-3583-424b-bd77-3a18cad0a4e0"],
+
+Cell["Prefer: ", "Text",ExpressionUUID->"5b921fe8-4d31-8148-8049-5a50d6fb9406"],
+
+Cell["\"we define\"", "Item",ExpressionUUID->"0a2ef1a6-ec9a-e945-ba32-f8029097366c"],
+
+Cell["\"we test whether\"", "Item",ExpressionUUID->"a6927bb9-93f5-f849-8b28-8c0cb1996167"],
+
+Cell["\"this suggests\"", "Item",ExpressionUUID->"9b6b2a67-c893-3b45-9ade-1db9188ffd70"],
+
+Cell["\"this remains hypothetical\"", "Item",ExpressionUUID->"ce741c7b-890d-d940-a8e1-b1f9bfa9077e"],
+
+Cell["instead of: ", "Text",ExpressionUUID->"efde23e5-2464-454b-83d9-ee9d481b808e"],
+
+Cell["\"this proves\"", "Item",ExpressionUUID->"fad353e2-8173-ac4c-b9b6-2cf59cec6dcb"],
+
+Cell["\"this is what reality is\"", "Item",ExpressionUUID->"404aab54-0f16-8941-aef5-249486422972"],
+
+Cell["\"information arises as energy\"", "Item",ExpressionUUID->"3bf63be4-4d3d-2e47-9a60-b584b0996666"],
+
+Cell["\<\
+unless an explicit conserved stress-energy construction is shown. \
+\>", "Text",ExpressionUUID->"9802a913-7f3e-ed4e-bae4-a0fb08766d52"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"07737591-005e-d947-ab6d-5efbf6b5785f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["17. Do we know what these things actually are?", "Section",ExpressionUUID->"4e2d7a79-af35-b944-bc4a-06433fc5ee1e"],
+
+Cell["At present, mathematically: ", "Text",ExpressionUUID->"4a962559-ac30-ea48-8810-a308048d3e59"],
+
+Cell[TextData[{
+ StyleBox["rho", "TI"],
+ " is a scalar field in an ansatz"
+}], "Item",ExpressionUUID->"f0b25e68-2674-b74f-aa7b-d61af5f9450a"],
+
+Cell[TextData[{
+ StyleBox["chi", "TI"],
+ " is a scalar field in an ansatz"
+}], "Item",ExpressionUUID->"83a84f4b-c194-2646-bcfb-21a55689bc4d"],
+
+Cell[TextData[{
+ StyleBox["res", "TI"],
+ " is a scalar field in an ansatz"
+}], "Item",ExpressionUUID->"88b0d8fd-b4ec-6943-8a3a-fbcdd9c89608"],
+
+Cell[TextData[{
+ "We do ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " yet know, from the notebook alone, whether they correspond to: "
+}], "Text",ExpressionUUID->"8b7c1c30-3c49-964f-9ddb-f727baa2bd71"],
+
+Cell["thermodynamic entropy density", "Item",ExpressionUUID->"02646201-f0c1-4a48-a908-62699e022b00"],
+
+Cell["algorithmic complexity density", "Item",ExpressionUUID->"59f33c79-d2e6-c341-bb60-8f0b12c2db4b"],
+
+Cell["coarse-graining scale", "Item",ExpressionUUID->"7df3b7ab-b4ba-5649-9edd-7d2a6dcbd8ef"],
+
+Cell["instrumental resolution", "Item",ExpressionUUID->"39d96f4b-db7a-6344-8c89-ce965b92d751"],
+
+Cell["renormalization-group scale field", "Item",ExpressionUUID->"9df97f24-1c5c-284f-ab2c-91da77ac4d91"],
+
+Cell["effective free-energy variables", "Item",ExpressionUUID->"3b27faab-db6a-af47-8b00-e61a990a764c"],
+
+Cell["\<\
+A rigorous next step is to define admissible dimensions/units and \
+transformation laws. \
+\>", "Text",ExpressionUUID->"ea34e474-7303-5c40-a6ff-4287e51415fb"],
+
+Cell[CellGroupData[{
+
+Cell["Unit-consistency scaffold", "Subsection",ExpressionUUID->"12c6a374-7cc5-8f4d-ad4a-737f0551958d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"unitLedger", "=", 
+    RowBox[{"Dataset", "[", 
+     RowBox[{"{", "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Quantity\>\"", "->", "\"\<rho\>\""}], ",", 
+         RowBox[{"\"\<InterpretationCandidates\>\"", "->", 
+          RowBox[{"{", 
+           
+           RowBox[{"\"\<information density\>\"", 
+            ",", "\"\<entropy density\>\"", ",", "\"\<effective scalar\>\""}],
+            "}"}]}], ",", 
+         RowBox[{"\"\<UnitsAssigned\>\"", "->", 
+          RowBox[{"Missing", "[", "\"\<NotAssigned\>\"", "]"}]}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Quantity\>\"", "->", "\"\<chi\>\""}], ",", 
+         RowBox[{"\"\<InterpretationCandidates\>\"", "->", 
+          RowBox[{"{", 
+           
+           RowBox[{"\"\<complexity field\>\"", 
+            ",", "\"\<susceptibility-like variable\>\"", 
+            ",", "\"\<latent field\>\""}], "}"}]}], ",", 
+         RowBox[{"\"\<UnitsAssigned\>\"", "->", 
+          RowBox[{"Missing", "[", "\"\<NotAssigned\>\"", "]"}]}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Quantity\>\"", "->", "\"\<res\>\""}], ",", 
+         RowBox[{"\"\<InterpretationCandidates\>\"", "->", 
+          RowBox[{"{", 
+           
+           RowBox[{"\"\<resolution\>\"", 
+            ",", "\"\<inverse coarse-graining length\>\"", 
+            ",", "\"\<measurement scale\>\""}], "}"}]}], ",", 
+         RowBox[{"\"\<UnitsAssigned\>\"", "->", 
+          RowBox[{"Missing", "[", "\"\<NotAssigned\>\"", "]"}]}]}], "|>"}]}], 
+      "\[IndentingNewLine]", "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "unitLedger"}], "Input",Expr\
+essionUUID->"723acdcb-2cad-e24e-bdcf-98c04194d7ab"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"61912870-151d-2741-9905-247ee6806688"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["18. How might information arise as energy?", "Section",ExpressionUUID->"02c2eb51-add0-7348-9ec1-c30a68f281c7"],
+
+Cell["This must be phrased carefully.", "Text",ExpressionUUID->"ba5f159e-0581-bd46-ae27-65fd166c87d5"],
+
+Cell["There are at least four logically distinct possibilities:", "Text",ExpressionUUID->"2fd88f5c-2413-4d41-85f0-dee1b22093f4"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["Information contributes to an effective energy functional",
+  FontWeight->Bold],
+ "2. ",
+ StyleBox["Energy bounds information-processing cost",
+  FontWeight->Bold],
+ "3. ",
+ StyleBox["Information geometry induces dynamics resembling energetic \
+principles",
+  FontWeight->Bold],
+ "4. ",
+ StyleBox["A field called \[OpenCurlyDoubleQuote]information\
+\[CloseCurlyDoubleQuote] is postulated and assigned energetic density",
+  FontWeight->Bold],
+ "These are ",
+ StyleBox["not equivalent",
+  FontSlant->Italic],
+ ". "
+}], "Text",ExpressionUUID->"ed685bdd-8a40-9949-8a91-221253372c6f"],
+
+Cell[CellGroupData[{
+
+Cell["Minimal rigorous bridge", "Subsection",ExpressionUUID->"f49524af-d305-7d49-8c61-5fff64489a25"],
+
+Cell["\<\
+To say information behaves as energy, define an effective Hamiltonian or \
+stress tensor. \
+\>", "Text",ExpressionUUID->"bfea6036-9664-6b48-9c18-b8bb1fcfc117"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"potentialEnergyDensity", "=", 
+    RowBox[{"potential", "[", 
+     RowBox[{
+      RowBox[{"rho", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}], ",", 
+      RowBox[{"chi", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}], ",", 
+      RowBox[{"res", "[", 
+       RowBox[{"x", ",", "sigma"}], "]"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "candidateStressTensorNote", 
+   "=", "\"\<Need explicit spacetime metric coupling before a true \
+stress-energy tensor can be derived.\>\""}], ";"}]}], "Input",ExpressionUUID->\
+"24b4e2ec-8a60-0847-82ee-27194da79d3d"],
+
+Cell["Without metric coupling, the statement remains heuristic. ", "Text",ExpressionUUID->"627b38f2-8647-9642-9ea1-a8faa380e417"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"8dc2dfd4-672f-7a40-9dc5-f3ec047b1e42"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["19. Proposed better notebook structure", "Section",ExpressionUUID->"d0aa4935-0e4e-2c4a-abdc-cbbbd68c7db3"],
+
+Cell["A more rigorous organization would be:", "Text",ExpressionUUID->"7358a407-2de9-4b43-9a7e-f19624d1a8c2"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["Definitions and status labels",
+  FontWeight->Bold],
+ "2. ",
+ StyleBox["Dimensional analysis",
+  FontWeight->Bold],
+ "3. ",
+ StyleBox["Action / potential",
+  FontWeight->Bold],
+ "4. ",
+ StyleBox["Variational derivation",
+  FontWeight->Bold],
+ "5. ",
+ StyleBox["Independent derivation cross-check",
+  FontWeight->Bold],
+ "6. ",
+ StyleBox["Homogeneous equilibria",
+  FontWeight->Bold],
+ "7. ",
+ StyleBox["Hessian stability",
+  FontWeight->Bold],
+ "8. ",
+ StyleBox["Boundedness/coercivity",
+  FontWeight->Bold],
+ "9. ",
+ StyleBox["Scale invariance / homogeneity",
+  FontWeight->Bold],
+ "10. ",
+ StyleBox["Linearized modes / dispersion",
+  FontWeight->Bold],
+ "11. ",
+ StyleBox["Measurement operator definition",
+  FontWeight->Bold],
+ "12. ",
+ StyleBox["Numerical experiments",
+  FontWeight->Bold],
+ "13. ",
+ StyleBox["Null models and controls",
+  FontWeight->Bold],
+ "14. ",
+ StyleBox["Interpretation limits",
+  FontWeight->Bold],
+ "15. ",
+ StyleBox["Physical predictions required for falsifiability",
+  FontWeight->Bold]
+}], "Text",ExpressionUUID->"a35dd8b9-8f7c-dc4e-8f3e-1493f5f33bf0"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"1fadad0c-046b-7547-bfd3-1707371aee68"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["20. Final notebook checklist", "Section",ExpressionUUID->"68ba157d-9dc1-304d-9439-ced0a1c3bd93"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"verificationChecklist", "=", 
+    RowBox[{"Dataset", "[", 
+     RowBox[{"{", "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<No symbol shadowing\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<VariationalD only in VariationalMethods`\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Euler-Lagrange cross-check\>\""}],
+          ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<manual and package derivations agree\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Fixed-point existence\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<Reduce/Solve returns real solutions\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Local stability\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<Hessian eigenvalues nonnegative/positive as \
+claimed\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Boundedness below\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<no runaway ray to -Infinity\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Scale homogeneity\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<weighted scaling law holds\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Linear mode spectrum\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<dispersion relation derived and interpreted\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", 
+          "->", "\"\<Measurement operator well-defined\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<domain/codomain/fixed points specified\>\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}], ",",
+        "\[IndentingNewLine]", "  ", 
+       RowBox[{"<|", 
+        RowBox[{
+         RowBox[{"\"\<Test\>\"", "->", "\"\<Claim-evidence linkage\>\""}], ",", 
+         RowBox[{"\"\<PassCondition\>\"", 
+          "->", "\"\<every major claim linked to raw computational evidence\>\
+\""}], ",", 
+         RowBox[{"\"\<Status\>\"", "->", "\"\<to evaluate\>\""}]}], "|>"}]}], 
+      "\[IndentingNewLine]", "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", "verificationChecklist"}], \
+"Input",ExpressionUUID->"c7727169-f301-d64e-b0d4-17ff7e6a3f0a"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"8fb387f3-9f84-1b41-a88c-b9425a89c728"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["21. Recommended next expansions", "Section",ExpressionUUID->"be983d3d-4b7f-c644-8a6e-3f7f6522e780"],
+
+Cell["\<\
+If you want this upgraded further, the next rigorous additions should be:\
+\>", "Text",ExpressionUUID->"9b1868d0-9823-0249-9fb1-e66b2c725443"],
+
+Cell[TextData[{
+ "1. ",
+ StyleBox["Automated equation search notebook",
+  FontWeight->Bold],
+ " reproducing your Equation Foundry result"
+}], "Text",ExpressionUUID->"224a44b2-5234-8b4d-9ec9-3f130d6e3ff7"],
+
+Cell[TextData[{
+ "2. ",
+ StyleBox["DMD / Koopman notebook",
+  FontWeight->Bold],
+ " with deterministic torus simulations and residual audits"
+}], "Text",ExpressionUUID->"a83f9105-a6a6-7544-9459-99d7dfc7c132"],
+
+Cell[TextData[{
+ "3. ",
+ StyleBox["Hyperdimensional encoding notebook",
+  FontWeight->Bold],
+ " with fixed-point preservation tests"
+}], "Text",ExpressionUUID->"c175b4dd-9027-8c4e-bdaf-688fadc3a21b"],
+
+Cell[TextData[{
+ "4. ",
+ StyleBox["Null-model notebook",
+  FontWeight->Bold],
+ " comparing golden-ratio hits against randomized controls"
+}], "Text",ExpressionUUID->"b0569b64-9351-f74a-a3bc-3a61a7d3ddda"],
+
+Cell[TextData[{
+ "5. ",
+ StyleBox["Physical bridge notebook",
+  FontWeight->Bold],
+ " deriving units, observables, and candidate stress-energy structure "
+}], "Text",ExpressionUUID->"8e6f1676-7669-a644-a59d-5d4d7b49529c"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"82e097f3-d770-634e-b0a1-fbd876b8b730"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["22. Closing note", "Section",ExpressionUUID->"5fa082d0-9334-e24a-a1f7-62af27e7c6b4"],
+
+Cell[TextData[{
+ "The strongest thing currently available is ",
+ StyleBox["formal exploration of candidate variational structures",
+  FontWeight->Bold],
+ ", not yet a demonstrated physical theory."
+}], "Text",ExpressionUUID->"327d0feb-4875-8446-bb6b-039af41a5550"],
+
+Cell["That is still valuable.", "Text",ExpressionUUID->"9538e09d-5d88-4244-8183-0339aed8689b"],
+
+Cell["\<\
+A rigorous notebook should make that strength clear without over-claiming \
+what has not yet been shown.\
+\>", "Text",ExpressionUUID->"4c0aaa7b-be7d-b34e-881e-76b2f8f5f2a5"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{581.25, 654},
+WindowMargins->{{1143, Automatic}, {Automatic, 445.5}},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"ebaa1020-6c1b-0d4b-abe8-60db90adb227"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 164, 3, 278, "Title",ExpressionUUID->"748affcf-b786-b04b-b237-6ef4a92b6987"],
+Cell[743, 27, 388, 8, 77, "Text",ExpressionUUID->"0c1daa0a-7ea4-cb44-bb08-a9a21baaa00d"],
+Cell[1134, 37, 121, 1, 30, "Item",ExpressionUUID->"d1b2160a-52b6-2f44-a6d5-ee67215c6492"],
+Cell[1258, 40, 129, 1, 30, "Item",ExpressionUUID->"b674d919-5f74-8d47-8fd4-77ea1e59b7bc"],
+Cell[1390, 43, 130, 1, 30, "Item",ExpressionUUID->"80a81792-64e3-f543-92bc-457fbd8ae7f9"],
+Cell[1523, 46, 123, 1, 30, "Item",ExpressionUUID->"0e6a6e98-94bd-1f4d-a703-f40d4803e6b5"],
+Cell[1649, 49, 128, 1, 30, "Item",ExpressionUUID->"c536003b-0357-a246-8920-6f802e4d8c11"],
+Cell[1780, 52, 139, 2, 30, "Item",ExpressionUUID->"afb5e07d-88d3-f544-beff-9f7213d4888b"],
+Cell[1922, 56, 253, 6, 55, "Text",ExpressionUUID->"99d08322-9e6e-0e41-9e41-9a036d472b7b"],
+Cell[2178, 64, 596, 20, 48, "Text",ExpressionUUID->"121863b2-886d-cf43-97cc-b76d535a9019"],
+Cell[CellGroupData[{
+Cell[2799, 88, 105, 0, 66, "Section",ExpressionUUID->"84aba47e-6340-4c46-9930-31ef7b035c2b"],
+Cell[2907, 90, 160, 3, 33, "Text",ExpressionUUID->"2ba4d553-5b32-cd41-b9b8-bcaae09231e1"],
+Cell[3070, 95, 200, 5, 33, "Text",ExpressionUUID->"d0a9ccfe-3a0c-f647-b673-7042f4ea5942"],
+Cell[3273, 102, 232, 5, 55, "Text",ExpressionUUID->"51697b04-90be-8742-9a8d-7084d6601962"],
+Cell[3508, 109, 210, 5, 33, "Text",ExpressionUUID->"75ea1dc9-7aa1-9942-8db5-925cc3971296"],
+Cell[3721, 116, 217, 5, 70, "Text",ExpressionUUID->"30941ef9-b824-0a4a-9765-151a3a47fadb"],
+Cell[3941, 123, 270, 6, 70, "Text",ExpressionUUID->"56bb6166-606a-884d-86c2-3beea03209d4"],
+Cell[4214, 131, 108, 0, 70, "Text",ExpressionUUID->"3354239e-fc5f-1248-8bbd-ba20617f4369"],
+Cell[4325, 133, 596, 20, 70, "Text",ExpressionUUID->"3cefd50c-b94c-0a4b-a194-519698bf2042"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4958, 158, 113, 0, 70, "Section",ExpressionUUID->"85a96a1b-a35d-f047-99b6-14551364f623"],
+Cell[CellGroupData[{
+Cell[5096, 162, 84, 0, 70, "Subsection",ExpressionUUID->"fd4690bf-7983-164e-9a68-70559d86f455"],
+Cell[5183, 164, 148, 2, 70, "Text",ExpressionUUID->"c0ff14c8-aad4-5e4e-b0ed-e97f0330eb57"],
+Cell[5334, 168, 303, 5, 70, "Item",ExpressionUUID->"340b3eb6-5c55-3943-ba8f-04b95f96edc1"],
+Cell[5640, 175, 289, 9, 70, "Item",ExpressionUUID->"c5da1bca-5356-4c4c-8644-30f71cf74d2b"],
+Cell[5932, 186, 203, 6, 70, "Item",ExpressionUUID->"61a9cf66-d2ab-e34f-8636-afae713343b8"],
+Cell[6138, 194, 124, 0, 70, "Text",ExpressionUUID->"bf6e9f74-ac68-5a45-96ee-ac196a5355a7"],
+Cell[6265, 196, 2177, 48, 70, "Input",ExpressionUUID->"f0b7e419-02a0-9746-9645-cb87183e8cca"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8479, 249, 90, 0, 70, "Subsection",ExpressionUUID->"9bc2285b-6f97-294b-89a2-8907ca431b4c"],
+Cell[8572, 251, 413, 9, 70, "Input",ExpressionUUID->"ff218ed6-635e-ee42-b366-548ec357de4d"],
+Cell[8988, 262, 81, 0, 70, "Text",ExpressionUUID->"81ccf330-cbd8-c74d-a630-75e35f482ae1"],
+Cell[9072, 264, 490, 8, 70, "Item",ExpressionUUID->"ee8f2d1f-94a9-5e49-b6f1-c7ff753ef1b0"],
+Cell[9565, 274, 307, 6, 70, "Item",ExpressionUUID->"969915a0-b48e-e24b-aca3-fe6a0ef21bb7"],
+Cell[9875, 282, 596, 20, 70, "Text",ExpressionUUID->"78f8aab7-b72f-d646-9ae1-40770b2aae98"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10520, 308, 171, 4, 70, "Section",ExpressionUUID->"089256c3-1ae5-7c4f-a163-b785a9af5922"],
+Cell[10694, 314, 131, 0, 70, "Text",ExpressionUUID->"77d462eb-fef6-a641-b98a-63e46081df00"],
+Cell[10828, 316, 2848, 70, 70, "TextTableForm",ExpressionUUID->"160570f9-c764-4c4c-80bd-fa6c0df6edd7"],
+Cell[CellGroupData[{
+Cell[13701, 390, 104, 0, 70, "Subsection",ExpressionUUID->"25e93503-720b-b245-bfc6-68074ac5f6fc"],
+Cell[13808, 392, 115, 0, 70, "Text",ExpressionUUID->"1afc7aee-8136-f642-a3fd-0f0d4e348003"],
+Cell[13926, 394, 92, 0, 70, "Item",ExpressionUUID->"9bc653c6-4395-1b4a-b534-7dfef222fd4e"],
+Cell[14021, 396, 95, 0, 70, "Item",ExpressionUUID->"c3f11630-4461-2d4c-9a93-9bd7fc22373f"],
+Cell[14119, 398, 111, 0, 70, "Item",ExpressionUUID->"54ab97f8-c245-0849-a364-c882c81fcd0a"],
+Cell[14233, 400, 103, 0, 70, "Item",ExpressionUUID->"89120c3c-0756-d047-914d-94b308eefc3b"],
+Cell[14339, 402, 144, 2, 70, "Text",ExpressionUUID->"30e07beb-7ced-074d-8fa7-cc01f4f7cf5c"],
+Cell[14486, 406, 596, 20, 70, "Text",ExpressionUUID->"a52f1fbb-43f1-be4c-88a1-c52a2b6e7a1a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15131, 432, 116, 0, 70, "Section",ExpressionUUID->"ae189da8-c701-2348-9298-b871cad0af7d"],
+Cell[15250, 434, 150, 2, 70, "Text",ExpressionUUID->"cd4679b9-8415-a24a-b1c2-496585406c98"],
+Cell[15403, 438, 2427, 71, 70, "Input",ExpressionUUID->"3f4e86bf-07d8-2544-931d-5aab51bfaf51"],
+Cell[CellGroupData[{
+Cell[17855, 513, 115, 0, 70, "Subsection",ExpressionUUID->"a59bc7be-cab9-9e42-af3f-ec57e3e2b0d8"],
+Cell[17973, 515, 3675, 94, 70, "Input",ExpressionUUID->"160c7e49-b00a-f945-883e-2c97bde46633"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21685, 614, 102, 0, 70, "Subsection",ExpressionUUID->"1221ef4e-c66e-4a40-b676-b8939f826d8f"],
+Cell[21790, 616, 105, 0, 70, "Text",ExpressionUUID->"af5b10b8-3982-184d-b460-9f0050658daa"],
+Cell[21898, 618, 655, 22, 70, "Text",ExpressionUUID->"3b4e2771-f79f-c243-89ab-024008183149"],
+Cell[22556, 642, 596, 20, 70, "Text",ExpressionUUID->"6e3db7a0-ce32-584a-8003-d09b9dbf8d7a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23201, 668, 123, 0, 70, "Section",ExpressionUUID->"a5c3ae73-c7e9-8b44-ae4b-2537889f255f"],
+Cell[23327, 670, 2261, 54, 70, "Input",ExpressionUUID->"c0d220e4-1d83-1d4e-a2a7-6fef645451d8"],
+Cell[CellGroupData[{
+Cell[25613, 728, 87, 0, 70, "Subsection",ExpressionUUID->"613b6238-fcee-7544-ad25-0e8565d64fe6"],
+Cell[25703, 730, 268, 4, 70, "Text",ExpressionUUID->"53af4598-3060-1342-bf85-e95000f1248b"],
+Cell[25974, 736, 343, 7, 70, "Input",ExpressionUUID->"a49157b7-5c0f-ff42-b1cd-c3967cdcfbf0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26354, 748, 91, 0, 70, "Subsection",ExpressionUUID->"26dd7dee-fb12-5747-92e8-2b01c1992fa2"],
+Cell[26448, 750, 282, 7, 70, "Text",ExpressionUUID->"fbc2d300-fbb3-d641-be7b-6a714a510338"],
+Cell[26733, 759, 596, 20, 70, "Text",ExpressionUUID->"9622f271-304b-744a-b0fc-75989d20097f"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27378, 785, 119, 0, 70, "Section",ExpressionUUID->"fc5d181c-40f7-c340-b627-06f8485a0e94"],
+Cell[27500, 787, 164, 3, 70, "Text",ExpressionUUID->"40e66115-52f6-a641-8019-0dc9e54dce9f"],
+Cell[27667, 792, 2590, 68, 70, "Input",ExpressionUUID->"2e5ddc73-b760-7f48-a586-09e696b68055"],
+Cell[30260, 862, 351, 6, 70, "Text",ExpressionUUID->"38dd5beb-4d9a-e743-9d90-3aa1b481bffe"],
+Cell[30614, 870, 596, 20, 70, "Text",ExpressionUUID->"d1225be4-eae2-4049-bc68-9440c78c1f5b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31247, 895, 106, 0, 70, "Section",ExpressionUUID->"1efcd312-6928-f640-a1ea-1458e0b9425f"],
+Cell[31356, 897, 145, 2, 70, "Text",ExpressionUUID->"e876a010-d321-174a-bde7-dfe64a0e5f59"],
+Cell[31504, 901, 4065, 110, 70, "Input",ExpressionUUID->"2a3c1ce7-59c1-de47-ab8b-e7a0ae904cac"],
+Cell[CellGroupData[{
+Cell[35594, 1015, 105, 0, 70, "Subsection",ExpressionUUID->"25f14201-7a4d-9743-a570-b29b1cedf283"],
+Cell[35702, 1017, 615, 14, 70, "Input",ExpressionUUID->"607d76f8-fb41-ae46-81fd-3c80b759a73c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36354, 1036, 105, 0, 70, "Subsection",ExpressionUUID->"9b019f73-91b5-b14e-bc0f-b45226d90b51"],
+Cell[36462, 1038, 157, 2, 70, "CodeText",ExpressionUUID->"ba9444b9-1eaf-1840-9eba-75b5977f1e5d"],
+Cell[36622, 1042, 1398, 36, 70, "Input",ExpressionUUID->"dcae9728-3194-5344-91db-f913927cc53d"],
+Cell[38023, 1080, 131, 0, 70, "Text",ExpressionUUID->"ad589130-a153-0849-aff1-7c7079c76ea4"],
+Cell[38157, 1082, 596, 20, 70, "Text",ExpressionUUID->"c61cac71-7837-1c48-bdb5-fe49769a35d8"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38802, 1108, 121, 0, 70, "Section",ExpressionUUID->"4c0bf968-d301-fc42-9cc3-bb6f8e1a40e0"],
+Cell[38926, 1110, 125, 0, 70, "Text",ExpressionUUID->"9edbcd20-030f-4241-bd8d-31a2deabdc56"],
+Cell[39054, 1112, 483, 13, 70, "Input",ExpressionUUID->"9a817990-abae-4545-a673-b5e8dc34bd20"],
+Cell[39540, 1127, 120, 0, 70, "Text",ExpressionUUID->"997f0602-6ceb-1b42-a388-923f8b267a7c"],
+Cell[39663, 1129, 1626, 38, 70, "Input",ExpressionUUID->"b0b4a035-a5b2-0341-9387-1cc04c0bec78"],
+Cell[CellGroupData[{
+Cell[41314, 1171, 91, 0, 70, "Subsection",ExpressionUUID->"d49d1190-849d-834c-8d77-9581ab43b069"],
+Cell[41408, 1173, 117, 0, 70, "Item",ExpressionUUID->"86f62016-9b65-0741-9865-fc549928f777"],
+Cell[41528, 1175, 130, 0, 70, "Item",ExpressionUUID->"413438d2-5c26-454d-aa8c-2df7ba7f5f6a"],
+Cell[41661, 1177, 103, 0, 70, "Item",ExpressionUUID->"f1a85dd3-d39b-854e-b0f0-fec0570241af"],
+Cell[41767, 1179, 596, 20, 70, "Text",ExpressionUUID->"408cc538-44d1-254f-867b-b6b8922f5b2c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42412, 1205, 103, 0, 70, "Section",ExpressionUUID->"42c734ec-a355-194d-ba73-4d6fba815aea"],
+Cell[42518, 1207, 193, 3, 70, "Text",ExpressionUUID->"4968e63e-5bda-9e4c-afd1-868a802920cf"],
+Cell[42714, 1212, 633, 16, 70, "Input",ExpressionUUID->"76f4adda-d920-924f-b6ca-96f9ab84838b"],
+Cell[CellGroupData[{
+Cell[43372, 1232, 110, 0, 70, "Subsection",ExpressionUUID->"7e1d84a8-921d-314c-b884-38bd66056a63"],
+Cell[43485, 1234, 2873, 73, 70, "Input",ExpressionUUID->"ea8294ef-2933-db43-b539-1ed9417edbd1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[46395, 1312, 88, 0, 70, "Subsection",ExpressionUUID->"9e849453-233d-ce43-99ab-2bb39866722d"],
+Cell[46486, 1314, 1113, 27, 70, "Input",ExpressionUUID->"aed6315c-5975-0440-a8ef-a06638d5aac0"],
+Cell[47602, 1343, 596, 20, 70, "Text",ExpressionUUID->"4ea58b46-95fc-1f46-bbd5-7c29c15edd9c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48247, 1369, 99, 0, 70, "Section",ExpressionUUID->"c53a3aa3-687f-0847-a3db-2c330f92efd0"],
+Cell[48349, 1371, 163, 3, 70, "Text",ExpressionUUID->"f44e2e20-61c0-fe4a-9b1c-535978c9cce2"],
+Cell[48515, 1376, 1672, 44, 70, "Input",ExpressionUUID->"13ea932f-f946-394a-9070-6b8709bad474"],
+Cell[CellGroupData[{
+Cell[50212, 1424, 107, 0, 70, "Subsection",ExpressionUUID->"71f52685-b589-b546-ac05-0e8c33ea6e2a"],
+Cell[50322, 1426, 985, 28, 70, "Input",ExpressionUUID->"3ba3475b-1750-9b4d-a9dc-0126ca65ed3e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[51344, 1459, 98, 0, 70, "Subsection",ExpressionUUID->"90226917-ab26-4f4a-8506-d58fc29f8022"],
+Cell[51445, 1461, 1454, 38, 70, "Text",ExpressionUUID->"e48ccfbd-c56d-e947-a574-7800c317dabf"],
+Cell[52902, 1501, 596, 20, 70, "Text",ExpressionUUID->"88fa5a69-e72b-e540-a116-9746e8f3c618"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53547, 1527, 120, 0, 70, "Section",ExpressionUUID->"1ea58965-a35f-e64e-8199-285681bd69ca"],
+Cell[53670, 1529, 1709, 43, 70, "Input",ExpressionUUID->"a7de26b6-f0d8-1c4b-bb4d-860b183a7472"],
+Cell[55382, 1574, 226, 3, 70, "Text",ExpressionUUID->"d1d42ed2-4844-3649-9cd4-0c6c276a9fe4"],
+Cell[55611, 1579, 596, 20, 70, "Text",ExpressionUUID->"fba8e637-a9f7-ba4e-b765-600ee4106e7f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56244, 1604, 111, 0, 70, "Section",ExpressionUUID->"a8369b6e-c4cc-c44b-93a7-8b291676e12c"],
+Cell[56358, 1606, 2093, 58, 70, "Input",ExpressionUUID->"3c439bed-0aae-584e-9144-54025229d61d"],
+Cell[58454, 1666, 149, 2, 70, "CodeText",ExpressionUUID->"53db02cf-bd25-a043-8953-7778fcef95cc"],
+Cell[58606, 1670, 795, 18, 70, "Input",ExpressionUUID->"9c7dfcd9-e1b2-904b-b174-eb1d30757e3c"],
+Cell[CellGroupData[{
+Cell[59426, 1692, 97, 0, 70, "Subsection",ExpressionUUID->"565796ab-7a21-a048-b87e-1d599c923b52"],
+Cell[59526, 1694, 2306, 63, 70, "Input",ExpressionUUID->"c7cf6241-0489-0943-864e-cbc57e7f0d0d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61869, 1762, 97, 0, 70, "Subsection",ExpressionUUID->"a19a4abe-fb48-d244-907d-68696aed5109"],
+Cell[61969, 1764, 376, 9, 70, "Input",ExpressionUUID->"b7d6bbf6-54f5-4049-b359-93321d12b864"],
+Cell[62348, 1775, 174, 3, 70, "Text",ExpressionUUID->"8ae62e1a-a45c-cc40-bede-1cb8329ab263"],
+Cell[62525, 1780, 596, 20, 70, "Text",ExpressionUUID->"dfb9dd4e-174c-9f4d-a10c-99641d4ee9ac"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[63170, 1806, 102, 0, 70, "Section",ExpressionUUID->"752d53f4-7cff-774b-a416-eb78728b3b12"],
+Cell[63275, 1808, 163, 3, 70, "Text",ExpressionUUID->"a256e2ee-681f-b740-8330-c873c39cb4fb"],
+Cell[63441, 1813, 1743, 41, 70, "Input",ExpressionUUID->"416a345c-8b33-1d4d-a602-48b5dc3d2eba"],
+Cell[65187, 1856, 596, 20, 70, "Text",ExpressionUUID->"bd256554-7fa1-f249-ae9f-8a43bd488172"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65820, 1881, 109, 0, 70, "Section",ExpressionUUID->"b702d165-2d5c-8046-b51b-21ea22a43637"],
+Cell[65932, 1883, 185, 3, 70, "Text",ExpressionUUID->"0f9cb937-3990-e440-a816-1c8da31484aa"],
+Cell[66120, 1888, 106, 0, 70, "CodeText",ExpressionUUID->"ea31eff9-6764-a143-a4e7-36d8fb5a4f9b"],
+Cell[66229, 1890, 512, 13, 70, "Input",ExpressionUUID->"46e888b7-b412-584f-bd74-e6bee854194f"],
+Cell[CellGroupData[{
+Cell[66766, 1907, 118, 0, 70, "Subsection",ExpressionUUID->"96f06973-2bc6-a947-a7bc-8146979536fb"],
+Cell[66887, 1909, 873, 25, 70, "Input",ExpressionUUID->"c6d1081e-7a66-7a47-b266-6c4d87b9b6d2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67797, 1939, 96, 0, 70, "Subsection",ExpressionUUID->"156b9fc3-a55e-a446-baed-3bf50fed0127"],
+Cell[67896, 1941, 114, 0, 70, "Text",ExpressionUUID->"b5a722b7-24c8-6b4d-9ac3-e36fd51bae16"],
+Cell[68013, 1943, 77, 0, 70, "Item",ExpressionUUID->"e19f68b3-8e0d-af45-8fc4-6404f1832cdf"],
+Cell[68093, 1945, 79, 0, 70, "Item",ExpressionUUID->"39754b1c-ace6-ed43-9ef9-d9ac89407a33"],
+Cell[68175, 1947, 91, 0, 70, "Item",ExpressionUUID->"1f341c68-2979-3d46-a9e4-47b410c2ad42"],
+Cell[68269, 1949, 146, 2, 70, "Item",ExpressionUUID->"12bd2edc-6f29-5846-81fc-c440937ddf30"],
+Cell[68418, 1953, 102, 0, 70, "Item",ExpressionUUID->"492dfcba-c713-7847-8a53-80279b5a1e97"],
+Cell[68523, 1955, 143, 2, 70, "Text",ExpressionUUID->"7102c7aa-23bf-e34d-a3b1-307efc579691"],
+Cell[68669, 1959, 596, 20, 70, "Text",ExpressionUUID->"3d4d5434-2d46-dd49-a4c3-87c8bb46f948"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69314, 1985, 123, 0, 70, "Section",ExpressionUUID->"46028e68-97e1-214d-ae37-2ba3d8ba5f1d"],
+Cell[69440, 1987, 996, 27, 70, "Input",ExpressionUUID->"c387c4d2-6b73-a34c-b26e-9347c8891ca6"],
+Cell[CellGroupData[{
+Cell[70461, 2018, 111, 0, 70, "Subsection",ExpressionUUID->"886711b6-247f-d44a-a1a7-18465f5835e9"],
+Cell[70575, 2020, 1194, 26, 70, "Input",ExpressionUUID->"e228b205-a8f1-2f4b-9905-dc3ff7a24db0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71806, 2051, 94, 0, 70, "Subsection",ExpressionUUID->"b483439c-7ea7-124d-90f7-223c35fb33d9"],
+Cell[71903, 2053, 189, 3, 70, "Text",ExpressionUUID->"8d774c95-cefc-194a-931e-abbcbd2e7f79"],
+Cell[72095, 2058, 87, 0, 70, "Item",ExpressionUUID->"96257b18-3d36-bc48-9d8c-a95d5ddb2b2d"],
+Cell[72185, 2060, 87, 0, 70, "Item",ExpressionUUID->"cf8bcd4e-f3e8-e54b-b490-ede2b28d06a0"],
+Cell[72275, 2062, 93, 0, 70, "Item",ExpressionUUID->"5266526d-35c3-ec46-a41d-4c2b3ee65c52"],
+Cell[72371, 2064, 83, 0, 70, "Item",ExpressionUUID->"e01407ae-176d-d44e-8eaa-5dbb0c03fec3"],
+Cell[72457, 2066, 106, 0, 70, "Item",ExpressionUUID->"aa7d4dd0-9bf7-184b-ac9c-e443e99b4c67"],
+Cell[72566, 2068, 140, 2, 70, "Text",ExpressionUUID->"7ecb10a6-ebfc-2d4e-9763-2946fa176ffa"],
+Cell[72709, 2072, 596, 20, 70, "Text",ExpressionUUID->"9377597d-6cce-e240-94e2-1f3bdc19aa89"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[73354, 2098, 124, 0, 70, "Section",ExpressionUUID->"d8074a04-00da-c34c-bc55-7d16e7b2dff5"],
+Cell[73481, 2100, 142, 2, 70, "Text",ExpressionUUID->"13222447-15bd-a047-a905-4af622199326"],
+Cell[73626, 2104, 2924, 63, 70, "Input",ExpressionUUID->"48ca3bc1-17a0-134a-b0bd-4f863b05f87b"],
+Cell[76553, 2169, 596, 20, 70, "Text",ExpressionUUID->"c0168209-201d-8541-bd5d-32d9b2337778"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[77186, 2194, 126, 0, 70, "Section",ExpressionUUID->"2f568008-5d2b-894a-afd0-c11416df8660"],
+Cell[CellGroupData[{
+Cell[77337, 2198, 106, 0, 70, "Subsection",ExpressionUUID->"0e244636-c03d-7641-8da1-b0546d49813c"],
+Cell[77446, 2200, 770, 22, 70, "Text",ExpressionUUID->"83b6ba7a-376f-474d-80f8-7209c96e670a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78253, 2227, 102, 0, 70, "Subsection",ExpressionUUID->"ab873399-3583-424b-bd77-3a18cad0a4e0"],
+Cell[78358, 2229, 79, 0, 70, "Text",ExpressionUUID->"5b921fe8-4d31-8148-8049-5a50d6fb9406"],
+Cell[78440, 2231, 84, 0, 70, "Item",ExpressionUUID->"0a2ef1a6-ec9a-e945-ba32-f8029097366c"],
+Cell[78527, 2233, 90, 0, 70, "Item",ExpressionUUID->"a6927bb9-93f5-f849-8b28-8c0cb1996167"],
+Cell[78620, 2235, 88, 0, 70, "Item",ExpressionUUID->"9b6b2a67-c893-3b45-9ade-1db9188ffd70"],
+Cell[78711, 2237, 100, 0, 70, "Item",ExpressionUUID->"ce741c7b-890d-d940-a8e1-b1f9bfa9077e"],
+Cell[78814, 2239, 83, 0, 70, "Text",ExpressionUUID->"efde23e5-2464-454b-83d9-ee9d481b808e"],
+Cell[78900, 2241, 86, 0, 70, "Item",ExpressionUUID->"fad353e2-8173-ac4c-b9b6-2cf59cec6dcb"],
+Cell[78989, 2243, 98, 0, 70, "Item",ExpressionUUID->"404aab54-0f16-8941-aef5-249486422972"],
+Cell[79090, 2245, 103, 0, 70, "Item",ExpressionUUID->"3bf63be4-4d3d-2e47-9a60-b584b0996666"],
+Cell[79196, 2247, 145, 2, 70, "Text",ExpressionUUID->"9802a913-7f3e-ed4e-bae4-a0fb08766d52"],
+Cell[79344, 2251, 596, 20, 70, "Text",ExpressionUUID->"07737591-005e-d947-ab6d-5efbf6b5785f"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[79989, 2277, 120, 0, 70, "Section",ExpressionUUID->"4e2d7a79-af35-b944-bc4a-06433fc5ee1e"],
+Cell[80112, 2279, 99, 0, 70, "Text",ExpressionUUID->"4a962559-ac30-ea48-8810-a308048d3e59"],
+Cell[80214, 2281, 141, 3, 70, "Item",ExpressionUUID->"f0b25e68-2674-b74f-aa7b-d61af5f9450a"],
+Cell[80358, 2286, 141, 3, 70, "Item",ExpressionUUID->"83a84f4b-c194-2646-bcfb-21a55689bc4d"],
+Cell[80502, 2291, 141, 3, 70, "Item",ExpressionUUID->"88b0d8fd-b4ec-6943-8a3a-fbcdd9c89608"],
+Cell[80646, 2296, 199, 5, 70, "Text",ExpressionUUID->"8b7c1c30-3c49-964f-9ddb-f727baa2bd71"],
+Cell[80848, 2303, 100, 0, 70, "Item",ExpressionUUID->"02646201-f0c1-4a48-a908-62699e022b00"],
+Cell[80951, 2305, 101, 0, 70, "Item",ExpressionUUID->"59f33c79-d2e6-c341-bb60-8f0b12c2db4b"],
+Cell[81055, 2307, 92, 0, 70, "Item",ExpressionUUID->"7df3b7ab-b4ba-5649-9edd-7d2a6dcbd8ef"],
+Cell[81150, 2309, 94, 0, 70, "Item",ExpressionUUID->"39d96f4b-db7a-6344-8c89-ce965b92d751"],
+Cell[81247, 2311, 104, 0, 70, "Item",ExpressionUUID->"9df97f24-1c5c-284f-ab2c-91da77ac4d91"],
+Cell[81354, 2313, 102, 0, 70, "Item",ExpressionUUID->"3b27faab-db6a-af47-8b00-e61a990a764c"],
+Cell[81459, 2315, 168, 3, 70, "Text",ExpressionUUID->"ea34e474-7303-5c40-a6ff-4287e51415fb"],
+Cell[CellGroupData[{
+Cell[81652, 2322, 102, 0, 70, "Subsection",ExpressionUUID->"12c6a374-7cc5-8f4d-ad4a-737f0551958d"],
+Cell[81757, 2324, 1896, 44, 70, "Input",ExpressionUUID->"723acdcb-2cad-e24e-bdcf-98c04194d7ab"],
+Cell[83656, 2370, 596, 20, 70, "Text",ExpressionUUID->"61912870-151d-2741-9905-247ee6806688"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84301, 2396, 116, 0, 70, "Section",ExpressionUUID->"02c2eb51-add0-7348-9ec1-c30a68f281c7"],
+Cell[84420, 2398, 102, 0, 70, "Text",ExpressionUUID->"ba5f159e-0581-bd46-ae27-65fd166c87d5"],
+Cell[84525, 2400, 128, 0, 70, "Text",ExpressionUUID->"2fd88f5c-2413-4d41-85f0-dee1b22093f4"],
+Cell[84656, 2402, 614, 19, 70, "Text",ExpressionUUID->"ed685bdd-8a40-9949-8a91-221253372c6f"],
+Cell[CellGroupData[{
+Cell[85295, 2425, 100, 0, 70, "Subsection",ExpressionUUID->"f49524af-d305-7d49-8c61-5fff64489a25"],
+Cell[85398, 2427, 169, 3, 70, "Text",ExpressionUUID->"bfea6036-9664-6b48-9c18-b8bb1fcfc117"],
+Cell[85570, 2432, 657, 18, 70, "Input",ExpressionUUID->"24b4e2ec-8a60-0847-82ee-27194da79d3d"],
+Cell[86230, 2452, 129, 0, 70, "Text",ExpressionUUID->"627b38f2-8647-9642-9ea1-a8faa380e417"],
+Cell[86362, 2454, 596, 20, 70, "Text",ExpressionUUID->"8dc2dfd4-672f-7a40-9dc5-f3ec047b1e42"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87007, 2480, 112, 0, 70, "Section",ExpressionUUID->"d0aa4935-0e4e-2c4a-abdc-cbbbd68c7db3"],
+Cell[87122, 2482, 109, 0, 70, "Text",ExpressionUUID->"7358a407-2de9-4b43-9a7e-f19624d1a8c2"],
+Cell[87234, 2484, 1120, 46, 70, "Text",ExpressionUUID->"a35dd8b9-8f7c-dc4e-8f3e-1493f5f33bf0"],
+Cell[88357, 2532, 596, 20, 70, "Text",ExpressionUUID->"1fadad0c-046b-7547-bfd3-1707371aee68"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88990, 2557, 102, 0, 70, "Section",ExpressionUUID->"68ba157d-9dc1-304d-9439-ced0a1c3bd93"],
+Cell[89095, 2559, 3554, 75, 70, "Input",ExpressionUUID->"c7727169-f301-d64e-b0d4-17ff7e6a3f0a"],
+Cell[92652, 2636, 596, 20, 70, "Text",ExpressionUUID->"8fb387f3-9f84-1b41-a88c-b9425a89c728"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[93285, 2661, 105, 0, 70, "Section",ExpressionUUID->"be983d3d-4b7f-c644-8a6e-3f7f6522e780"],
+Cell[93393, 2663, 152, 2, 70, "Text",ExpressionUUID->"9b1868d0-9823-0249-9fb1-e66b2c725443"],
+Cell[93548, 2667, 204, 5, 70, "Text",ExpressionUUID->"224a44b2-5234-8b4d-9ec9-3f130d6e3ff7"],
+Cell[93755, 2674, 208, 5, 70, "Text",ExpressionUUID->"a83f9105-a6a6-7544-9459-99d7dfc7c132"],
+Cell[93966, 2681, 199, 5, 70, "Text",ExpressionUUID->"c175b4dd-9027-8c4e-bdaf-688fadc3a21b"],
+Cell[94168, 2688, 204, 5, 70, "Text",ExpressionUUID->"b0569b64-9351-f74a-a3bc-3a61a7d3ddda"],
+Cell[94375, 2695, 221, 5, 70, "Text",ExpressionUUID->"8e6f1676-7669-a644-a59d-5d4d7b49529c"],
+Cell[94599, 2702, 596, 20, 70, "Text",ExpressionUUID->"82e097f3-d770-634e-b0a1-fbd876b8b730"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[95232, 2727, 90, 0, 70, "Section",ExpressionUUID->"5fa082d0-9334-e24a-a1f7-62af27e7c6b4"],
+Cell[95325, 2729, 264, 5, 70, "Text",ExpressionUUID->"327d0feb-4875-8446-bb6b-039af41a5550"],
+Cell[95592, 2736, 94, 0, 70, "Text",ExpressionUUID->"9538e09d-5d88-4244-8183-0339aed8689b"],
+Cell[95689, 2738, 183, 3, 70, "Text",ExpressionUUID->"4c0aaa7b-be7d-b34e-881e-76b2f8f5f2a5"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

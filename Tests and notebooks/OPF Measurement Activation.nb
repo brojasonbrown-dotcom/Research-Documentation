@@ -1,0 +1,3218 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    128938,       3208]
+NotebookOptionsPosition[     99925,       2799]
+NotebookOutlinePosition[    100331,       2815]
+CellTagsIndexPosition[    100288,       2812]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["OPF Measurement Activation Notebook", "Title",ExpressionUUID->"d2197f30-b138-e047-927e-cac616afe136"],
+
+Cell["This notebook formalizes your unmapped statement ", "Text",ExpressionUUID->"9cd8de15-6326-6844-a54b-49a24fc46098"],
+
+Cell[BoxData[GridBox[{
+   {
+    PaneBox[Cell[TextData[{
+      StyleBox["\"incommensurate measurement activation\"",
+       FontWeight->Bold],
+      " \[RightArrow] the unmeasured state behaves like a zero-valued but \
+uncollapsed potential, and mention/observation induces stabilization into \
+spacetime"
+     }],
+      Background->None,ExpressionUUID->"bb909c3b-adfd-c547-9978-eaa6fece51b6"],
+     BaseStyle->{"Text", FontColor -> LightDarkSwitched[
+         GrayLevel[0.35], 
+         GrayLevel[0.8602474]]},
+     ImageMargins->5,
+     ImageSize->{Full, Automatic}]}
+  },
+  AutoDelete->False,
+  GridBoxBackground->{"Columns" -> {{
+       LightDarkSwitched[
+        GrayLevel[1], 
+        GrayLevel[0.278317]]}}},
+  GridBoxDividers->{"ColumnsIndexed" -> {1 -> Directive[
+        LightDarkSwitched[
+         RGBColor[0.87, 0.94, 1], 
+         RGBColor[0.2491127, 0.3295188, 0.4231198]], 
+        AbsoluteThickness[4]]}, "Rows" -> {{False}}},
+  GridBoxItemSize->{
+   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]], "Text", \
+"BlockQuote",
+ Background->None,ExpressionUUID->"634843c8-bddd-2f43-b291-47026ce7ca17"],
+
+Cell["in a way that is: ", "Text",ExpressionUUID->"b5f132c2-649e-c34c-8102-14b449eca27e"],
+
+Cell["mathematically explicit", "Item",ExpressionUUID->"82b6eb76-1a95-5b43-a1c2-c990e140bb48"],
+
+Cell["separated into assumptions vs derived consequences", "Item",ExpressionUUID->"3f4237a9-d362-1140-8d34-2b5be7c034df"],
+
+Cell["testable in Wolfram Language", "Item",ExpressionUUID->"8e6ca164-6c0b-dd4e-af19-319677e014f6"],
+
+Cell["\<\
+comparable to modern PDE, variational, operator, and measurement workflows\
+\>", "Item",ExpressionUUID->"3e399d6c-f034-514a-b854-eb84150eb274"],
+
+Cell[TextData[{
+ "careful about what is ",
+ StyleBox["postulated",
+  FontWeight->Bold],
+ " versus what actually ",
+ StyleBox["follows",
+  FontWeight->Bold]
+}], "Item",ExpressionUUID->"e0da55c8-93b4-b04c-ad6a-aedd3b0448ac"],
+
+Cell["It also documents how to test the idea against: ", "Text",ExpressionUUID->"7a41e254-f737-f845-bc46-3c0c3fb75c10"],
+
+Cell["\<\
+early-universe style activation / symmetry-breaking analogies\
+\>", "Item",ExpressionUUID->"a6fe4949-9659-e64a-92dd-61bab764250a"],
+
+Cell["double-slit style measurement-induced pattern changes", "Item",ExpressionUUID->"fc1f541c-1fdb-574d-b403-d15adb144b8c"],
+
+Cell["scale dependence of observation kernels", "Item",ExpressionUUID->"3da1f43c-3b6b-e94e-b955-240d141b3af7"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"f57f4f1e-fc04-5046-9601-2611df8ac851"],
+
+Cell[CellGroupData[{
+
+Cell["0. Core methodological warning", "Section",ExpressionUUID->"cb8808b2-41db-2043-b318-7bec2330802a"],
+
+Cell["Your proposed rule ", "Text",ExpressionUUID->"83c04bda-0d98-e241-956e-2288768522a7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"opfUnmapped", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{"\"\<incommensurate measurement activation\>\"", "->", 
+     "\[IndentingNewLine]", 
+     "    ", "\"\<The 'if not measured requires measurement' rule is not in \
+the Lagrangian. \\\n     It would need an event-driven field update operator; \
+\\\n     no standard PDE framework has one.\>\""}], "\[IndentingNewLine]", 
+    "|>"}]}], ";"}]], "Input",ExpressionUUID->"aa7881d4-11e2-444f-ae33-\
+7f9598efd437"],
+
+Cell["is correct.", "Text",ExpressionUUID->"af89cdfb-6296-d04c-bb38-26a45de43d2d"],
+
+Cell[TextData[{
+ "A standard Lagrangian density of the form ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         StyleBox["L", "TI"], "(", 
+         RowBox[{"\[Rho]", ",", "\[Chi]", ",", 
+           StyleBox["r", "TI"], ",", "\[PartialD]", "\[Rho]", ",", 
+           "\[PartialD]", "\[Chi]", ",", "\[PartialD]", 
+           StyleBox["r", "TI"]}], ")"}], TraditionalForm], "errors" -> {}, 
+     "input" -> 
+     "\\mathcal{L}(\\rho,\\chi,r,\\partial\\rho,\\partial\\chi,\\partial r)", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "81091ced-74d4-ba45-bbca-ba7385bffead"],
+ StyleBox["does not by itself encode",
+  FontWeight->Bold],
+ " a rule like: "
+}], "Text",ExpressionUUID->"70816afe-9f2a-bb4d-812b-a13146018434"],
+
+Cell["\[OpenCurlyDoubleQuote]unmeasured = latent potential\
+\[CloseCurlyDoubleQuote]", "Item",ExpressionUUID->"d29273a3-20c4-1042-96bc-\
+9a2c6a1db8f4"],
+
+Cell["\[OpenCurlyDoubleQuote]observation = \
+activation\[CloseCurlyDoubleQuote]", "Item",ExpressionUUID->"99635cc8-a57f-\
+b54e-889a-f2ab7cee56c3"],
+
+Cell["\[OpenCurlyDoubleQuote]mention collapses or stabilizes spacetime\
+\[CloseCurlyDoubleQuote]", "Item",ExpressionUUID->"47757682-d8cb-564b-8ecb-\
+059c8c6f1144"],
+
+Cell["To model that rigorously, we must add at least one of:", "Text",ExpressionUUID->"ba23aaa3-acc9-2646-add1-f72facb72593"],
+
+Cell[TextData[{
+ "1. a ",
+ StyleBox["measurement operator",
+  FontWeight->Bold],
+ "2. an ",
+ StyleBox["event-triggered update law",
+  FontWeight->Bold],
+ "3. a ",
+ StyleBox["hybrid continuous-discrete system",
+  FontWeight->Bold],
+ "4. a ",
+ StyleBox["state-dependent decoherence functional",
+  FontWeight->Bold],
+ "5. an ",
+ StyleBox["observation-dependent source term or projection map",
+  FontWeight->Bold],
+ "So the correct workflow is: "
+}], "Text",ExpressionUUID->"fbf27fcf-e7f8-cf4b-9792-7a71dac31602"],
+
+Cell[TextData[{
+ "keep the OPF latent substrate as a ",
+ StyleBox["pre-measurement state space postulate",
+  FontWeight->Bold]
+}], "Item",ExpressionUUID->"5e3bce54-2f37-c54e-bd08-4a8757953089"],
+
+Cell[TextData[{
+ "define a ",
+ StyleBox["measurement activation operator",
+  FontWeight->Bold],
+ " separately"
+}], "Item",ExpressionUUID->"ad766635-ad84-e848-8c11-ea8459a0b928"],
+
+Cell["\<\
+test whether that operator yields stable post-measurement dynamics\
+\>", "Item",ExpressionUUID->"ffb0639e-1720-4047-9785-fb1341059656"],
+
+Cell["\<\
+compare its consequences with known interference / decoherence phenomena\
+\>", "Item",ExpressionUUID->"b4bb627f-88d2-0a43-a294-543de18a9d03"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"668c9b80-50e7-8241-b18f-9e2c356b2084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["1. Initialization", "Section",ExpressionUUID->"49015ded-1457-894d-b5b7-65ab8bdeb40f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\"\<Global`*\>\"", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<VariationalMethods`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$HistoryLength", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Assumptions", "=", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"Element", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "\[Alpha]", ",", "\[Beta]", ",", "\[Mu]", ",", "\[CapitalGamma]", ",",
+          "\[Sigma]", ",", "\[Eta]", ",", "\[Kappa]", ",", "\[Lambda]", ",", 
+         "\[Omega]", ",", "kx", ",", "ky", ",", "kz", ",", 
+         "\[CurlyEpsilon]"}], "}"}], ",", "Reals"}], "]"}], "&&", 
+     "\[IndentingNewLine]", "   ", 
+     RowBox[{"\[Alpha]", ">", "0"}], "&&", 
+     RowBox[{"\[Beta]", ">", "0"}], "&&", 
+     RowBox[{"\[Mu]", ">", "0"}], "&&", 
+     RowBox[{"\[CapitalGamma]", ">=", "0"}], "&&", 
+     RowBox[{"\[Sigma]", ">=", "0"}], "&&", 
+     RowBox[{"\[Eta]", ">=", "0"}], "&&", 
+     RowBox[{"\[Kappa]", ">=", "0"}]}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"coords4", "=", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"spatialCoords", "=", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "z"}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"say", "[", "msg_", "]"}], ":=", 
+   RowBox[{"Print", "[", 
+    RowBox[{"Style", "[", 
+     RowBox[{"msg", ",", "14", ",", "Bold", ",", 
+      RowBox[{"Darker", "[", "Blue", "]"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"pass", "[", "msg_", "]"}], ":=", 
+   RowBox[{"Print", "[", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+      RowBox[{"\"\<PASS: \>\"", " ", "<>", " ", "msg"}], ",", 
+      RowBox[{"Darker", "[", "Green", "]"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fail", "[", "msg_", "]"}], ":=", 
+   RowBox[{"Print", "[", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+      RowBox[{"\"\<FAIL: \>\"", " ", "<>", " ", "msg"}], ",", "Red"}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"warn", "[", "msg_", "]"}], ":=", 
+    RowBox[{"Print", "[", 
+     RowBox[{"Style", "[", 
+      RowBox[{
+       RowBox[{"\"\<WARN: \>\"", " ", "<>", " ", "msg"}], ",", 
+       RowBox[{"Darker", "[", "Orange", "]"}]}], "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"subtractSides", "[", "eq_Equal", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"eq", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "-", 
+    RowBox[{"eq", "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}]}], ";"}]}], "Input",ExpressionUUID->\
+"61825103-5b1f-8c43-bf3f-65d9d3ed09ab"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"aabcd1eb-d9cf-224a-806b-585f3eb30e02"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["2. Formal separation of state layers", "Section",ExpressionUUID->"02df70de-8869-334a-abba-58da950736c0"],
+
+Cell["We distinguish three layers. ", "Text",ExpressionUUID->"05cb0d58-03db-8a4e-940f-dbfd2763e2c7"],
+
+Cell[CellGroupData[{
+
+Cell["Layer 0: latent unmeasured potential", "Subsection",ExpressionUUID->"d37c3c2a-a55d-644a-b372-028075863d80"],
+
+Cell[TextData[{
+ "This is ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " ordinary spacetime dynamics. It is metadata plus an uncollapsed symbolic \
+carrier. "
+}], "Text",ExpressionUUID->"2fcae590-bb06-794d-9d20-cf2cf230ce28"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"layer0", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"\"\<Interpretation\>\"", 
+      "->", "\"\<Unmeasured potential / latent substrate\>\""}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<Geometry\>\"", "->", "\"\<Sphere\>\""}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<BoundaryDuality\>\"", "->", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "Infinity"}], "}"}]}], ",", "\[IndentingNewLine]", 
+     "  ", 
+     RowBox[{"\"\<TemporalMode\>\"", 
+      "->", "\"\<Timeless or pre-dynamical\>\""}], ",", "\[IndentingNewLine]",
+      "  ", 
+     RowBox[{"\"\<ObservedSpacetimeQ\>\"", "->", "False"}]}], 
+    "\[IndentingNewLine]", "|>"}]}], ";"}]], "Input",ExpressionUUID->\
+"cdd5e42f-17ea-754b-a961-1ded5a4af7f6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Layer 1: pre-measurement field carrier", "Subsection",ExpressionUUID->"549e4e42-4c01-764b-8a37-ae8774baad6b"],
+
+Cell["This is the symbolic field layer on which the action lives. ", "Text",ExpressionUUID->"1c08afb4-872a-f542-bdca-b22f01106f45"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"latentLagrangian", "=", "\[IndentingNewLine]", "  ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Rho]", "[", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], " ", 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Chi]", "[", 
+       RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "]"}]}], "+", 
+    "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{"\[Chi]", "[", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], " ", 
+     RowBox[{
+      RowBox[{"r", "[", 
+       RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "^", "2"}]}], "+", 
+    "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "/", "2"}], " ", 
+     RowBox[{"Total", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"\[Rho]", "[", 
+            RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "#"}], 
+          "]"}], "^", "2"}], " ", "&"}], " ", "/@", " ", "coords4"}], "]"}]}],
+     "+", "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{"\[Beta]", "/", "2"}], " ", 
+     RowBox[{"Total", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"\[Chi]", "[", 
+            RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "#"}], 
+          "]"}], "^", "2"}], " ", "&"}], " ", "/@", " ", "coords4"}], "]"}]}],
+     "+", "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{"\[Mu]", "/", "2"}], " ", 
+     RowBox[{"Total", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"r", "[", 
+            RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "#"}], 
+          "]"}], "^", "2"}], " ", "&"}], " ", "/@", " ", "coords4"}], 
+      "]"}]}]}]}], ";"}]], "Input",ExpressionUUID->"93d95aa6-8d78-d34f-b3d1-\
+088b9c2b6795"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Layer 2: activated / observed spacetime sector", "Subsection",ExpressionUUID->"55e18b24-8090-f247-a9b7-48096c94664f"],
+
+Cell["This requires a separate activation rule. ", "Text",ExpressionUUID->"8be566af-14f0-224a-a441-328c1bf7a1e6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"observedFields", "=", 
+   RowBox[{"{", 
+    RowBox[{"\[Rho]m", ",", "\[Chi]m", ",", "rm"}], "}"}]}], ";"}]], "Input",E\
+xpressionUUID->"27cbd7ac-399e-704b-b530-c149aa59b4cc"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"d4a8c09d-e4c1-4146-a489-875abdbbf906"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["3. The operator for \[OpenCurlyDoubleQuote]true zero as unmeasured \
+potential\[CloseCurlyDoubleQuote]", "Section",ExpressionUUID->"c74b25f3-3237-\
+be42-bc57-cb395d8b2d64"],
+
+Cell[TextData[{
+ "The cleanest rigorous way to encode your idea is ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " to say that the field is numerically zero."
+}], "Text",ExpressionUUID->"103da1a9-6747-7b42-a75a-9e5ff650797e"],
+
+Cell["Instead define: ", "Text",ExpressionUUID->"dd3f1aed-0d36-c44c-bf88-3c27bae67685"],
+
+Cell[TextData[{
+ "a latent state ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox["\[CapitalPsi]", 
+        StyleBox["L", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\Psi_L", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "2ad3cd78-1bad-2942-8aad-c29aa24cb4b9"]
+}], "Item",ExpressionUUID->"e6262f4d-05dd-dd4f-ae0f-6ea42213b745"],
+
+Cell[TextData[{
+ "a measurement activation operator ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["M", "TI"], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{M}", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "53cbf2c9-0fdb-1346-a518-ece7a0b6be62"]
+}], "Item",ExpressionUUID->"b11ab04b-f916-db4b-8e10-ed3edbca840c"],
+
+Cell[TextData[{
+ "a stabilization operator ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["S", "TI"], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{S}", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "4df6a851-78bd-a54f-8ab5-018e1c8f52f7"]
+}], "Item",ExpressionUUID->"6e18defe-4f16-1a4a-a593-9ec7f509c196"],
+
+Cell[TextData[{
+ "with composition ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[CapitalPsi]", "obs"], "\[LongEqual]", 
+         StyleBox["S", "TI"], "\[EmptySmallCircle]", 
+         StyleBox["M", "TI"], 
+         RowBox[{"[", 
+           RowBox[{
+             SubscriptBox["\[CapitalPsi]", 
+              StyleBox["L", "TI"]], ";", 
+             StyleBox["O", "TI"], ",", 
+             StyleBox["R", "TI"]}], "]"}]}], TraditionalForm], "errors" -> {},
+      "input" -> 
+     "\\Psi_{\\text{obs}} = \\mathcal{S} \\circ \\mathcal{M}[\\Psi_L; O, R]", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "8d1d3019-a69f-fa4f-a22b-6aec682bc933"],
+ "where: "
+}], "Text",ExpressionUUID->"3601a11c-444c-4146-b426-5c6928d4c1c1"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["O", "TI"], TraditionalForm], "errors" -> {}, "input" -> "O", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "39e37c9c-0772-3346-995e-994effcd8b12"],
+ " is the observation protocol / observable"
+}], "Item",ExpressionUUID->"fb382ddc-cf40-1b40-b31b-4ea91698f014"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["R", "TI"], TraditionalForm], "errors" -> {}, "input" -> "R", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "b99441c0-de28-2f4a-9c7a-527b4d0d7a60"],
+ " is the measurement resolution scale"
+}], "Item",ExpressionUUID->"bbf16563-303c-4441-b5f5-4c194e41c4cf"],
+
+Cell[CellGroupData[{
+
+Cell["3.1 Symbolic operator definitions", "Subsection",ExpressionUUID->"08289935-9ca5-e949-ad3f-cc367b2fe2c3"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", 
+    RowBox[{
+    "latentState", ",", "measurementActivation", ",", "stabilizationOperator",
+      ",", "observedState"}], "]"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"latentState", "[", 
+     RowBox[{"t_", ",", "x_", ",", "y_", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"\[CapitalPsi]L", "[", 
+     RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"measurementActivation", "[", 
+     RowBox[{"\[Psi]_", ",", "obsKernel_", ",", "resolution_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"obsKernel", "[", "resolution", "]"}], "[", "\[Psi]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"stabilizationOperator", "[", "\[Psi]_", "]"}], ":=", 
+    RowBox[{"FixedPoint", "[", 
+     RowBox[{"stabilizeStep", ",", "\[Psi]", ",", "12"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"observedState", "[", 
+    RowBox[{"\[Psi]_", ",", "obsKernel_", ",", "resolution_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", "  ", 
+   RowBox[{"stabilizationOperator", " ", "@", " ", 
+    RowBox[{"measurementActivation", "[", 
+     RowBox[{"\[Psi]", ",", "obsKernel", ",", "resolution"}], "]"}]}]}], 
+  ";"}]}], "Input",ExpressionUUID->"db98d707-269c-774d-8dab-7fb9c85a69d2"],
+
+Cell["\<\
+This is only a framework until we specify the actual activation law. \
+\>", "Text",ExpressionUUID->"db2d4328-8ee7-d741-8bf2-2b63237c92f3"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"cc8cf05a-6633-3746-87f1-2dfa51a98c60"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["4. Correct mathematical ways to represent activation", "Section",ExpressionUUID->"1d4110b7-8e98-cf49-9076-52e2192fa91f"],
+
+Cell["\<\
+There are several rigorous possibilities. They should be kept distinct. \
+\>", "Text",ExpressionUUID->"440dba03-b763-fe44-9a7f-16343b6e43da"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach A: projection-like measurement operator", "Section",ExpressionUUID->"91366b2f-3456-2b43-a64d-92fca8d1e062"],
+
+Cell[TextData[{
+ "Observation acts by projection onto a measured basis. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox[
+          StyleBox["M", "TI"], "\[CapitalPi]"], 
+         RowBox[{"[", "\[CapitalPsi]", "]"}], "\[LongEqual]", 
+         UnderscriptBox["\[Sum]", 
+          StyleBox["n", "TI"], LimitsPositioning -> True], 
+         RowBox[{"\[LeftAngleBracket]", 
+           RowBox[{
+             SubscriptBox[
+              StyleBox["b", "TI"], 
+              StyleBox["n", "TI"]], ",", "\[CapitalPsi]"}], 
+           "\[RightAngleBracket]"}], 
+         SubscriptBox[
+          StyleBox["b", "TI"], 
+          StyleBox["n", "TI"]]}], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{M}_{\\Pi}[\\Psi] = \\sum_n \\langle b_n, \\Psi \\rangle b_n", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "c615fcfa-866f-2349-9c30-08889152c6ba"]
+}], "Text",ExpressionUUID->"a150dd21-5478-c543-b43d-15fc132a2441"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "projectionActivation", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"projectionActivation", "[", 
+     RowBox[{"basis_", ",", "region_"}], "]"}], "[", "\[Psi]_", "]"}], ":=", 
+   "\[IndentingNewLine]", "  ", 
+   RowBox[{"Sum", "[", "\[IndentingNewLine]", "   ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Integrate", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"\[Psi]", "[", "\[Xi]", "]"}], " ", 
+         RowBox[{
+          RowBox[{"basis", "[", "n", "]"}], "[", "\[Xi]", "]"}]}], ",", 
+        RowBox[{
+         RowBox[{"Evaluate", "@", "Sequence"}], " ", "@@", " ", "region"}]}], 
+       "]"}], " ", 
+      RowBox[{
+       RowBox[{"basis", "[", "n", "]"}], "[", "x", "]"}]}], ",", 
+     "\[IndentingNewLine]", "   ", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "nMax"}], "}"}]}], "\[IndentingNewLine]", 
+    "  ", "]"}]}], ";"}]}], "Input",ExpressionUUID->"49435974-bd1f-1b44-9e4e-\
+21e517c7eb43"],
+
+Cell[TextData[StyleBox["Use when testing:",
+ FontWeight->Bold]], "Text",ExpressionUUID->"9a209f6c-ada4-a746-b8c4-aacfc52abf5d"],
+
+Cell["mode selection", "Item",ExpressionUUID->"51aecf25-0ebc-4b4a-b55e-02ecabfe4b27"],
+
+Cell["basis truncation effects", "Item",ExpressionUUID->"4026028e-f6d0-7a42-894f-dfcc3ed3dc81"],
+
+Cell["scale-dependent observability", "Item",ExpressionUUID->"d15c8035-0947-d647-9aff-3f02d7ac5afd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach B: decoherence / damping activation", "Section",ExpressionUUID->"98793ba4-c054-9d42-aba0-65b89a531593"],
+
+Cell[TextData[{
+ "Observation adds damping of nonclassical coherence. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[PartialD]", 
+          StyleBox["t", "TI"]], "\[CapitalPsi]", "\[LongEqual]", 
+         StyleBox["F", "TI"], 
+         RowBox[{"[", "\[CapitalPsi]", "]"}], "-", "\[Eta] ", 
+         RowBox[{"(", 
+           RowBox[{
+             StyleBox["I", "TI"], "-", 
+             StyleBox["P", "TI"]}], ")"}], "\[CapitalPsi]"}], 
+       TraditionalForm], "errors" -> {}, "input" -> 
+     "\\partial_t \\Psi = F[\\Psi] - \\eta\\,(I-\\mathcal{P})\\Psi", "state" -> 
+     "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "42b5a597-d8da-ee46-95e5-03c22ce5c38b"],
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["P", "TI"], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{P}", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "6ed302f5-6683-1d49-a6d7-9a614da05729"],
+ " is the measured subspace. "
+}], "Text",ExpressionUUID->"54dd13c3-0b32-9d4c-953d-9c1fecb989ff"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "decoherenceOperator", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"decoherenceOperator", "[", 
+     RowBox[{"proj_", ",", "\[Eta]_"}], "]"}], "[", "\[Psi]_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"-", "\[Eta]"}], " ", 
+    RowBox[{"(", 
+     RowBox[{"\[Psi]", "-", 
+      RowBox[{"proj", "[", "\[Psi]", "]"}]}], ")"}]}]}], ";"}]}], "Input",Expr\
+essionUUID->"4df3a381-258a-d848-849e-b297c98bfc69"],
+
+Cell[TextData[StyleBox["Use when testing:",
+ FontWeight->Bold]], "Text",ExpressionUUID->"ff3744a7-7df1-1a42-ae51-4eac2e68282f"],
+
+Cell["double-slit visibility loss", "Item",ExpressionUUID->"2efe468e-b409-ed47-8211-0cb86879b957"],
+
+Cell["environment-induced selection", "Item",ExpressionUUID->"a4733cbe-03a1-5b44-8eac-4a72837a29c6"],
+
+Cell["stabilization timescales", "Item",ExpressionUUID->"9bdb3b1f-c6fa-e549-ac42-d150b21d7511"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach C: hybrid event-triggered activation", "Section",ExpressionUUID->"dadb5b0b-0088-ee40-9753-2f24394bb444"],
+
+Cell[TextData[{
+ "Observation occurs at event times ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox[
+        StyleBox["t", "TI"], 
+        StyleBox["i", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "t_i", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "3a6add93-0bae-364a-8f65-aa4a7bc5f92b"],
+ " and updates state discontinuously. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{"\[CapitalPsi]", 
+         RowBox[{"(", 
+           SubsuperscriptBox[
+            StyleBox["t", "TI"], 
+            StyleBox["i", "TI"], "+"], ")"}], "\[LongEqual]", 
+         StyleBox["M", "TI"], 
+         RowBox[{"[", 
+           RowBox[{"\[CapitalPsi]", "(", 
+             SubsuperscriptBox[
+              StyleBox["t", "TI"], 
+              StyleBox["i", "TI"], "-"], ")"}], "]"}]}], TraditionalForm], 
+     "errors" -> {}, "input" -> "\\Psi(t_i^+) = \\mathcal{M}[\\Psi(t_i^-)]", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "e9a01b22-f5c1-0a4c-b233-6d6e1b9df38d"]
+}], "Text",ExpressionUUID->"2318f166-ce87-8346-bd4b-441d2bad3220"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "eventUpdateRule", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"eventUpdateRule", "[", 
+    RowBox[{"\[Psi]Before_", ",", "activation_"}], "]"}], ":=", 
+   RowBox[{"activation", "[", "\[Psi]Before", "]"}]}], ";"}]}], "Input",Expres\
+sionUUID->"16f1c3c7-96c1-3841-84f8-bfe6ddaf2354"],
+
+Cell[TextData[StyleBox["Use when testing:",
+ FontWeight->Bold]], "Text",ExpressionUUID->"128d50e6-fc1d-1e4e-a5e7-b3d453bc12ce"],
+
+Cell["detector clicks", "Item",ExpressionUUID->"a76662ab-d70e-4d40-8e21-06e6e4753325"],
+
+Cell["thresholded mention/observation events", "Item",ExpressionUUID->"1c67c03a-1b28-624e-b99c-ba7177bfe97f"],
+
+Cell["discrete intervention experiments", "Item",ExpressionUUID->"dabbf1f9-e4c2-4246-a1f3-66db49f429db"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach D: source-triggered activation of spacetime sector", "Section",ExpressionUUID->"23a0a5e1-405c-a945-a290-41f1a0fac196"],
+
+Cell[TextData[{
+ "Observation activates the measured sector by source injection. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         StyleBox["E", "TI"], 
+         RowBox[{"[", "\[CapitalPhi]", "]"}], "\[LongEqual]", "0  ", 
+         "\[Rule]  ", 
+         StyleBox["E", "TI"], 
+         RowBox[{"[", "\[CapitalPhi]", "]"}], "\[LongEqual]", 
+         SubscriptBox[
+          StyleBox["J", "TI"], 
+          StyleBox["O", "TI"]]}], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{E}[\\Phi] = 0 \\quad \\to \\quad \\mathcal{E}[\\Phi] = J_O", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "696a696a-a14e-7143-892e-b1b6ca784690"]
+}], "Text",ExpressionUUID->"e43253f8-35a8-6e4a-9739-af0562b80a06"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "activationSource", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"activationSource", "[", 
+    RowBox[{"obsStrength_", ",", "obsProfile_"}], "]"}], ":=", 
+   RowBox[{"obsStrength", " ", 
+    RowBox[{"obsProfile", "[", 
+     RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], ";"}]}], "Input",\
+ExpressionUUID->"d8ce81e2-770b-2b4d-aeb9-af15555ca108"],
+
+Cell[TextData[StyleBox["Use when testing:",
+ FontWeight->Bold]], "Text",ExpressionUUID->"bc7db6b4-0c28-3742-9d6b-6caee7b57170"],
+
+Cell["symmetry breaking analogies", "Item",ExpressionUUID->"f48ea7dc-548d-f942-8fb5-ab44bed47721"],
+
+Cell["early-universe nucleation analogies", "Item",ExpressionUUID->"b52f7739-1d11-e343-b930-7470addde715"],
+
+Cell["detector-induced localization", "Item",ExpressionUUID->"a8f4dfc3-0e4d-f445-b948-96f4f26389f3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Approach E: resolution-threshold activation", "Section",ExpressionUUID->"048ea6e8-a657-2d48-b456-953f426d1aa7"],
+
+Cell[TextData[{
+ "Only structure above a scale-dependent threshold is stabilized. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox[
+          StyleBox["M", "TI"], 
+          StyleBox["R", "TI"]], 
+         RowBox[{"[", "\[CapitalPsi]", "]"}], "\[LongEqual]", 
+         StyleBox["H", "TI"], 
+         RowBox[{"(", 
+           RowBox[{"|", "\[CapitalPsi]", "|", "-", "\[Sigma]", 
+             RowBox[{"(", 
+               StyleBox["R", "TI"], ")"}]}], ")"}], " ", "\[CapitalPsi]"}], 
+       TraditionalForm], "errors" -> {}, "input" -> 
+     "\\mathcal{M}_R[\\Psi] = H(|\\Psi| - \\sigma(R))\\,\\Psi", "state" -> 
+     "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "c3b51730-7b86-2f4a-8a6c-c4f815e3ccf8"]
+}], "Text",ExpressionUUID->"98962c0c-aa98-f841-bb7c-b235c5ff217f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{"resolutionThresholdActivation", ",", "\[Sigma]r"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Sigma]r", "[", "R_", "]"}], ":=", 
+   RowBox[{"\[Sigma]", "/", "R"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"resolutionThresholdActivation", "[", "R_", "]"}], "[", "\[Psi]_",
+     "]"}], ":=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "}"}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"UnitStep", "[", 
+       RowBox[{
+        RowBox[{"Abs", "[", 
+         RowBox[{"\[Psi]", "[", 
+          RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "]"}], "-", 
+        RowBox[{"\[Sigma]r", "[", "R", "]"}]}], "]"}], " ", 
+      RowBox[{"\[Psi]", "[", 
+       RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",ExpressionUUID->\
+"379e563f-54c9-314f-8ea7-75e8a88644dd"],
+
+Cell[TextData[StyleBox["Use when testing:",
+ FontWeight->Bold]], "Text",ExpressionUUID->"a12a9660-c6d5-ea43-8381-116b7b90c5f2"],
+
+Cell["finite detector resolution", "Item",ExpressionUUID->"0168cee4-277a-8747-b32b-3480b636f0b8"],
+
+Cell["coarse vs fine observation", "Item",ExpressionUUID->"44435eae-ab3f-1f48-bcf8-2c77a5699417"],
+
+Cell["scale-relative emergence", "Item",ExpressionUUID->"511b5ea7-4a89-5b4c-8bd7-d1e33339c120"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"de147d52-96ce-b247-8ba6-18fcd4091c3c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["5. A rigorous OPF activation equation", "Section",ExpressionUUID->"657bc721-4948-4b4b-85aa-430fbb280e53"],
+
+Cell["\<\
+A mathematically testable version is to let the latent field obey one \
+equation and the observed field obey a measurement-coupled equation.\
+\>", "Text",ExpressionUUID->"0d26d2ee-53c7-3d46-a6ce-0d7fd0f17486"],
+
+Cell[TextData[{
+ "Let ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox["\[CapitalPsi]", 
+        StyleBox["L", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\Psi_L", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "e0137efb-cbf2-9b48-9c14-ec23f5ed5a01"],
+ " be latent and ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       SubscriptBox["\[CapitalPsi]", 
+        StyleBox["O", "TI"]], TraditionalForm], "errors" -> {}, "input" -> 
+     "\\Psi_O", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "a3fac1e5-2a66-394d-9c9d-5b04eaaaae89"],
+ " observed. ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[PartialD]", 
+          StyleBox["t", "TI"]], 
+         SubscriptBox["\[CapitalPsi]", 
+          StyleBox["O", "TI"]], "+", 
+         SubscriptBox["\[CapitalGamma]\[CapitalPsi]", 
+          StyleBox["O", "TI"]], "\[LongEqual]", "\[Kappa] ", 
+         SubscriptBox[
+          StyleBox["M", "TI"], 
+          StyleBox["R", "TI"]], 
+         RowBox[{"[", 
+           SubscriptBox["\[CapitalPsi]", 
+            StyleBox["L", "TI"]], "]"}]}], TraditionalForm], "errors" -> {}, 
+     "input" -> 
+     "\\partial_t \\Psi_O + \\Gamma \\Psi_O = \
+\\kappa\\,\\mathcal{M}_R[\\Psi_L]", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "d5d6f82f-5ddd-fa49-9164-d266f7e7f020"],
+ "This says: "
+}], "Text",ExpressionUUID->"c8fe3277-3d7f-2043-8fcd-01a68e20bcfa"],
+
+Cell["latent field exists as potential", "Item",ExpressionUUID->"6424b0f6-0b51-b04b-be92-de874e95d256"],
+
+Cell["measurement produces an activated source", "Item",ExpressionUUID->"3d5e65f7-75e1-874b-bab8-5d7851af30a6"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "stabilization occurs through the persistence term ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|
+    "boxes" -> FormBox["\[CapitalGamma]", TraditionalForm], "errors" -> {}, 
+     "input" -> "\\Gamma", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "bb5528ab-2084-9e4c-92fb-9277f8795fc0"]
+}], "Item",ExpressionUUID->"4b169312-dcfd-ba4f-853d-ef92e136d548"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", 
+    RowBox[{
+    "\[Psi]L", ",", "\[Psi]O", ",", "measurementKernelR", ",", 
+     "activationEquation"}], "]"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"measurementKernelR", "[", "R_", "]"}], "[", "\[Psi]_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"resolutionThresholdActivation", "[", "R", "]"}], "[", "\[Psi]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"activationEquation", "[", "R_", "]"}], ":=", 
+   "\[IndentingNewLine]", "  ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"\[Psi]O", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "t"}], "]"}],
+      "+", 
+     RowBox[{"\[CapitalGamma]", " ", 
+      RowBox[{"\[Psi]O", "[", 
+       RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], "==", 
+    "\[IndentingNewLine]", "   ", 
+    RowBox[{"\[Kappa]", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"measurementKernelR", "[", "R", "]"}], "[", "\[Psi]L", "]"}], "[", 
+      RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}]}], 
+  ";"}]}], "Input",ExpressionUUID->"182ec0a4-474d-d740-aeb1-584cadb30755"]
+}, Open  ]],
+
+Cell["This is a valid modern hybrid field equation template. ", "Text",ExpressionUUID->"4d1018a9-63de-e44d-a550-60724c17a1e3"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"8519b13b-d48b-8044-a598-56dcee5a0cbf"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["6. Recovering spacetime stabilization", "Section",ExpressionUUID->"40926758-ff27-2d40-a53c-132721731b48"],
+
+Cell[TextData[{
+ "If \[OpenCurlyDoubleQuote]observation stabilizes spacetime\
+\[CloseCurlyDoubleQuote] means measured observables persist, then a minimal \
+rule is: ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[PartialD]", 
+          StyleBox["t", "TI"]], 
+         StyleBox["g", "TI"], "+", 
+         SubscriptBox["\[CapitalGamma]", 
+          StyleBox["g", "TI"]], 
+         StyleBox["g", "TI"], "\[LongEqual]", 
+         StyleBox["F", "TI"], 
+         RowBox[{"(", 
+           SubscriptBox["\[CapitalPsi]", 
+            StyleBox["O", "TI"]], ")"}]}], TraditionalForm], "errors" -> {}, 
+     "input" -> "\\partial_t g + \\Gamma_g g = F(\\Psi_O)", "state" -> 
+     "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "257c3cf8-c650-9c4e-8f7e-4f0038aa9f42"],
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["g", "TI"], TraditionalForm], "errors" -> {}, "input" -> "g", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "01b176a4-c0bc-de4b-85e6-ee079c6c3872"],
+ " is some effective spacetime descriptor or geometric observable. "
+}], "Text",ExpressionUUID->"5bc160c1-1275-7b4f-aef7-6212bf0b55b0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{"g", ",", "geometryActivationEquation"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"geometryActivationEquation", "[", "R_", "]"}], ":=", 
+   "\[IndentingNewLine]", "  ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"g", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", "t"}], "]"}],
+      "+", 
+     RowBox[{"\[CapitalGamma]", " ", 
+      RowBox[{"g", "[", 
+       RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}]}], "==", 
+    RowBox[{"\[Lambda]", " ", 
+     RowBox[{
+      RowBox[{"Abs", "[", 
+       RowBox[{"\[Psi]O", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "]"}], "^", 
+      "2"}]}]}]}], ";"}]}], "Input",ExpressionUUID->"c9c5b6d9-f171-1249-9314-\
+2046be43bdc3"],
+
+Cell[TextData[{
+ "This does ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " prove spacetime literally emerges from measurement, but it gives a \
+rigorous testable mathematical implementation of that postulate. "
+}], "Text",ExpressionUUID->"ab580717-3759-e041-8bf2-2855c826060a"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"f7b2db21-0c20-e644-b1dc-68c1cb95b3a9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["7. Variational status audit", "Section",ExpressionUUID->"f85286a9-c6c0-9747-9b8e-bbe83bfbd327"],
+
+Cell["\<\
+We must explicitly mark which equations come from the Lagrangian and which do \
+not. \
+\>", "Text",ExpressionUUID->"6a4463e4-4197-6447-a097-7ecaa0dc76bd"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"eulerLatent", "=", 
+    RowBox[{
+     RowBox[{"EulerEquations", "[", "\[IndentingNewLine]", "   ", 
+      RowBox[{"latentLagrangian", ",", "\[IndentingNewLine]", "   ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Rho]", "[", 
+          RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
+         RowBox[{"\[Chi]", "[", 
+          RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], ",", 
+         RowBox[{"r", "[", 
+          RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}]}], "}"}], ",", 
+       "\[IndentingNewLine]", "   ", "coords4"}], "\[IndentingNewLine]", 
+      "]"}], " ", "//", " ", "FullSimplify"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"opfOriginAudit", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\"\<DerivedFromLatentLagrangian\>\"", "->", "eulerLatent"}], ",",
+       "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<NotDerivedFromLatentLagrangian\>\"", "->", 
+       RowBox[{"<|", "\[IndentingNewLine]", "    ", 
+        RowBox[{
+         RowBox[{"\"\<MeasurementActivation\>\"", "->", 
+          RowBox[{"activationEquation", "[", "R", "]"}]}], ",", 
+         "\[IndentingNewLine]", "    ", 
+         RowBox[{"\"\<GeometryActivation\>\"", "->", 
+          RowBox[{"geometryActivationEquation", "[", "R", "]"}]}]}], 
+        "\[IndentingNewLine]", "  ", "|>"}]}]}], "\[IndentingNewLine]", 
+     "|>"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "say", "[", "\"\<Origin audit: derived vs postulated structures\>\"", "]"}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dataset", "[", "opfOriginAudit", "]"}], "]"}], ";"}]}], "Input",Ex\
+pressionUUID->"cd2de706-2779-4b43-a555-d75687b8c13d"],
+
+Cell["This distinction is essential for rigor. ", "Text",ExpressionUUID->"fd57ffc4-50a9-444b-8712-c5ee73590f20"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"384346c6-c260-0046-a573-08aee36f585c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+8. Early-universe analogy: from unmeasured latent potential to stabilized \
+sector\
+\>", "Section",ExpressionUUID->"4835d366-83c9-264a-b870-d1a7863934ff"],
+
+Cell[TextData[{
+ "A rigorous analogy is ",
+ StyleBox["not",
+  FontWeight->Bold],
+ " \[OpenCurlyDoubleQuote]the universe was literally observed into existence.\
+\[CloseCurlyDoubleQuote]"
+}], "Text",ExpressionUUID->"3bd0f475-2a3f-0b4a-9a47-0617fdfd1805"],
+
+Cell["A safer mathematical analogy is: ", "Text",ExpressionUUID->"071e1809-55b1-6546-b201-694a8160ee51"],
+
+Cell["latent symmetric or prelocalized field sector", "Item",ExpressionUUID->"5918c401-5e1f-d944-869a-b60825e9ee57"],
+
+Cell["instability / threshold / decoherence / coupling", "Item",ExpressionUUID->"24b3642d-8d1f-984d-8714-d57f9edc89f8"],
+
+Cell["emergence of persistent classical observables", "Item",ExpressionUUID->"e58eea03-e235-0040-b1e5-cbaccacd3861"],
+
+Cell["This is structurally similar to: ", "Text",ExpressionUUID->"0bffcfcb-6a58-184d-8815-a3f184fd3cd5"],
+
+Cell["symmetry breaking", "Item",ExpressionUUID->"9b8eb963-5734-9340-8a82-91e019b8cc72"],
+
+Cell["phase transition", "Item",ExpressionUUID->"78995d1e-fad0-9140-816e-ed107a6751a5"],
+
+Cell["reheating / mode freezing", "Item",ExpressionUUID->"2a6aab14-c3f5-bb4c-83f9-f29562ac9a9d"],
+
+Cell["decoherence after inflationary perturbations", "Item",ExpressionUUID->"b69a3793-1f84-b64e-b5fd-f66491174931"],
+
+Cell[CellGroupData[{
+
+Cell["Testable surrogate model", "Subsection",ExpressionUUID->"7724b9c6-b540-c345-b133-6cebcf92662b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", 
+   RowBox[{"uLatent", ",", "uObs", ",", "latentToObservedPDE"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"latentToObservedPDE", "[", "R_", "]"}], ":=", 
+   RowBox[{"{", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"uLatent", "[", 
+         RowBox[{"t", ",", "x"}], "]"}], ",", "t"}], "]"}], "==", 
+      RowBox[{"-", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"uLatent", "[", 
+          RowBox[{"t", ",", "x"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "2"}], "}"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"uObs", "[", 
+          RowBox[{"t", ",", "x"}], "]"}], ",", "t"}], "]"}], "+", 
+       RowBox[{"\[CapitalGamma]", " ", 
+        RowBox[{"uObs", "[", 
+         RowBox[{"t", ",", "x"}], "]"}]}]}], "==", 
+      RowBox[{"\[Kappa]", " ", 
+       RowBox[{"UnitStep", "[", 
+        RowBox[{
+         RowBox[{"Abs", "[", 
+          RowBox[{"uLatent", "[", 
+           RowBox[{"t", ",", "x"}], "]"}], "]"}], "-", 
+         RowBox[{"\[Sigma]r", "[", "R", "]"}]}], "]"}], " ", 
+       RowBox[{"uLatent", "[", 
+        RowBox[{"t", ",", "x"}], "]"}]}]}]}], "\[IndentingNewLine]", "}"}]}], 
+  ";"}]}], "Input",ExpressionUUID->"789e8f69-ab10-7949-9091-4c783a3877a3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["What to test", "Subsection",ExpressionUUID->"170e0b17-634e-344e-8f14-1c369cd115ea"],
+
+Cell[TextData[{
+ "threshold dependence on ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       StyleBox["R", "TI"], TraditionalForm], "errors" -> {}, "input" -> "R", 
+     "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "62c72859-96ba-f24e-bde4-0eaf77409ee1"]
+}], "Item",ExpressionUUID->"a9559d88-b78e-b941-958d-9a8f2ce97ea7"],
+
+Cell[TextData[{
+ "stabilization time as function of ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|
+    "boxes" -> FormBox["\[CapitalGamma]", TraditionalForm], "errors" -> {}, 
+     "input" -> "\\Gamma", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "fe90166d-2206-3c4d-b0a7-3a96c0eb3196"]
+}], "Item",ExpressionUUID->"6cd38476-3c6c-4e45-9a0c-345b114fc2ae"],
+
+Cell["whether persistent observed modes form", "Item",ExpressionUUID->"3b523bac-1e4a-e546-8d82-9acf58875d79"],
+
+Cell["whether activation is localized or extended", "Item",ExpressionUUID->"355189f1-127d-2d44-9b2d-314d072b9eb1"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"a87cfd5c-5ff6-924e-a052-c88a87490870"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+9. Double-slit analogy: measurement changes interference structure\
+\>", "Section",ExpressionUUID->"e1ce4452-f807-6049-830a-73393575b76e"],
+
+Cell[TextData[{
+ "The most rigorous use here is ",
+ StyleBox["comparative phenomenology",
+  FontWeight->Bold],
+ "."
+}], "Text",ExpressionUUID->"414a0059-9929-5c42-810d-5880d4ddc8be"],
+
+Cell["A double-slit experiment shows: ", "Text",ExpressionUUID->"0146194b-0561-ce41-b270-63347405a006"],
+
+Cell["unmeasured path information allows interference", "Item",ExpressionUUID->"c6a8c8a1-196d-c141-9f92-3673f6b3b5a2"],
+
+Cell["path measurement suppresses interference visibility", "Item",ExpressionUUID->"04bc58e1-555c-dc45-b8a5-19ff7754f4da"],
+
+Cell["\<\
+That maps naturally to a decoherence operator, not necessarily to universal \
+spacetime creation. \
+\>", "Text",ExpressionUUID->"87988d69-04d2-f543-981f-313e23b11964"],
+
+Cell[CellGroupData[{
+
+Cell["9.1 Two-path amplitude model", "Subsection",ExpressionUUID->"b74b1d88-3406-4143-b557-9830e9bc053a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", 
+    RowBox[{
+    "\[Psi]1", ",", "\[Psi]2", ",", "\[Psi]Tot", ",", "intensityUnmeasured", ",",
+      "intensityMeasured"}], "]"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Psi]1", "[", "x_", "]"}], ":=", 
+   RowBox[{"a1", " ", 
+    RowBox[{"Exp", "[", 
+     RowBox[{"I", " ", 
+      RowBox[{"\[Phi]1", "[", "x", "]"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Psi]2", "[", "x_", "]"}], ":=", 
+   RowBox[{"a2", " ", 
+    RowBox[{"Exp", "[", 
+     RowBox[{"I", " ", 
+      RowBox[{"\[Phi]2", "[", "x", "]"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Psi]Tot", "[", "x_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"\[Psi]1", "[", "x", "]"}], "+", 
+     RowBox[{"\[Psi]2", "[", "x", "]"}]}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"intensityUnmeasured", "[", "x_", "]"}], ":=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{"ComplexExpand", "[", 
+     RowBox[{
+      RowBox[{"Conjugate", "[", 
+       RowBox[{"\[Psi]Tot", "[", "x", "]"}], "]"}], " ", 
+      RowBox[{"\[Psi]Tot", "[", "x", "]"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"intensityMeasured", "[", "x_", "]"}], ":=", 
+    RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{"ComplexExpand", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Conjugate", "[", 
+         RowBox[{"\[Psi]1", "[", "x", "]"}], "]"}], " ", 
+        RowBox[{"\[Psi]1", "[", "x", "]"}]}], "+", 
+       RowBox[{
+        RowBox[{"Conjugate", "[", 
+         RowBox[{"\[Psi]2", "[", "x", "]"}], "]"}], " ", 
+        RowBox[{"\[Psi]2", "[", "x", "]"}]}]}], "]"}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"visibilityDifference", "[", "x_", "]"}], ":=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"intensityUnmeasured", "[", "x", "]"}], "-", 
+     RowBox[{"intensityMeasured", "[", "x", "]"}]}], "]"}]}], ";"}]}], "Input",\
+ExpressionUUID->"d2b1df83-df14-fd43-8d6c-eeb5cf86a250"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["9.2 Interpretation", "Subsection",ExpressionUUID->"bd074111-7463-494d-96cc-c92bc8e92533"],
+
+Cell[TextData[{
+ Cell[BoxData[Cell["intensityUnmeasured",
+   Background->None,ExpressionUUID->"5e1d0f32-0901-fb42-82cf-941f59ee258c"]], 
+  "InlineCode",ExpressionUUID->"4db1533e-3630-a743-b19e-f2f3ad2a2342"],
+ " contains interference cross-terms"
+}], "Item",ExpressionUUID->"b38c108c-57c0-af48-8455-8a8d2041cab0"],
+
+Cell[TextData[{
+ Cell[BoxData[Cell["intensityMeasured",
+   Background->None,ExpressionUUID->"91e20d08-563f-e14b-83c8-6c710e03ecaa"]], 
+  "InlineCode",ExpressionUUID->"f6711396-53c1-f54d-be53-e6b065728df2"],
+ " removes them"
+}], "Item",ExpressionUUID->"6aea0684-5149-9047-afe8-3c4758fa4cfd"],
+
+Cell["\<\
+the difference isolates coherence information lost under measurement\
+\>", "Item",ExpressionUUID->"0370bbae-a0fb-744c-afe1-57b7b20bfd96"],
+
+Cell["This is the correct rigorous comparison structure. ", "Text",ExpressionUUID->"e0572209-8a95-564d-b6b9-88ca43ef371f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["9.3 Relative scale interpretation", "Subsection",ExpressionUUID->"f71aefab-ca58-ff4b-ac4a-def61fc8009e"],
+
+Cell["Measurement strength can be made resolution-dependent: ", "CodeText",ExpressionUUID->"d0347eaf-cdfb-5a40-b61b-60b425a21116"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "coherenceWeight", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"coherenceWeight", "[", "R_", "]"}], ":=", 
+    RowBox[{"Exp", "[", 
+     RowBox[{
+      RowBox[{"-", "\[Eta]"}], "/", "R"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"intensityPartialMeasurement", "[", "R_", "]"}], "[", "x_", "]"}],
+    ":=", 
+   RowBox[{"FullSimplify", "[", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Conjugate", "[", 
+       RowBox[{"\[Psi]1", "[", "x", "]"}], "]"}], " ", 
+      RowBox[{"\[Psi]1", "[", "x", "]"}]}], "+", 
+     RowBox[{
+      RowBox[{"Conjugate", "[", 
+       RowBox[{"\[Psi]2", "[", "x", "]"}], "]"}], " ", 
+      RowBox[{"\[Psi]2", "[", "x", "]"}]}], "+", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{"coherenceWeight", "[", "R", "]"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Conjugate", "[", 
+          RowBox[{"\[Psi]1", "[", "x", "]"}], "]"}], " ", 
+         RowBox[{"\[Psi]2", "[", "x", "]"}]}], "+", 
+        RowBox[{
+         RowBox[{"Conjugate", "[", 
+          RowBox[{"\[Psi]2", "[", "x", "]"}], "]"}], " ", 
+         RowBox[{"\[Psi]1", "[", "x", "]"}]}]}], ")"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",ExpressionUUID->\
+"2416f9fd-b648-9d4e-98ac-1cc95ecf53cc"],
+
+Cell["This is a rigorous scale-relative interpolation model. ", "Text",ExpressionUUID->"5906fe13-eaa8-dd42-8f37-0a788cf8595c"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"27fef4cb-f226-1b42-9408-4440b17b9035"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["10. Operator ordering and correct insertion of values", "Section",ExpressionUUID->"ad378008-2111-2046-9c73-b1fa776f2b6e"],
+
+Cell["\<\
+To test rigorously, values must be inserted in the right order. \
+\>", "Text",ExpressionUUID->"8e1f8e4d-eea2-d040-b654-0d2ded70f951"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Correct order", "Section",ExpressionUUID->"8ebd68c1-25dd-9346-8a61-abc9153de9a4"],
+
+Cell["1. define symbolic latent action", "Text",ExpressionUUID->"3c800629-589f-7c40-aa69-958cee5850bd"],
+
+Cell["2. derive exact Euler\[Dash]Lagrange equations", "Text",ExpressionUUID->"fc1a2b19-2c43-ee49-bbeb-d19b702916e1"],
+
+Cell["3. define activation operator separately", "Text",ExpressionUUID->"b3d0e22d-f343-2446-a5fc-1d7addac1770"],
+
+Cell["4. classify stationary latent backgrounds", "Text",ExpressionUUID->"1c54f0f9-5405-c44d-bb80-025e611170c0"],
+
+Cell["5. linearize about admissible backgrounds", "Text",ExpressionUUID->"8beec05d-9a40-484b-90a9-834adb815a69"],
+
+Cell["6. only then insert parameter values", "Text",ExpressionUUID->"e167c7e8-e3d1-cf4e-aede-da4c4cb2ee14"],
+
+Cell["7. test residuals after substitution", "Text",ExpressionUUID->"ef37e94e-b074-6a49-bc1e-6898d2efe467"],
+
+Cell["8. compare multiple numerical implementations ", "Text",ExpressionUUID->"d18fd2f5-6a9a-834d-b3eb-8210d0051e1d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Incorrect order", "Section",ExpressionUUID->"44b3b1fc-50a7-804b-a562-97561bf43c90"],
+
+Cell["\<\
+inserting numerical values before derivation if exact structure is needed\
+\>", "Item",ExpressionUUID->"21c82d82-81ba-5f4f-b78c-0298a27a8d59"],
+
+Cell["\<\
+mixing postulated measurement equations into the latent action without saying \
+so\
+\>", "Item",ExpressionUUID->"77cad3d4-6513-0045-9580-702a97eff2e2"],
+
+Cell["\<\
+interpreting every thresholded update as variationally derived\
+\>", "Item",ExpressionUUID->"e6eb7671-4f8c-f149-910e-53b52c6adb4c"],
+
+Cell["\<\
+claiming emergence from measurement without distinguishing analogy from \
+derivation\
+\>", "Item",ExpressionUUID->"864e895c-87f7-bc40-a391-e6a1d1351c5f"],
+
+Cell[CellGroupData[{
+
+Cell["Formal insertion template", "Subsection",ExpressionUUID->"09e02edf-8007-8247-af06-cb29d9bbd4a0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", 
+    RowBox[{
+    "parameterSet", ",", "backgroundSet", ",", "applyParameters", ",", 
+     "applyBackground"}], "]"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"parameterSet", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\[Alpha]", "->", "1"}], ",", 
+      RowBox[{"\[Beta]", "->", "1"}], ",", 
+      RowBox[{"\[Mu]", "->", "1"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\[CapitalGamma]", "->", "0.1"}], ",", 
+      RowBox[{"\[Kappa]", "->", "1"}], ",", 
+      RowBox[{"\[Lambda]", "->", "1"}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\[Sigma]", "->", "0.2"}], ",", 
+      RowBox[{"\[Eta]", "->", "0.3"}]}], "\[IndentingNewLine]", "|>"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"backgroundSet", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"\[Rho]", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "->", "0"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"\[Chi]", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "->", "1"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{
+       RowBox[{"r", "[", 
+        RowBox[{"t", ",", "x", ",", "y", ",", "z"}], "]"}], "->", "0"}]}], 
+     "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"applyParameters", "[", "expr_", "]"}], ":=", 
+   RowBox[{"expr", " ", "/.", " ", 
+    RowBox[{"Normal", "[", "parameterSet", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"applyBackground", "[", "expr_", "]"}], ":=", 
+   RowBox[{"expr", " ", "/.", " ", 
+    RowBox[{"Normal", "[", "backgroundSet", "]"}]}]}], ";"}]}], "Input",Expres\
+sionUUID->"8881c347-2fb2-e841-9a34-4ec4b1ce18fc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Residual testing template", "Subsection",ExpressionUUID->"39a68685-ada8-1241-8f7a-574f43e1253e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "residualNorm", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"residualNorm", "[", "eqs_", "]"}], ":=", 
+    RowBox[{"Simplify", "[", 
+     RowBox[{"Norm", "[", 
+      RowBox[{"subtractSides", " ", "/@", " ", "eqs"}], "]"}], "]"}]}], ";"}],
+   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"latentBackgroundResidual", "=", 
+   RowBox[{"residualNorm", "[", 
+    RowBox[{"eulerLatent", " ", "/.", " ", 
+     RowBox[{"Normal", "[", "backgroundSet", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Latent background residual: \>\"", ",", 
+    "latentBackgroundResidual"}], "]"}], ";"}]}], "Input",ExpressionUUID->\
+"947390a0-4548-9847-ac48-899e8cdb6278"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"68403d09-ae5c-e74d-8112-aca2a4d95e31"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["11. Rigorous test matrix", "Section",ExpressionUUID->"9fe8ac7d-f65a-6c44-8f5d-fc631861cc67"],
+
+Cell["Here is the full set of areas to test. ", "Text",ExpressionUUID->"9e83c284-29d0-5444-a69e-64a443503df5"],
+
+Cell[CellGroupData[{
+
+Cell["A. Symbolic correctness tests", "Subsection",ExpressionUUID->"71cfd7b3-3b07-3444-a27b-f1a86c34816a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"symbolicTests", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"\"\<EulerEquationsDerived\>\"", "->", "eulerLatent"}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<BackgroundResidualZeroQ\>\"", "->", 
+      RowBox[{"Simplify", "[", 
+       RowBox[{"latentBackgroundResidual", "==", "0"}], "]"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<ActivationNotInLagrangianQ\>\"", "->", "True"}]}], 
+    "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dataset", "[", "symbolicTests", "]"}], "]"}], ";"}]}], "Input",Exp\
+ressionUUID->"83557098-33df-b344-a036-bab26c8af43d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["B. Linearization tests", "Subsection",ExpressionUUID->"22ecbb25-9fa4-b040-917b-671de7315f41"],
+
+Cell["\<\
+Linearize latent equations and activation equation around a chosen \
+background. \
+\>", "Text",ExpressionUUID->"8f3d17a8-844d-6b40-83be-c17aec0818e6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"linRules", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\[Rho]", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"\[CurlyEpsilon]", " ", 
+          RowBox[{"u\[Rho]", "[", 
+           RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "]"}]}]}], 
+        "]"}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\[Chi]", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"1", "+", 
+          RowBox[{"\[CurlyEpsilon]", " ", 
+           RowBox[{"u\[Chi]", "[", 
+            RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "]"}]}]}]}], 
+        "]"}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"r", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"\[CurlyEpsilon]", " ", 
+          RowBox[{"ur", "[", 
+           RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "]"}]}]}], 
+        "]"}]}]}], "\[IndentingNewLine]", "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"linearizedLatent", "=", "\[IndentingNewLine]", "  ", 
+   RowBox[{
+    RowBox[{"Coefficient", "[", 
+     RowBox[{
+      RowBox[{"Normal", "[", 
+       RowBox[{"Series", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"subtractSides", " ", "/@", " ", "eulerLatent"}], " ", "/.",
+           " ", "linRules"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"\[CurlyEpsilon]", ",", "0", ",", "1"}], "}"}]}], "]"}], 
+       "]"}], ",", "\[CurlyEpsilon]"}], "]"}], " ", "//", " ", 
+    "FullSimplify"}]}], ";"}]}], "Input",ExpressionUUID->"18441755-842c-c04e-\
+9387-06fb329f32b3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["C. Modal tests", "Subsection",ExpressionUUID->"fef271f0-278c-ac4a-b8b5-08b8cff15e8d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"planeRules", "=", 
+    RowBox[{"{", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"u\[Rho]", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"a\[Rho]", " ", 
+          RowBox[{"Exp", "[", 
+           RowBox[{"I", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"kx", " ", "xx"}], "+", 
+              RowBox[{"ky", " ", "yy"}], "+", 
+              RowBox[{"kz", " ", "zz"}], "-", 
+              RowBox[{"\[Omega]", " ", "tt"}]}], ")"}]}], "]"}]}]}], "]"}]}], 
+      ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"u\[Chi]", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"a\[Chi]", " ", 
+          RowBox[{"Exp", "[", 
+           RowBox[{"I", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"kx", " ", "xx"}], "+", 
+              RowBox[{"ky", " ", "yy"}], "+", 
+              RowBox[{"kz", " ", "zz"}], "-", 
+              RowBox[{"\[Omega]", " ", "tt"}]}], ")"}]}], "]"}]}]}], "]"}]}], 
+      ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"ur", "->", 
+       RowBox[{"Function", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"tt", ",", "xx", ",", "yy", ",", "zz"}], "}"}], ",", 
+         RowBox[{"ar", " ", 
+          RowBox[{"Exp", "[", 
+           RowBox[{"I", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"kx", " ", "xx"}], "+", 
+              RowBox[{"ky", " ", "yy"}], "+", 
+              RowBox[{"kz", " ", "zz"}], "-", 
+              RowBox[{"\[Omega]", " ", "tt"}]}], ")"}]}], "]"}]}]}], 
+        "]"}]}]}], "\[IndentingNewLine]", "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"modalSystem", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"linearizedLatent", " ", "/.", " ", "planeRules"}], ")"}], "/", 
+     RowBox[{"Exp", "[", 
+      RowBox[{"I", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"kx", " ", "x"}], "+", 
+         RowBox[{"ky", " ", "y"}], "+", 
+         RowBox[{"kz", " ", "z"}], "-", 
+         RowBox[{"\[Omega]", " ", "t"}]}], ")"}]}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"modalMatrix", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coefficient", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{"{", 
+        RowBox[{"a\[Rho]", ",", "a\[Chi]", ",", "ar"}], "}"}]}], "]"}], " ", 
+     "&"}], " ", "/@", " ", "modalSystem"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"dispersionDet", "=", 
+    RowBox[{"FullSimplify", "[", 
+     RowBox[{"Det", "[", "modalMatrix", "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Dispersion determinant: \>\"", ",", "dispersionDet"}], "]"}], 
+  ";"}]}], "Input",ExpressionUUID->"e51c4ede-cf60-a845-888e-55e588346701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["D. Stability tests", "Subsection",ExpressionUUID->"c6128839-4166-cd4d-ae7a-1527e1c0dca1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"modalFrequencies", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"dispersionDet", "==", "0"}], ",", "\[Omega]"}], "]"}], "]"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Modal frequencies: \>\"", ",", "modalFrequencies"}], "]"}], 
+  ";"}]}], "Input",ExpressionUUID->"0b43fbff-161a-6f41-b285-b08df7b63759"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["E. Activation tests", "Subsection",ExpressionUUID->"8a3f5ab6-d195-924a-9832-5cfad4d6c3a5"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"activationTests", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"\"\<ThresholdActivationDefined\>\"", "->", 
+      RowBox[{"HoldForm", "[", 
+       RowBox[{
+        RowBox[{"measurementKernelR", "[", "R", "]"}], "[", "\[Psi]L", "]"}], 
+       "]"}]}], ",", "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<PersistenceEquationDefined\>\"", "->", 
+      RowBox[{"HoldForm", "[", 
+       RowBox[{"activationEquation", "[", "R", "]"}], "]"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<GeometryActivationDefined\>\"", "->", 
+      RowBox[{"HoldForm", "[", 
+       RowBox[{"geometryActivationEquation", "[", "R", "]"}], "]"}]}]}], 
+    "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dataset", "[", "activationTests", "]"}], "]"}], ";"}]}], "Input",E\
+xpressionUUID->"25d9fb19-000a-ff40-87dc-63c0dea89008"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["F. Double-slit comparative tests", "Subsection",ExpressionUUID->"24ff24e0-4bd2-6b48-a00f-bcbd8c121c0f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"doubleSlitTests", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"\"\<UnmeasuredIntensity\>\"", "->", 
+      RowBox[{"intensityUnmeasured", "[", "x", "]"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<MeasuredIntensity\>\"", "->", 
+      RowBox[{"intensityMeasured", "[", "x", "]"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<VisibilityDifference\>\"", "->", 
+      RowBox[{"visibilityDifference", "[", "x", "]"}]}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"\"\<PartialMeasurementIntensity\>\"", "->", 
+      RowBox[{
+       RowBox[{"intensityPartialMeasurement", "[", "R", "]"}], "[", "x", 
+       "]"}]}]}], "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dataset", "[", "doubleSlitTests", "]"}], "]"}], ";"}]}], "Input",E\
+xpressionUUID->"59e4b80a-5c5f-454b-8357-51fabd9ce0fa"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"86843eb5-4167-8f4c-8384-b0aea77772b3"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["12. Numerical test structures", "Section",ExpressionUUID->"fa3b5ffd-f138-8c40-9665-ad824c39ec0d"],
+
+Cell["\<\
+For practical predictive testing, exact symbolic work should be followed by \
+numerical experiments. \
+\>", "Text",ExpressionUUID->"34fa2d0f-c3c7-514c-8ce8-d7e8906a3d64"],
+
+Cell[CellGroupData[{
+
+Cell["12.1 1D activation PDE prototype", "Subsection",ExpressionUUID->"a087e327-e243-1649-8d06-024cfffeef24"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", 
+    RowBox[{"uLatentSol", ",", "uObsSol", ",", "sol1D"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"paramsNum", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\[CapitalGamma]", "->", "0.4"}], ",", 
+     RowBox[{"\[Kappa]", "->", "1.2"}], ",", 
+     RowBox[{"\[Sigma]", "->", "0.1"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Rnum", "=", "1.0"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"sol1D", "=", 
+    RowBox[{"NDSolveValue", "[", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", "\[IndentingNewLine]", "   ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"uLatent", "[", 
+             RowBox[{"t", ",", "x"}], "]"}], ",", "t"}], "]"}], "==", 
+          RowBox[{"D", "[", 
+           RowBox[{
+            RowBox[{"uLatent", "[", 
+             RowBox[{"t", ",", "x"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", "2"}], "}"}]}], "]"}]}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{"uObs", "[", 
+              RowBox[{"t", ",", "x"}], "]"}], ",", "t"}], "]"}], "+", 
+           RowBox[{"\[CapitalGamma]", " ", 
+            RowBox[{"uObs", "[", 
+             RowBox[{"t", ",", "x"}], "]"}]}]}], "==", "\[IndentingNewLine]", 
+          "    ", 
+          RowBox[{"\[Kappa]", " ", 
+           RowBox[{"UnitStep", "[", 
+            RowBox[{
+             RowBox[{"Abs", "[", 
+              RowBox[{"uLatent", "[", 
+               RowBox[{"t", ",", "x"}], "]"}], "]"}], "-", 
+             RowBox[{"\[Sigma]r", "[", "Rnum", "]"}]}], "]"}], " ", 
+           RowBox[{"uLatent", "[", 
+            RowBox[{"t", ",", "x"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+         "   ", 
+         RowBox[{
+          RowBox[{"uLatent", "[", 
+           RowBox[{"0", ",", "x"}], "]"}], "==", 
+          RowBox[{"Exp", "[", 
+           RowBox[{
+            RowBox[{"-", "20"}], " ", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"x", "-", 
+               RowBox[{"1", "/", "2"}]}], ")"}], "^", "2"}]}], "]"}]}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{"uObs", "[", 
+           RowBox[{"0", ",", "x"}], "]"}], "==", "0"}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Derivative", "[", 
+             RowBox[{"0", ",", "1"}], "]"}], "[", "uLatent", "]"}], "[", 
+           RowBox[{"t", ",", "0"}], "]"}], "==", "0"}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Derivative", "[", 
+             RowBox[{"0", ",", "1"}], "]"}], "[", "uLatent", "]"}], "[", 
+           RowBox[{"t", ",", "1"}], "]"}], "==", "0"}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Derivative", "[", 
+             RowBox[{"0", ",", "1"}], "]"}], "[", "uObs", "]"}], "[", 
+           RowBox[{"t", ",", "0"}], "]"}], "==", "0"}], ",", 
+         "\[IndentingNewLine]", "   ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Derivative", "[", 
+             RowBox[{"0", ",", "1"}], "]"}], "[", "uObs", "]"}], "[", 
+           RowBox[{"t", ",", "1"}], "]"}], "==", "0"}]}], 
+        "\[IndentingNewLine]", "  ", "}"}], " ", "/.", " ", "paramsNum"}], ",",
+       "\[IndentingNewLine]", "  ", 
+      RowBox[{"{", 
+       RowBox[{"uLatent", ",", "uObs"}], "}"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0", ",", "1"}], "}"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "say", "[", "\"\<Computed 1D latent/observed activation PDE solution.\>\"", 
+   "]"}], ";"}]}], "Input",ExpressionUUID->"fd0b6036-99b4-9742-9eb1-\
+bd735edccc59"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["12.2 Printed observables", "Subsection",ExpressionUUID->"e5aebe1a-68db-c340-8a28-edc664f65a30"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"obsSamples", "=", 
+    RowBox[{"Table", "[", "\[IndentingNewLine]", "   ", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"tt", ",", 
+        RowBox[{
+         RowBox[{"sol1D", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "[", 
+         RowBox[{"tt", ",", "0.5"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"sol1D", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "[", 
+         RowBox[{"tt", ",", "0.5"}], "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", "   ", 
+      RowBox[{"{", 
+       RowBox[{"tt", ",", "0", ",", "1", ",", "0.1"}], "}"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Grid", "[", "\[IndentingNewLine]", "  ", 
+    RowBox[{
+     RowBox[{"Prepend", "[", 
+      RowBox[{"obsSamples", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<t\>\"", ",", "\"\<uLatent(t,0.5)\>\"", 
+         ",", "\"\<uObs(t,0.5)\>\""}], "}"}]}], "]"}], ",", 
+     "\[IndentingNewLine]", "  ", 
+     RowBox[{"Frame", "->", "All"}]}], "\[IndentingNewLine]", "]"}], "]"}], 
+  ";"}]}], "Input",ExpressionUUID->"0057a8f1-ef95-824a-941a-295333d88160"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["12.3 Plots", "Subsection",ExpressionUUID->"ba7d332d-8fab-cd4b-bb91-3b57d077602b"],
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"Evaluate", "@", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"sol1D", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "[", 
+       RowBox[{"tt", ",", "0.5"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"tt", ",", "0", ",", "1", ",", "0.1"}], "}"}]}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"tt", ",", "0", ",", "1"}], "}"}]}], "]"}]], "Input",ExpressionUUI\
+D->"8c5555a1-d277-f540-a718-f3c0e01f5d16"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"190a8718-d2d6-c94b-b3b6-377bf9062d0c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["13. Relative findings to document rigorously", "Section",ExpressionUUID->"ea967e8e-1c18-c64b-8d2a-962ec2d6eb57"],
+
+Cell[TextData[{
+ "This section separates ",
+ StyleBox["supported",
+  FontWeight->Bold],
+ ", ",
+ StyleBox["analogical",
+  FontWeight->Bold],
+ ", and ",
+ StyleBox["unsupported",
+  FontWeight->Bold],
+ " claims. "
+}], "Text",ExpressionUUID->"1800267e-35f4-a54e-a739-41b953f9edf0"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"relativeFindings", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\"\<SupportedByModelStructure\>\"", "->", 
+       RowBox[{"{", "\[IndentingNewLine]", "    ", 
+        RowBox[{"\"\<A latent field sector can be defined independently of \
+observed sector equations.\>\"", ",", "\[IndentingNewLine]", 
+         "    ", "\"\<Observation can be modeled as projection, damping, \
+event update, source activation, or thresholding.\>\"", ",", 
+         "\[IndentingNewLine]", 
+         "    ", "\"\<Measurement-induced suppression of interference is \
+naturally represented by decoherence-weighted cross-terms.\>\"", ",", 
+         "\[IndentingNewLine]", 
+         "    ", "\"\<Persistent observed sectors can be modeled by \
+first-order stabilization equations.\>\""}], "\[IndentingNewLine]", "  ", 
+        "}"}]}], ",", "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<AnalogicalButNotDerived\>\"", "->", 
+       RowBox[{"{", "\[IndentingNewLine]", "    ", 
+        RowBox[{"\"\<Universe formation from immeasurable substrate to \
+measurable spacetime.\>\"", ",", "\[IndentingNewLine]", 
+         "    ", "\"\<Spacetime itself emerging from mention/observation.\>\"",
+          ",", "\[IndentingNewLine]", 
+         "    ", "\"\<Layer-0 timeless potential as literal physical \
+pre-universe ontology.\>\""}], "\[IndentingNewLine]", "  ", "}"}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<UnsupportedWithoutAdditionalPhysics\>\"", "->", 
+       RowBox[{"{", "\[IndentingNewLine]", "    ", 
+        RowBox[{"\"\<That measurement alone creates the universe.\>\"", ",", 
+         "\[IndentingNewLine]", 
+         "    ", "\"\<That double-slit path measurement directly proves \
+spacetime activation.\>\"", ",", "\[IndentingNewLine]", 
+         "    ", "\"\<That the proposed activation law is unique or \
+fundamental.\>\""}], "\[IndentingNewLine]", "  ", "}"}]}]}], 
+     "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dataset", "[", "relativeFindings", "]"}], "]"}], ";"}]}], "Input",\
+ExpressionUUID->"1d48026e-b6e3-7147-b7a5-5b25e477bb67"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"0d44e93f-6e9c-1847-9b62-67d9478a589a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["14. What is the most rigorous and correct structure?", "Section",ExpressionUUID->"fadc0fcd-0d67-9645-8231-bf5ec0c355a9"],
+
+Cell["For your stated goal, the best rigorous structure is: ", "Text",ExpressionUUID->"4684989d-0704-5c4f-b760-3274a0f6e4db"],
+
+Cell[CellGroupData[{
+
+Cell["Structure S1: latent variational sector", "Subsection",ExpressionUUID->"a033f6ae-31ae-d54f-a827-5891379b9414"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{"\[Delta]", 
+         SubscriptBox[
+          StyleBox["S", "TI"], 
+          StyleBox["L", "TI"]], "\[LongEqual]", "0"}], TraditionalForm], 
+     "errors" -> {}, "input" -> "\\delta S_L = 0", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "2d526332-9555-7b44-b79f-4e501cedfac3"],
+ "for the OPF field carrier. "
+}], "Text",ExpressionUUID->"26c0a90d-d779-a34a-932f-3d8c59686943"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Structure S2: measurement activation map", "Subsection",ExpressionUUID->"1f7228f9-9fbe-d74c-bf46-65bf840bb876"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[CapitalPsi]", 
+          StyleBox["O", "TI"]], "\[LongEqual]", 
+         SubscriptBox[
+          StyleBox["M", "TI"], 
+          StyleBox["R", "TI"]], 
+         RowBox[{"[", 
+           SubscriptBox["\[CapitalPsi]", 
+            StyleBox["L", "TI"]], "]"}]}], TraditionalForm], "errors" -> {}, 
+     "input" -> "\\Psi_O = \\mathcal{M}_R[\\Psi_L]", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "59ce3db7-ffd2-454d-9c9a-05533bcaf9d5"],
+ "or in dynamic form ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         SubscriptBox["\[PartialD]", 
+          StyleBox["t", "TI"]], 
+         SubscriptBox["\[CapitalPsi]", 
+          StyleBox["O", "TI"]], "+", 
+         SubscriptBox["\[CapitalGamma]\[CapitalPsi]", 
+          StyleBox["O", "TI"]], "\[LongEqual]", "\[Kappa]", 
+         SubscriptBox[
+          StyleBox["M", "TI"], 
+          StyleBox["R", "TI"]], 
+         RowBox[{"[", 
+           SubscriptBox["\[CapitalPsi]", 
+            StyleBox["L", "TI"]], "]"}]}], TraditionalForm], "errors" -> {}, 
+     "input" -> 
+     "\\partial_t \\Psi_O + \\Gamma \\Psi_O = \\kappa \
+\\mathcal{M}_R[\\Psi_L]", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "f3ae372d-ee71-7c48-bb05-9ac5fc6f24bf"]
+}], "Text",ExpressionUUID->"bb56be43-658f-4f49-b5dd-216996195ea7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Structure S3: geometry or observable persistence map", "Subsection",ExpressionUUID->"aa0b778e-05c2-9e43-97dc-8086fb2ab57b"],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  TemplateBox[<|"boxes" -> FormBox[
+      RowBox[{
+        SubscriptBox["\[PartialD]", 
+         StyleBox["t", "TI"]], 
+        StyleBox["g", "TI"], "+", 
+        SubscriptBox["\[CapitalGamma]", 
+         StyleBox["g", "TI"]], 
+        StyleBox["g", "TI"], "\[LongEqual]", 
+        StyleBox["F", "TI"], 
+        RowBox[{"(", 
+          SubscriptBox["\[CapitalPsi]", 
+           StyleBox["O", "TI"]], ")"}]}], TraditionalForm], "errors" -> {}, 
+    "input" -> "\\partial_t g + \\Gamma_g g = F(\\Psi_O)", "state" -> "Boxes"|>,
+   "TeXAssistantTemplate"], 
+  TraditionalForm]],ExpressionUUID->"6d395901-43fe-f049-92bc-06534c4bf5b9"]], \
+"Text",ExpressionUUID->"670857dd-1b12-6248-b587-f93fd667a004"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Structure S4: scale-relative interference test", "Subsection",ExpressionUUID->"8629a0ef-b1ae-6348-83eb-0217476f742c"],
+
+Cell["\<\
+use partial coherence weighting to compare unmeasured and measured limits. \
+\>", "Text",ExpressionUUID->"7463a16b-9e3c-5c4e-9f6f-f375dc42e0d9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Structure S5: full residual + benchmark validation", "Subsection",ExpressionUUID->"c43e5a10-b34f-e941-8f24-8e8b77f68492"],
+
+Cell["exact symbolic residuals", "Item",ExpressionUUID->"d5b93971-0210-414b-9d56-f35d98d6ef89"],
+
+Cell["linearization residuals", "Item",ExpressionUUID->"3e7f4266-24e5-0248-b8d4-71db5fc5b128"],
+
+Cell["modal determinant tests", "Item",ExpressionUUID->"523993ab-c4b1-6043-8700-cdb1278666fb"],
+
+Cell["numerical convergence sweeps", "Item",ExpressionUUID->"3ea13bd3-feab-6649-8a6e-2068fc5bb33e"],
+
+Cell["external comparison if needed", "Item",ExpressionUUID->"26d309f7-2989-a948-84e8-14f8d4aded12"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"573a75d5-b483-e248-bf91-d0d2eb5f374e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell["15. Tech stack test areas", "Section",ExpressionUUID->"71a3bf81-8292-e648-bfeb-19bf109def71"],
+
+Cell[CellGroupData[{
+
+Cell["Wolfram Language", "Section",ExpressionUUID->"d447b90c-95ad-fa4e-a4df-034f81cdc011"],
+
+Cell["Best for: ", "Text",ExpressionUUID->"60186859-9f76-e143-ad68-78333bf348e6"],
+
+Cell["exact derivation", "Item",ExpressionUUID->"63b4f69b-88d4-084b-950b-73dccc30e7f4"],
+
+Cell["operator algebra", "Item",ExpressionUUID->"b58cd512-6505-1b44-afcb-b95780a4f924"],
+
+Cell[TextData[ButtonBox["EulerEquations",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/VariationalMethods/EulerEquations"]], "Item",Expressi\
+onUUID->"67bcdbff-682c-bb49-baee-29f30bd63641"],
+
+Cell[TextData[ButtonBox["Reduce",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/Reduce"]], "Item",ExpressionUUID->"7ec9e217-a417-\
+1b41-a678-aa148500f6d5"],
+
+Cell[TextData[ButtonBox["DSolve",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/DSolve"]], "Item",ExpressionUUID->"3166aeee-4076-\
+4b4e-a030-2e86d6791323"],
+
+Cell[TextData[ButtonBox["NDSolve",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/NDSolve"]], "Item",ExpressionUUID->"4a625ba0-a1a7-\
+854f-918e-ca67ee4bc184"],
+
+Cell[TextData[ButtonBox["Eigensystem",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/Eigensystem"]], "Item",ExpressionUUID->"b9872d70-\
+d647-cb42-b386-7bbc0db8b091"],
+
+Cell[TextData[ButtonBox["NDEigensystem",
+ BaseStyle->"Link",
+ ButtonData->"paclet:ref/NDEigensystem"]], "Item",ExpressionUUID->"69d5db1c-\
+a67b-3449-a0b5-d1a4a7d3d1d7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PyTorch", "Section",ExpressionUUID->"88000486-809c-da45-96b8-80d0ce4e39db"],
+
+Cell["Best for: ", "Text",ExpressionUUID->"6bc1aba2-61d1-9a4b-a183-483c70a78de3"],
+
+Cell[TextData[{
+ "batched scans over ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[<|"boxes" -> FormBox[
+       RowBox[{
+         StyleBox["R", "TI"], ",", "\[CapitalGamma]", ",", "\[Eta]", ",", 
+         "\[Sigma]"}], TraditionalForm], "errors" -> {}, "input" -> 
+     "R,\\Gamma,\\eta,\\sigma", "state" -> "Boxes"|>,
+    "TeXAssistantTemplate"], TraditionalForm]],ExpressionUUID->
+  "d76ac130-dc84-6d4b-bd59-1d948fb4cd3a"]
+}], "Item",ExpressionUUID->"79f02102-9eb2-dc4e-bf5d-83fd3e8890df"],
+
+Cell["sensitivity analyses", "Item",ExpressionUUID->"0a06f6aa-713c-c148-bae8-3ecc339104a5"],
+
+Cell["autodiff on surrogate activation laws", "Item",ExpressionUUID->"52f11045-7a32-b344-800b-843fbb0da692"],
+
+Cell["GPU throughput checks", "Item",ExpressionUUID->"cc4be7f4-2683-4d4f-a06b-0ae7b388f3a5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["CUDA", "Section",ExpressionUUID->"4a090a6f-d976-0349-a683-dee86b1878cf"],
+
+Cell["Best for: ", "Text",ExpressionUUID->"d1a4d262-4844-e541-b20b-87744509891e"],
+
+Cell["custom kernels for batched threshold activation", "Item",ExpressionUUID->"19dfcc94-8880-184f-a676-d724e920c82c"],
+
+Cell["interference visibility sweeps", "Item",ExpressionUUID->"947ab3c2-4c11-6e48-8f0e-7cda501585e1"],
+
+Cell["large-grid residual evaluation", "Item",ExpressionUUID->"153f484e-ba5f-ed43-ad52-c60ff1638a49"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["What to compare across stacks", "Section",ExpressionUUID->"8aca5f7d-4a51-134f-998e-3d20cff37816"],
+
+Cell["1. residual norms", "Text",ExpressionUUID->"32a8b5be-e102-194e-924f-ed9425636874"],
+
+Cell["2. activation thresholds", "Text",ExpressionUUID->"d9186e1a-573a-d349-b420-8779f4771afc"],
+
+Cell["3. modal roots", "Text",ExpressionUUID->"98a90645-dc3e-6841-ada7-e141237d43b9"],
+
+Cell["4. interference visibility curves", "Text",ExpressionUUID->"2ce2e02b-710b-4745-8830-1dde86438296"],
+
+Cell["5. stability timescales", "Text",ExpressionUUID->"98743533-4296-154b-8b8e-63f825127fdc"],
+
+Cell["6. reproducibility across dtype / device ", "Text",ExpressionUUID->"9c7ec3cd-09d6-2048-a312-5b1ce58ac225"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"747e19f3-fb02-c048-9ae7-756be36f4da8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["16. Exportable summary object", "Section",ExpressionUUID->"fe1f5c75-8b4e-4b41-b9dd-0a4d2526a5d1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"finalSummary", "=", 
+    RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+     RowBox[{
+      RowBox[{"\"\<Layer0\>\"", "->", "layer0"}], ",", "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"\"\<LatentLagrangian\>\"", "->", "latentLagrangian"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<LatentEulerEquations\>\"", "->", "eulerLatent"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<ActivationEquation\>\"", "->", 
+       RowBox[{"activationEquation", "[", "R", "]"}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<GeometryActivationEquation\>\"", "->", 
+       RowBox[{"geometryActivationEquation", "[", "R", "]"}]}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<OriginAudit\>\"", "->", "opfOriginAudit"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<DispersionDeterminant\>\"", "->", "dispersionDet"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<DoubleSlitTests\>\"", "->", "doubleSlitTests"}], ",", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"\"\<RelativeFindings\>\"", "->", "relativeFindings"}]}], 
+     "\[IndentingNewLine]", "|>"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], 
+       ",", "\"\<opf-measurement-activation-summary.wl\>\""}], "}"}], "]"}], ",",
+     "finalSummary"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Export", "[", 
+    RowBox[{
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], 
+        ",", "\"\<opf-measurement-activation-summary.txt\>\""}], "}"}], "]"}],
+      ",", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"InputForm", "[", "finalSummary", "]"}], "]"}], 
+     ",", "\"\<Text\>\""}], "]"}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+  "say", "[", "\"\<Measurement activation notebook complete.\>\"", "]"}], 
+  ";"}]}], "Input",ExpressionUUID->"eff1d11a-8a56-f444-8ff0-9530cff06646"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"fc67e9e5-824b-ed49-9da1-d514da6e2bfa"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["17. Final conclusion", "Section",ExpressionUUID->"5e00ec81-34b9-ec44-a0a4-27b4da3f0477"],
+
+Cell["Your statement ", "Text",ExpressionUUID->"cc0d2f29-0b87-f44a-a041-49aa5a3da1e2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"opfUnmapped", "=", 
+   RowBox[{"<|", "\[IndentingNewLine]", "  ", 
+    RowBox[{"\"\<incommensurate measurement activation\>\"", "->", 
+     "\[IndentingNewLine]", 
+     "    ", "\"\<The 'if not measured requires measurement' rule is not in \
+the Lagrangian. \\\n     It would need an event-driven field update operator; \
+\\\n     no standard PDE framework has one.\>\""}], "\[IndentingNewLine]", 
+    "|>"}]}], ";"}]], "Input",ExpressionUUID->"10e30d40-f75a-534b-bdd5-\
+f5af83d505a1"],
+
+Cell["is the correct starting point.", "Text",ExpressionUUID->"3427ab10-dbc4-8b45-be09-85178dd484ad"],
+
+Cell["The most rigorous upgrade is:", "Text",ExpressionUUID->"d4c0ee1a-3a73-6e43-93b5-aea0bdf9e58d"],
+
+Cell["1. keep the OPF latent field action separate", "Text",ExpressionUUID->"06c327da-c612-ce4b-aecd-89550eeb1a96"],
+
+Cell[TextData[{
+ "2. add a ",
+ StyleBox["measurement activation operator",
+  FontWeight->Bold],
+ " explicitly"
+}], "Text",ExpressionUUID->"817a6270-f848-1b40-9d6c-a5a7f616dfa1"],
+
+Cell["3. choose one of: ", "Text",ExpressionUUID->"5849ec8c-024e-644f-9bed-8291cfe08975"],
+
+Cell["projection", "Subitem",ExpressionUUID->"7c35f040-29ee-6a46-9e40-c9e69ecad5ab"],
+
+Cell["decoherence", "Subitem",ExpressionUUID->"1dc9adfa-ce9d-394f-810b-ddc181e0e047"],
+
+Cell["event-triggered update", "Subitem",ExpressionUUID->"473c4f4a-acc1-7d43-8021-fa7ad39f8230"],
+
+Cell["source activation", "Subitem",ExpressionUUID->"9b0b8556-dff6-b545-8efe-7783641fd017"],
+
+Cell["threshold / resolution activation", "Subitem",ExpressionUUID->"ba178d19-bbfb-134a-9dba-ae088a3d5a60"],
+
+Cell["4. test each against: ", "Text",ExpressionUUID->"63abed40-5e50-fa4c-9b72-6cb3377d766c"],
+
+Cell["residual consistency", "Subitem",ExpressionUUID->"30d36cac-57fa-8347-8984-8f24eef2d33b"],
+
+Cell["modal stability", "Subitem",ExpressionUUID->"1a303c0b-ecdb-514a-a237-ed1ad781c4c7"],
+
+Cell["double-slit coherence suppression", "Subitem",ExpressionUUID->"40c9c206-ecff-3441-a61c-f4c9c9f86ac5"],
+
+Cell["scale dependence", "Subitem",ExpressionUUID->"390ac234-4581-6949-b158-0f7e3cf291d3"],
+
+Cell["persistence of observed sector", "Subitem",ExpressionUUID->"72ef4515-976d-604a-a64b-e9cfba862e59"],
+
+Cell["5. document clearly which parts are: ", "Text",ExpressionUUID->"3ca9984d-6d2a-4349-a7c2-4fb6e59daf78"],
+
+Cell["derived", "Subitem",ExpressionUUID->"fe54f8dd-e59c-d34b-a672-dc5dd7df4460"],
+
+Cell["assumed", "Subitem",ExpressionUUID->"ecc944b9-4a4c-974e-ba39-9249f17fa6e7"],
+
+Cell["analogical", "Subitem",ExpressionUUID->"88bff4ae-9fc6-2a40-81f3-768cd2a03614"],
+
+Cell["unsupported", "Subitem",ExpressionUUID->"ee0a681d-79f6-1f48-ae10-0099cca8a096"],
+
+Cell["That is the rigorous path. ", "Text",ExpressionUUID->"a0d4a274-0b1e-9942-83d3-b27f6f8f6b79"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{0},
+      "Spacer1"]},
+    {
+     TemplateBox[{0},
+      "Spacer1"]}
+   },
+   AutoDelete->False,
+   FrameStyle->Directive[
+     LightDarkSwitched[
+      GrayLevel[0.8], 
+      GrayLevel[0.4867756]], 
+     AbsoluteThickness[1]],
+   GridBoxDividers->{
+    "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}},
+   GridBoxItemSize->{"Columns" -> {{Fit}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Text", "MarkdownDelimiter",
+ ShowStringCharacters->False,
+ Background->None,ExpressionUUID->"89e439f6-4462-8c47-845e-24f14ab68fa6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["18. Recommended next extensions", "Section",ExpressionUUID->"4f15e6c3-5190-ee4c-b319-7e98a91f5442"],
+
+Cell["Possible next notebook upgrades: ", "Text",ExpressionUUID->"383015f1-0297-cf49-9251-03b9ee9feec9"],
+
+Cell[TextData[{
+ StyleBox["A.",
+  FontWeight->Bold],
+ " full double-slit simulation with partial which-path measurement"
+}], "Item",ExpressionUUID->"02b1b062-9873-664b-8d5f-45f28a862c62"],
+
+Cell[TextData[{
+ StyleBox["B.",
+  FontWeight->Bold],
+ " latent-to-observed PDE benchmark suite with convergence tables"
+}], "Item",ExpressionUUID->"87edc66b-8492-da4a-b1b1-0b1cf9cf603e"],
+
+Cell[TextData[{
+ StyleBox["C.",
+  FontWeight->Bold],
+ " state-space reduction of activation dynamics"
+}], "Item",ExpressionUUID->"3e7ab479-5767-7143-a416-aa27dd5880aa"],
+
+Cell[TextData[{
+ StyleBox["D.",
+  FontWeight->Bold],
+ " PyTorch/CUDA benchmark export harness"
+}], "Item",ExpressionUUID->"19d67411-9b48-0247-b3f2-afea746e39fc"],
+
+Cell[TextData[{
+ StyleBox["E.",
+  FontWeight->Bold],
+ " cosmology analogy notebook with symmetry-breaking/decoherence comparisons"
+}], "Item",ExpressionUUID->"1a50def1-0be3-e149-854a-7871427d920b"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{581.25, 616.5},
+WindowMargins->{{Automatic, 780}, {346.5, Automatic}},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"52fd21a3-f25f-b945-9aca-965bb7c873e3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 107, 0, 157, "Title",ExpressionUUID->"d2197f30-b138-e047-927e-cac616afe136"],
+Cell[686, 24, 120, 0, 33, "Text",ExpressionUUID->"9cd8de15-6326-6844-a54b-49a24fc46098"],
+Cell[809, 26, 1119, 29, 87, "Text",ExpressionUUID->"634843c8-bddd-2f43-b291-47026ce7ca17"],
+Cell[1931, 57, 89, 0, 33, "Text",ExpressionUUID->"b5f132c2-649e-c34c-8102-14b449eca27e"],
+Cell[2023, 59, 94, 0, 30, "Item",ExpressionUUID->"82b6eb76-1a95-5b43-a1c2-c990e140bb48"],
+Cell[2120, 61, 121, 0, 30, "Item",ExpressionUUID->"3f4237a9-d362-1140-8d34-2b5be7c034df"],
+Cell[2244, 63, 99, 0, 30, "Item",ExpressionUUID->"8e6ca164-6c0b-dd4e-af19-319677e014f6"],
+Cell[2346, 65, 153, 2, 50, "Item",ExpressionUUID->"3e399d6c-f034-514a-b854-eb84150eb274"],
+Cell[2502, 69, 222, 7, 30, "Item",ExpressionUUID->"e0da55c8-93b4-b04c-ad6a-aedd3b0448ac"],
+Cell[2727, 78, 119, 0, 33, "Text",ExpressionUUID->"7a41e254-f737-f845-bc46-3c0c3fb75c10"],
+Cell[2849, 80, 140, 2, 30, "Item",ExpressionUUID->"a6fe4949-9659-e64a-92dd-61bab764250a"],
+Cell[2992, 84, 124, 0, 30, "Item",ExpressionUUID->"fc1f541c-1fdb-574d-b403-d15adb144b8c"],
+Cell[3119, 86, 110, 0, 30, "Item",ExpressionUUID->"3da1f43c-3b6b-e94e-b955-240d141b3af7"],
+Cell[3232, 88, 596, 20, 48, "Text",ExpressionUUID->"f57f4f1e-fc04-5046-9601-2611df8ac851"],
+Cell[CellGroupData[{
+Cell[3853, 112, 104, 0, 66, "Section",ExpressionUUID->"cb8808b2-41db-2043-b318-7bec2330802a"],
+Cell[3960, 114, 90, 0, 33, "Text",ExpressionUUID->"83c04bda-0d98-e241-956e-2288768522a7"],
+Cell[4053, 116, 520, 10, 161, "Input",ExpressionUUID->"aa7881d4-11e2-444f-ae33-7f9598efd437"],
+Cell[4576, 128, 82, 0, 70, "Text",ExpressionUUID->"af89cdfb-6296-d04c-bb38-26a45de43d2d"],
+Cell[4661, 130, 801, 19, 70, "Text",ExpressionUUID->"70816afe-9f2a-bb4d-812b-a13146018434"],
+Cell[5465, 151, 151, 2, 70, "Item",ExpressionUUID->"d29273a3-20c4-1042-96bc-9a2c6a1db8f4"],
+Cell[5619, 155, 146, 2, 70, "Item",ExpressionUUID->"99635cc8-a57f-b54e-889a-f2ab7cee56c3"],
+Cell[5768, 159, 163, 2, 70, "Item",ExpressionUUID->"47757682-d8cb-564b-8ecb-059c8c6f1144"],
+Cell[5934, 163, 125, 0, 70, "Text",ExpressionUUID->"ba23aaa3-acc9-2646-add1-f72facb72593"],
+Cell[6062, 165, 509, 17, 70, "Text",ExpressionUUID->"fbf27fcf-e7f8-cf4b-9792-7a71dac31602"],
+Cell[6574, 184, 193, 4, 70, "Item",ExpressionUUID->"5e3bce54-2f37-c54e-bd08-4a8757953089"],
+Cell[6770, 190, 177, 5, 70, "Item",ExpressionUUID->"ad766635-ad84-e848-8c11-ea8459a0b928"],
+Cell[6950, 197, 145, 2, 70, "Item",ExpressionUUID->"ffb0639e-1720-4047-9785-fb1341059656"],
+Cell[7098, 201, 151, 2, 70, "Item",ExpressionUUID->"b4bb627f-88d2-0a43-a294-543de18a9d03"],
+Cell[7252, 205, 596, 20, 70, "Text",ExpressionUUID->"668c9b80-50e7-8241-b18f-9e2c356b2084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7885, 230, 91, 0, 70, "Section",ExpressionUUID->"49015ded-1457-894d-b5b7-65ab8bdeb40f"],
+Cell[7979, 232, 2969, 80, 70, "Input",ExpressionUUID->"61825103-5b1f-8c43-bf3f-65d9d3ed09ab"],
+Cell[10951, 314, 596, 20, 70, "Text",ExpressionUUID->"aabcd1eb-d9cf-224a-806b-585f3eb30e02"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11584, 339, 110, 0, 70, "Section",ExpressionUUID->"02df70de-8869-334a-abba-58da950736c0"],
+Cell[11697, 341, 100, 0, 70, "Text",ExpressionUUID->"05cb0d58-03db-8a4e-940f-dbfd2763e2c7"],
+Cell[CellGroupData[{
+Cell[11822, 345, 113, 0, 70, "Subsection",ExpressionUUID->"d37c3c2a-a55d-644a-b372-028075863d80"],
+Cell[11938, 347, 222, 6, 70, "Text",ExpressionUUID->"2fcae590-bb06-794d-9d20-cf2cf230ce28"],
+Cell[12163, 355, 815, 19, 70, "Input",ExpressionUUID->"cdd5e42f-17ea-754b-a961-1ded5a4af7f6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13015, 379, 115, 0, 70, "Subsection",ExpressionUUID->"549e4e42-4c01-764b-8a37-ae8774baad6b"],
+Cell[13133, 381, 131, 0, 70, "Text",ExpressionUUID->"1c08afb4-872a-f542-bdca-b22f01106f45"],
+Cell[13267, 383, 1898, 54, 70, "Input",ExpressionUUID->"93d95aa6-8d78-d34f-b3d1-088b9c2b6795"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15202, 442, 123, 0, 70, "Subsection",ExpressionUUID->"55e18b24-8090-f247-a9b7-48096c94664f"],
+Cell[15328, 444, 113, 0, 70, "Text",ExpressionUUID->"8be566af-14f0-224a-a441-328c1bf7a1e6"],
+Cell[15444, 446, 209, 5, 70, "Input",ExpressionUUID->"27cbd7ac-399e-704b-b530-c149aa59b4cc"],
+Cell[15656, 453, 596, 20, 70, "Text",ExpressionUUID->"d4a8c09d-e4c1-4146-a489-875abdbbf906"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16301, 479, 178, 2, 70, "Section",ExpressionUUID->"c74b25f3-3237-be42-bc57-cb395d8b2d64"],
+Cell[16482, 483, 221, 5, 70, "Text",ExpressionUUID->"103da1a9-6747-7b42-a75a-9e5ff650797e"],
+Cell[16706, 490, 87, 0, 70, "Text",ExpressionUUID->"dd3f1aed-0d36-c44c-bf88-3c27bae67685"],
+Cell[16796, 492, 423, 10, 70, "Item",ExpressionUUID->"e6262f4d-05dd-dd4f-ae0f-6ea42213b745"],
+Cell[17222, 504, 407, 9, 70, "Item",ExpressionUUID->"b11ab04b-f916-db4b-8e10-ed3edbca840c"],
+Cell[17632, 515, 398, 9, 70, "Item",ExpressionUUID->"6e18defe-4f16-1a4a-a593-9ec7f509c196"],
+Cell[18033, 526, 822, 21, 70, "Text",ExpressionUUID->"3601a11c-444c-4146-b426-5c6928d4c1c1"],
+Cell[18858, 549, 403, 9, 70, "Item",ExpressionUUID->"fb382ddc-cf40-1b40-b31b-4ea91698f014"],
+Cell[19264, 560, 398, 9, 70, "Item",ExpressionUUID->"bbf16563-303c-4441-b5f5-4c194e41c4cf"],
+Cell[CellGroupData[{
+Cell[19687, 573, 110, 0, 70, "Subsection",ExpressionUUID->"08289935-9ca5-e949-ad3f-cc367b2fe2c3"],
+Cell[19800, 575, 1543, 39, 70, "Input",ExpressionUUID->"db98d707-269c-774d-8dab-7fb9c85a69d2"],
+Cell[21346, 616, 148, 2, 70, "Text",ExpressionUUID->"db2d4328-8ee7-d741-8bf2-2b63237c92f3"],
+Cell[21497, 620, 596, 20, 70, "Text",ExpressionUUID->"cc8cf05a-6633-3746-87f1-2dfa51a98c60"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22142, 646, 126, 0, 70, "Section",ExpressionUUID->"1d4110b7-8e98-cf49-9076-52e2192fa91f"],
+Cell[22271, 648, 151, 2, 70, "Text",ExpressionUUID->"440dba03-b763-fe44-9a7f-16343b6e43da"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22459, 655, 122, 0, 70, "Section",ExpressionUUID->"91366b2f-3456-2b43-a64d-92fca8d1e062"],
+Cell[22584, 657, 1020, 24, 70, "Text",ExpressionUUID->"a150dd21-5478-c543-b43d-15fc132a2441"],
+Cell[23607, 683, 1014, 27, 70, "Input",ExpressionUUID->"49435974-bd1f-1b44-9e4e-21e517c7eb43"],
+Cell[24624, 712, 127, 1, 70, "Text",ExpressionUUID->"9a209f6c-ada4-a746-b8c4-aacfc52abf5d"],
+Cell[24754, 715, 85, 0, 70, "Item",ExpressionUUID->"51aecf25-0ebc-4b4a-b55e-02ecabfe4b27"],
+Cell[24842, 717, 95, 0, 70, "Item",ExpressionUUID->"4026028e-f6d0-7a42-894f-dfcc3ed3dc81"],
+Cell[24940, 719, 100, 0, 70, "Item",ExpressionUUID->"d15c8035-0947-d647-9aff-3f02d7ac5afd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25077, 724, 118, 0, 70, "Section",ExpressionUUID->"98793ba4-c054-9d42-aba0-65b89a531593"],
+Cell[25198, 726, 1148, 28, 70, "Text",ExpressionUUID->"54dd13c3-0b32-9d4c-953d-9c1fecb989ff"],
+Cell[26349, 756, 489, 13, 70, "Input",ExpressionUUID->"4df3a381-258a-d848-849e-b297c98bfc69"],
+Cell[26841, 771, 127, 1, 70, "Text",ExpressionUUID->"ff3744a7-7df1-1a42-ae51-4eac2e68282f"],
+Cell[26971, 774, 98, 0, 70, "Item",ExpressionUUID->"2efe468e-b409-ed47-8211-0cb86879b957"],
+Cell[27072, 776, 100, 0, 70, "Item",ExpressionUUID->"a4733cbe-03a1-5b44-8eac-4a72837a29c6"],
+Cell[27175, 778, 95, 0, 70, "Item",ExpressionUUID->"9bdb3b1f-c6fa-e549-ac42-d150b21d7511"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27307, 783, 119, 0, 70, "Section",ExpressionUUID->"dadb5b0b-0088-ee40-9753-2f24394bb444"],
+Cell[27429, 785, 1190, 30, 70, "Text",ExpressionUUID->"2318f166-ce87-8346-bd4b-441d2bad3220"],
+Cell[28622, 817, 360, 8, 70, "Input",ExpressionUUID->"16f1c3c7-96c1-3841-84f8-bfe6ddaf2354"],
+Cell[28985, 827, 127, 1, 70, "Text",ExpressionUUID->"128d50e6-fc1d-1e4e-a5e7-b3d453bc12ce"],
+Cell[29115, 830, 86, 0, 70, "Item",ExpressionUUID->"a76662ab-d70e-4d40-8e21-06e6e4753325"],
+Cell[29204, 832, 109, 0, 70, "Item",ExpressionUUID->"1c67c03a-1b28-624e-b99c-ba7177bfe97f"],
+Cell[29316, 834, 104, 0, 70, "Item",ExpressionUUID->"dabbf1f9-e4c2-4246-a1f3-66db49f429db"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29457, 839, 133, 0, 70, "Section",ExpressionUUID->"23a0a5e1-405c-a945-a290-41f1a0fac196"],
+Cell[29593, 841, 793, 18, 70, "Text",ExpressionUUID->"e43253f8-35a8-6e4a-9739-af0562b80a06"],
+Cell[30389, 861, 431, 10, 70, "Input",ExpressionUUID->"d8ce81e2-770b-2b4d-aeb9-af15555ca108"],
+Cell[30823, 873, 127, 1, 70, "Text",ExpressionUUID->"bc7db6b4-0c28-3742-9d6b-6caee7b57170"],
+Cell[30953, 876, 98, 0, 70, "Item",ExpressionUUID->"f48ea7dc-548d-f942-8fb5-ab44bed47721"],
+Cell[31054, 878, 106, 0, 70, "Item",ExpressionUUID->"b52f7739-1d11-e343-b930-7470addde715"],
+Cell[31163, 880, 100, 0, 70, "Item",ExpressionUUID->"a8f4dfc3-0e4d-f445-b948-96f4f26389f3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31300, 885, 117, 0, 70, "Section",ExpressionUUID->"048ea6e8-a657-2d48-b456-953f426d1aa7"],
+Cell[31420, 887, 854, 20, 70, "Text",ExpressionUUID->"98962c0c-aa98-f841-bb7c-b235c5ff217f"],
+Cell[32277, 909, 1051, 29, 70, "Input",ExpressionUUID->"379e563f-54c9-314f-8ea7-75e8a88644dd"],
+Cell[33331, 940, 127, 1, 70, "Text",ExpressionUUID->"a12a9660-c6d5-ea43-8381-116b7b90c5f2"],
+Cell[33461, 943, 97, 0, 70, "Item",ExpressionUUID->"0168cee4-277a-8747-b32b-3480b636f0b8"],
+Cell[33561, 945, 97, 0, 70, "Item",ExpressionUUID->"44435eae-ab3f-1f48-bcf8-2c77a5699417"],
+Cell[33661, 947, 95, 0, 70, "Item",ExpressionUUID->"511b5ea7-4a89-5b4c-8bd7-d1e33339c120"],
+Cell[33759, 949, 596, 20, 70, "Text",ExpressionUUID->"de147d52-96ce-b247-8ba6-18fcd4091c3c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34392, 974, 111, 0, 70, "Section",ExpressionUUID->"657bc721-4948-4b4b-85aa-430fbb280e53"],
+Cell[34506, 976, 219, 3, 70, "Text",ExpressionUUID->"0d26d2ee-53c7-3d46-a6ce-0d7fd0f17486"],
+Cell[34728, 981, 1592, 42, 70, "Text",ExpressionUUID->"c8fe3277-3d7f-2043-8fcd-01a68e20bcfa"],
+Cell[36323, 1025, 103, 0, 70, "Item",ExpressionUUID->"6424b0f6-0b51-b04b-be92-de874e95d256"],
+Cell[36429, 1027, 111, 0, 70, "Item",ExpressionUUID->"3d5e65f7-75e1-874b-bab8-5d7851af30a6"],
+Cell[CellGroupData[{
+Cell[36565, 1031, 413, 9, 70, "Item",ExpressionUUID->"4b169312-dcfd-ba4f-853d-ef92e136d548"],
+Cell[36981, 1042, 1279, 35, 70, "Input",ExpressionUUID->"182ec0a4-474d-d740-aeb1-584cadb30755"]
+}, Open  ]],
+Cell[38275, 1080, 126, 0, 70, "Text",ExpressionUUID->"4d1018a9-63de-e44d-a550-60724c17a1e3"],
+Cell[38404, 1082, 596, 20, 70, "Text",ExpressionUUID->"8519b13b-d48b-8044-a598-56dcee5a0cbf"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39037, 1107, 111, 0, 70, "Section",ExpressionUUID->"40926758-ff27-2d40-a53c-132721731b48"],
+Cell[39151, 1109, 1267, 31, 70, "Text",ExpressionUUID->"5bc160c1-1275-7b4f-aef7-6212bf0b55b0"],
+Cell[40421, 1142, 848, 24, 70, "Input",ExpressionUUID->"c9c5b6d9-f171-1249-9314-2046be43bdc3"],
+Cell[41272, 1168, 274, 6, 70, "Text",ExpressionUUID->"ab580717-3759-e041-8bf2-2855c826060a"],
+Cell[41549, 1176, 596, 20, 70, "Text",ExpressionUUID->"f7b2db21-0c20-e644-b1dc-68c1cb95b3a9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42182, 1201, 101, 0, 70, "Section",ExpressionUUID->"f85286a9-c6c0-9747-9b8e-bbe83bfbd327"],
+Cell[42286, 1203, 164, 3, 70, "Text",ExpressionUUID->"6a4463e4-4197-6447-a097-7ecaa0dc76bd"],
+Cell[42453, 1208, 1847, 42, 70, "Input",ExpressionUUID->"cd2de706-2779-4b43-a555-d75687b8c13d"],
+Cell[44303, 1252, 112, 0, 70, "Text",ExpressionUUID->"fd57ffc4-50a9-444b-8712-c5ee73590f20"],
+Cell[44418, 1254, 596, 20, 70, "Text",ExpressionUUID->"384346c6-c260-0046-a573-08aee36f585c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[45051, 1279, 164, 3, 70, "Section",ExpressionUUID->"4835d366-83c9-264a-b870-d1a7863934ff"],
+Cell[45218, 1284, 252, 6, 70, "Text",ExpressionUUID->"3bd0f475-2a3f-0b4a-9a47-0617fdfd1805"],
+Cell[45473, 1292, 104, 0, 70, "Text",ExpressionUUID->"071e1809-55b1-6546-b201-694a8160ee51"],
+Cell[45580, 1294, 116, 0, 70, "Item",ExpressionUUID->"5918c401-5e1f-d944-869a-b60825e9ee57"],
+Cell[45699, 1296, 119, 0, 70, "Item",ExpressionUUID->"24b3642d-8d1f-984d-8714-d57f9edc89f8"],
+Cell[45821, 1298, 116, 0, 70, "Item",ExpressionUUID->"e58eea03-e235-0040-b1e5-cbaccacd3861"],
+Cell[45940, 1300, 104, 0, 70, "Text",ExpressionUUID->"0bffcfcb-6a58-184d-8815-a3f184fd3cd5"],
+Cell[46047, 1302, 88, 0, 70, "Item",ExpressionUUID->"9b8eb963-5734-9340-8a82-91e019b8cc72"],
+Cell[46138, 1304, 87, 0, 70, "Item",ExpressionUUID->"78995d1e-fad0-9140-816e-ed107a6751a5"],
+Cell[46228, 1306, 96, 0, 70, "Item",ExpressionUUID->"2a6aab14-c3f5-bb4c-83f9-f29562ac9a9d"],
+Cell[46327, 1308, 115, 0, 70, "Item",ExpressionUUID->"b69a3793-1f84-b64e-b5fd-f66491174931"],
+Cell[CellGroupData[{
+Cell[46467, 1312, 101, 0, 70, "Subsection",ExpressionUUID->"7724b9c6-b540-c345-b133-6cebcf92662b"],
+Cell[46571, 1314, 1459, 41, 70, "Input",ExpressionUUID->"789e8f69-ab10-7949-9091-4c783a3877a3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48067, 1360, 89, 0, 70, "Subsection",ExpressionUUID->"170e0b17-634e-344e-8f14-1c369cd115ea"],
+Cell[48159, 1362, 386, 9, 70, "Item",ExpressionUUID->"a9559d88-b78e-b941-958d-9a8f2ce97ea7"],
+Cell[48548, 1373, 397, 9, 70, "Item",ExpressionUUID->"6cd38476-3c6c-4e45-9a0c-345b114fc2ae"],
+Cell[48948, 1384, 109, 0, 70, "Item",ExpressionUUID->"3b523bac-1e4a-e546-8d82-9acf58875d79"],
+Cell[49060, 1386, 114, 0, 70, "Item",ExpressionUUID->"355189f1-127d-2d44-9b2d-314d072b9eb1"],
+Cell[49177, 1388, 596, 20, 70, "Text",ExpressionUUID->"a87cfd5c-5ff6-924e-a052-c88a87490870"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49822, 1414, 148, 2, 70, "Section",ExpressionUUID->"e1ce4452-f807-6049-830a-73393575b76e"],
+Cell[49973, 1418, 182, 5, 70, "Text",ExpressionUUID->"414a0059-9929-5c42-810d-5880d4ddc8be"],
+Cell[50158, 1425, 103, 0, 70, "Text",ExpressionUUID->"0146194b-0561-ce41-b270-63347405a006"],
+Cell[50264, 1427, 118, 0, 70, "Item",ExpressionUUID->"c6a8c8a1-196d-c141-9f92-3673f6b3b5a2"],
+Cell[50385, 1429, 122, 0, 70, "Item",ExpressionUUID->"04bc58e1-555c-dc45-b8a5-19ff7754f4da"],
+Cell[50510, 1431, 177, 3, 70, "Text",ExpressionUUID->"87988d69-04d2-f543-981f-313e23b11964"],
+Cell[CellGroupData[{
+Cell[50712, 1438, 105, 0, 70, "Subsection",ExpressionUUID->"b74b1d88-3406-4143-b557-9830e9bc053a"],
+Cell[50820, 1440, 2240, 60, 70, "Input",ExpressionUUID->"d2b1df83-df14-fd43-8d6c-eeb5cf86a250"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53097, 1505, 95, 0, 70, "Subsection",ExpressionUUID->"bd074111-7463-494d-96cc-c92bc8e92533"],
+Cell[53195, 1507, 313, 5, 70, "Item",ExpressionUUID->"b38c108c-57c0-af48-8455-8a8d2041cab0"],
+Cell[53511, 1514, 290, 5, 70, "Item",ExpressionUUID->"6aea0684-5149-9047-afe8-3c4758fa4cfd"],
+Cell[53804, 1521, 147, 2, 70, "Item",ExpressionUUID->"0370bbae-a0fb-744c-afe1-57b7b20bfd96"],
+Cell[53954, 1525, 122, 0, 70, "Text",ExpressionUUID->"e0572209-8a95-564d-b6b9-88ca43ef371f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[54113, 1530, 110, 0, 70, "Subsection",ExpressionUUID->"f71aefab-ca58-ff4b-ac4a-def61fc8009e"],
+Cell[54226, 1532, 130, 0, 70, "CodeText",ExpressionUUID->"d0347eaf-cdfb-5a40-b61b-60b425a21116"],
+Cell[54359, 1534, 1436, 39, 70, "Input",ExpressionUUID->"2416f9fd-b648-9d4e-98ac-1cc95ecf53cc"],
+Cell[55798, 1575, 126, 0, 70, "Text",ExpressionUUID->"5906fe13-eaa8-dd42-8f37-0a788cf8595c"],
+Cell[55927, 1577, 596, 20, 70, "Text",ExpressionUUID->"27fef4cb-f226-1b42-9408-4440b17b9035"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56572, 1603, 127, 0, 70, "Section",ExpressionUUID->"ad378008-2111-2046-9c73-b1fa776f2b6e"],
+Cell[56702, 1605, 143, 2, 70, "Text",ExpressionUUID->"8e1f8e4d-eea2-d040-b654-0d2ded70f951"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56882, 1612, 87, 0, 70, "Section",ExpressionUUID->"8ebd68c1-25dd-9346-8a61-abc9153de9a4"],
+Cell[56972, 1614, 103, 0, 70, "Text",ExpressionUUID->"3c800629-589f-7c40-aa69-958cee5850bd"],
+Cell[57078, 1616, 117, 0, 70, "Text",ExpressionUUID->"fc1a2b19-2c43-ee49-bbeb-d19b702916e1"],
+Cell[57198, 1618, 111, 0, 70, "Text",ExpressionUUID->"b3d0e22d-f343-2446-a5fc-1d7addac1770"],
+Cell[57312, 1620, 112, 0, 70, "Text",ExpressionUUID->"1c54f0f9-5405-c44d-bb80-025e611170c0"],
+Cell[57427, 1622, 112, 0, 70, "Text",ExpressionUUID->"8beec05d-9a40-484b-90a9-834adb815a69"],
+Cell[57542, 1624, 107, 0, 70, "Text",ExpressionUUID->"e167c7e8-e3d1-cf4e-aede-da4c4cb2ee14"],
+Cell[57652, 1626, 107, 0, 70, "Text",ExpressionUUID->"ef37e94e-b074-6a49-bc1e-6898d2efe467"],
+Cell[57762, 1628, 117, 0, 70, "Text",ExpressionUUID->"d18fd2f5-6a9a-834d-b3eb-8210d0051e1d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[57916, 1633, 89, 0, 70, "Section",ExpressionUUID->"44b3b1fc-50a7-804b-a562-97561bf43c90"],
+Cell[58008, 1635, 152, 2, 70, "Item",ExpressionUUID->"21c82d82-81ba-5f4f-b78c-0298a27a8d59"],
+Cell[58163, 1639, 161, 3, 70, "Item",ExpressionUUID->"77cad3d4-6513-0045-9580-702a97eff2e2"],
+Cell[58327, 1644, 141, 2, 70, "Item",ExpressionUUID->"e6eb7671-4f8c-f149-910e-53b52c6adb4c"],
+Cell[58471, 1648, 163, 3, 70, "Item",ExpressionUUID->"864e895c-87f7-bc40-a391-e6a1d1351c5f"],
+Cell[CellGroupData[{
+Cell[58659, 1655, 102, 0, 70, "Subsection",ExpressionUUID->"09e02edf-8007-8247-af06-cb29d9bbd4a0"],
+Cell[58764, 1657, 1964, 48, 70, "Input",ExpressionUUID->"8881c347-2fb2-e841-9a34-4ec4b1ce18fc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[60765, 1710, 102, 0, 70, "Subsection",ExpressionUUID->"39a68685-ada8-1241-8f7a-574f43e1253e"],
+Cell[60870, 1712, 814, 20, 70, "Input",ExpressionUUID->"947390a0-4548-9847-ac48-899e8cdb6278"],
+Cell[61687, 1734, 596, 20, 70, "Text",ExpressionUUID->"68403d09-ae5c-e74d-8112-aca2a4d95e31"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62332, 1760, 98, 0, 70, "Section",ExpressionUUID->"9fe8ac7d-f65a-6c44-8f5d-fc631861cc67"],
+Cell[62433, 1762, 110, 0, 70, "Text",ExpressionUUID->"9e83c284-29d0-5444-a69e-64a443503df5"],
+Cell[CellGroupData[{
+Cell[62568, 1766, 106, 0, 70, "Subsection",ExpressionUUID->"71cfd7b3-3b07-3444-a27b-f1a86c34816a"],
+Cell[62677, 1768, 726, 16, 70, "Input",ExpressionUUID->"83557098-33df-b344-a036-bab26c8af43d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[63440, 1789, 99, 0, 70, "Subsection",ExpressionUUID->"22ecbb25-9fa4-b040-917b-671de7315f41"],
+Cell[63542, 1791, 160, 3, 70, "Text",ExpressionUUID->"8f3d17a8-844d-6b40-83be-c17aec0818e6"],
+Cell[63705, 1796, 1944, 50, 70, "Input",ExpressionUUID->"18441755-842c-c04e-9387-06fb329f32b3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65686, 1851, 91, 0, 70, "Subsection",ExpressionUUID->"fef271f0-278c-ac4a-b8b5-08b8cff15e8d"],
+Cell[65780, 1853, 3113, 84, 70, "Input",ExpressionUUID->"e51c4ede-cf60-a845-888e-55e588346701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68930, 1942, 95, 0, 70, "Subsection",ExpressionUUID->"c6128839-4166-cd4d-ae7a-1527e1c0dca1"],
+Cell[69028, 1944, 434, 11, 70, "Input",ExpressionUUID->"0b43fbff-161a-6f41-b285-b08df7b63759"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69499, 1960, 96, 0, 70, "Subsection",ExpressionUUID->"8a3f5ab6-d195-924a-9832-5cfad4d6c3a5"],
+Cell[69598, 1962, 950, 21, 70, "Input",ExpressionUUID->"25d9fb19-000a-ff40-87dc-63c0dea89008"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70585, 1988, 109, 0, 70, "Subsection",ExpressionUUID->"24ff24e0-4bd2-6b48-a00f-bcbd8c121c0f"],
+Cell[70697, 1990, 961, 21, 70, "Input",ExpressionUUID->"59e4b80a-5c5f-454b-8357-51fabd9ce0fa"],
+Cell[71661, 2013, 596, 20, 70, "Text",ExpressionUUID->"86843eb5-4167-8f4c-8384-b0aea77772b3"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72306, 2039, 103, 0, 70, "Section",ExpressionUUID->"fa3b5ffd-f138-8c40-9665-ad824c39ec0d"],
+Cell[72412, 2041, 180, 3, 70, "Text",ExpressionUUID->"34fa2d0f-c3c7-514c-8ce8-d7e8906a3d64"],
+Cell[CellGroupData[{
+Cell[72617, 2048, 109, 0, 70, "Subsection",ExpressionUUID->"a087e327-e243-1649-8d06-024cfffeef24"],
+Cell[72729, 2050, 4230, 112, 70, "Input",ExpressionUUID->"fd0b6036-99b4-9742-9eb1-bd735edccc59"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[76996, 2167, 101, 0, 70, "Subsection",ExpressionUUID->"e5aebe1a-68db-c340-8a28-edc664f65a30"],
+Cell[77100, 2169, 1198, 31, 70, "Input",ExpressionUUID->"0057a8f1-ef95-824a-941a-295333d88160"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78335, 2205, 87, 0, 70, "Subsection",ExpressionUUID->"ba7d332d-8fab-cd4b-bb91-3b57d077602b"],
+Cell[78425, 2207, 495, 14, 70, "Input",ExpressionUUID->"8c5555a1-d277-f540-a718-f3c0e01f5d16"],
+Cell[78923, 2223, 596, 20, 70, "Text",ExpressionUUID->"190a8718-d2d6-c94b-b3b6-377bf9062d0c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[79568, 2249, 118, 0, 70, "Section",ExpressionUUID->"ea967e8e-1c18-c64b-8d2a-962ec2d6eb57"],
+Cell[79689, 2251, 276, 11, 70, "Text",ExpressionUUID->"1800267e-35f4-a54e-a739-41b953f9edf0"],
+Cell[79968, 2264, 2227, 40, 70, "Input",ExpressionUUID->"1d48026e-b6e3-7147-b7a5-5b25e477bb67"],
+Cell[82198, 2306, 596, 20, 70, "Text",ExpressionUUID->"0d44e93f-6e9c-1847-9b62-67d9478a589a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[82831, 2331, 126, 0, 70, "Section",ExpressionUUID->"fadc0fcd-0d67-9645-8231-bf5ec0c355a9"],
+Cell[82960, 2333, 125, 0, 70, "Text",ExpressionUUID->"4684989d-0704-5c4f-b760-3274a0f6e4db"],
+Cell[CellGroupData[{
+Cell[83110, 2337, 116, 0, 70, "Subsection",ExpressionUUID->"a033f6ae-31ae-d54f-a827-5891379b9414"],
+Cell[83229, 2339, 513, 12, 70, "Text",ExpressionUUID->"26c0a90d-d779-a34a-932f-3d8c59686943"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[83779, 2356, 117, 0, 70, "Subsection",ExpressionUUID->"1f7228f9-9fbe-d74c-bf46-65bf840bb876"],
+Cell[83899, 2358, 1489, 38, 70, "Text",ExpressionUUID->"bb56be43-658f-4f49-b5dd-216996195ea7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[85425, 2401, 129, 0, 70, "Subsection",ExpressionUUID->"aa0b778e-05c2-9e43-97dc-8086fb2ab57b"],
+Cell[85557, 2403, 734, 17, 70, "Text",ExpressionUUID->"670857dd-1b12-6248-b587-f93fd667a004"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[86328, 2425, 123, 0, 70, "Subsection",ExpressionUUID->"8629a0ef-b1ae-6348-83eb-0217476f742c"],
+Cell[86454, 2427, 154, 2, 70, "Text",ExpressionUUID->"7463a16b-9e3c-5c4e-9f6f-f375dc42e0d9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[86645, 2434, 127, 0, 70, "Subsection",ExpressionUUID->"c43e5a10-b34f-e941-8f24-8e8b77f68492"],
+Cell[86775, 2436, 95, 0, 70, "Item",ExpressionUUID->"d5b93971-0210-414b-9d56-f35d98d6ef89"],
+Cell[86873, 2438, 94, 0, 70, "Item",ExpressionUUID->"3e7f4266-24e5-0248-b8d4-71db5fc5b128"],
+Cell[86970, 2440, 94, 0, 70, "Item",ExpressionUUID->"523993ab-c4b1-6043-8700-cdb1278666fb"],
+Cell[87067, 2442, 99, 0, 70, "Item",ExpressionUUID->"3ea13bd3-feab-6649-8a6e-2068fc5bb33e"],
+Cell[87169, 2444, 100, 0, 70, "Item",ExpressionUUID->"26d309f7-2989-a948-84e8-14f8d4aded12"],
+Cell[87272, 2446, 596, 20, 70, "Text",ExpressionUUID->"573a75d5-b483-e248-bf91-d0d2eb5f374e"]
+}, Open  ]]
+}, Open  ]],
+Cell[87895, 2470, 99, 0, 70, "Section",ExpressionUUID->"71a3bf81-8292-e648-bfeb-19bf109def71"],
+Cell[CellGroupData[{
+Cell[88019, 2474, 90, 0, 70, "Section",ExpressionUUID->"d447b90c-95ad-fa4e-a4df-034f81cdc011"],
+Cell[88112, 2476, 81, 0, 70, "Text",ExpressionUUID->"60186859-9f76-e143-ad68-78333bf348e6"],
+Cell[88196, 2478, 87, 0, 70, "Item",ExpressionUUID->"63b4f69b-88d4-084b-950b-73dccc30e7f4"],
+Cell[88286, 2480, 87, 0, 70, "Item",ExpressionUUID->"b58cd512-6505-1b44-afcb-b95780a4f924"],
+Cell[88376, 2482, 189, 3, 70, "Item",ExpressionUUID->"67bcdbff-682c-bb49-baee-29f30bd63641"],
+Cell[88568, 2487, 154, 3, 70, "Item",ExpressionUUID->"7ec9e217-a417-1b41-a678-aa148500f6d5"],
+Cell[88725, 2492, 154, 3, 70, "Item",ExpressionUUID->"3166aeee-4076-4b4e-a030-2e86d6791323"],
+Cell[88882, 2497, 156, 3, 70, "Item",ExpressionUUID->"4a625ba0-a1a7-854f-918e-ca67ee4bc184"],
+Cell[89041, 2502, 164, 3, 70, "Item",ExpressionUUID->"b9872d70-d647-cb42-b386-7bbc0db8b091"],
+Cell[89208, 2507, 168, 3, 70, "Item",ExpressionUUID->"69d5db1c-a67b-3449-a0b5-d1a4a7d3d1d7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[89413, 2515, 81, 0, 70, "Section",ExpressionUUID->"88000486-809c-da45-96b8-80d0ce4e39db"],
+Cell[89497, 2517, 81, 0, 70, "Text",ExpressionUUID->"6bc1aba2-61d1-9a4b-a183-483c70a78de3"],
+Cell[89581, 2519, 489, 11, 70, "Item",ExpressionUUID->"79f02102-9eb2-dc4e-bf5d-83fd3e8890df"],
+Cell[90073, 2532, 91, 0, 70, "Item",ExpressionUUID->"0a06f6aa-713c-c148-bae8-3ecc339104a5"],
+Cell[90167, 2534, 108, 0, 70, "Item",ExpressionUUID->"52f11045-7a32-b344-800b-843fbb0da692"],
+Cell[90278, 2536, 92, 0, 70, "Item",ExpressionUUID->"cc4be7f4-2683-4d4f-a06b-0ae7b388f3a5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[90407, 2541, 78, 0, 70, "Section",ExpressionUUID->"4a090a6f-d976-0349-a683-dee86b1878cf"],
+Cell[90488, 2543, 81, 0, 70, "Text",ExpressionUUID->"d1a4d262-4844-e541-b20b-87744509891e"],
+Cell[90572, 2545, 118, 0, 70, "Item",ExpressionUUID->"19dfcc94-8880-184f-a676-d724e920c82c"],
+Cell[90693, 2547, 101, 0, 70, "Item",ExpressionUUID->"947ab3c2-4c11-6e48-8f0e-7cda501585e1"],
+Cell[90797, 2549, 101, 0, 70, "Item",ExpressionUUID->"153f484e-ba5f-ed43-ad52-c60ff1638a49"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[90935, 2554, 103, 0, 70, "Section",ExpressionUUID->"8aca5f7d-4a51-134f-998e-3d20cff37816"],
+Cell[91041, 2556, 88, 0, 70, "Text",ExpressionUUID->"32a8b5be-e102-194e-924f-ed9425636874"],
+Cell[91132, 2558, 95, 0, 70, "Text",ExpressionUUID->"d9186e1a-573a-d349-b420-8779f4771afc"],
+Cell[91230, 2560, 85, 0, 70, "Text",ExpressionUUID->"98a90645-dc3e-6841-ada7-e141237d43b9"],
+Cell[91318, 2562, 104, 0, 70, "Text",ExpressionUUID->"2ce2e02b-710b-4745-8830-1dde86438296"],
+Cell[91425, 2564, 94, 0, 70, "Text",ExpressionUUID->"98743533-4296-154b-8b8e-63f825127fdc"],
+Cell[91522, 2566, 112, 0, 70, "Text",ExpressionUUID->"9c7ec3cd-09d6-2048-a312-5b1ce58ac225"],
+Cell[91637, 2568, 596, 20, 70, "Text",ExpressionUUID->"747e19f3-fb02-c048-9ae7-756be36f4da8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[92270, 2593, 103, 0, 70, "Section",ExpressionUUID->"fe1f5c75-8b4e-4b41-b9dd-0a4d2526a5d1"],
+Cell[92376, 2595, 2192, 51, 70, "Input",ExpressionUUID->"eff1d11a-8a56-f444-8ff0-9530cff06646"],
+Cell[94571, 2648, 596, 20, 70, "Text",ExpressionUUID->"fc67e9e5-824b-ed49-9da1-d514da6e2bfa"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[95204, 2673, 94, 0, 70, "Section",ExpressionUUID->"5e00ec81-34b9-ec44-a0a4-27b4da3f0477"],
+Cell[95301, 2675, 86, 0, 70, "Text",ExpressionUUID->"cc0d2f29-0b87-f44a-a041-49aa5a3da1e2"],
+Cell[95390, 2677, 520, 10, 70, "Input",ExpressionUUID->"10e30d40-f75a-534b-bdd5-f5af83d505a1"],
+Cell[95913, 2689, 101, 0, 70, "Text",ExpressionUUID->"3427ab10-dbc4-8b45-be09-85178dd484ad"],
+Cell[96017, 2691, 100, 0, 70, "Text",ExpressionUUID->"d4c0ee1a-3a73-6e43-93b5-aea0bdf9e58d"],
+Cell[96120, 2693, 115, 0, 70, "Text",ExpressionUUID->"06c327da-c612-ce4b-aecd-89550eeb1a96"],
+Cell[96238, 2695, 177, 5, 70, "Text",ExpressionUUID->"817a6270-f848-1b40-9d6c-a5a7f616dfa1"],
+Cell[96418, 2702, 89, 0, 70, "Text",ExpressionUUID->"5849ec8c-024e-644f-9bed-8291cfe08975"],
+Cell[96510, 2704, 84, 0, 70, "Subitem",ExpressionUUID->"7c35f040-29ee-6a46-9e40-c9e69ecad5ab"],
+Cell[96597, 2706, 85, 0, 70, "Subitem",ExpressionUUID->"1dc9adfa-ce9d-394f-810b-ddc181e0e047"],
+Cell[96685, 2708, 96, 0, 70, "Subitem",ExpressionUUID->"473c4f4a-acc1-7d43-8021-fa7ad39f8230"],
+Cell[96784, 2710, 91, 0, 70, "Subitem",ExpressionUUID->"9b0b8556-dff6-b545-8efe-7783641fd017"],
+Cell[96878, 2712, 107, 0, 70, "Subitem",ExpressionUUID->"ba178d19-bbfb-134a-9dba-ae088a3d5a60"],
+Cell[96988, 2714, 93, 0, 70, "Text",ExpressionUUID->"63abed40-5e50-fa4c-9b72-6cb3377d766c"],
+Cell[97084, 2716, 94, 0, 70, "Subitem",ExpressionUUID->"30d36cac-57fa-8347-8984-8f24eef2d33b"],
+Cell[97181, 2718, 89, 0, 70, "Subitem",ExpressionUUID->"1a303c0b-ecdb-514a-a237-ed1ad781c4c7"],
+Cell[97273, 2720, 107, 0, 70, "Subitem",ExpressionUUID->"40c9c206-ecff-3441-a61c-f4c9c9f86ac5"],
+Cell[97383, 2722, 90, 0, 70, "Subitem",ExpressionUUID->"390ac234-4581-6949-b158-0f7e3cf291d3"],
+Cell[97476, 2724, 104, 0, 70, "Subitem",ExpressionUUID->"72ef4515-976d-604a-a64b-e9cfba862e59"],
+Cell[97583, 2726, 108, 0, 70, "Text",ExpressionUUID->"3ca9984d-6d2a-4349-a7c2-4fb6e59daf78"],
+Cell[97694, 2728, 81, 0, 70, "Subitem",ExpressionUUID->"fe54f8dd-e59c-d34b-a672-dc5dd7df4460"],
+Cell[97778, 2730, 81, 0, 70, "Subitem",ExpressionUUID->"ecc944b9-4a4c-974e-ba39-9249f17fa6e7"],
+Cell[97862, 2732, 84, 0, 70, "Subitem",ExpressionUUID->"88bff4ae-9fc6-2a40-81f3-768cd2a03614"],
+Cell[97949, 2734, 85, 0, 70, "Subitem",ExpressionUUID->"ee0a681d-79f6-1f48-ae10-0099cca8a096"],
+Cell[98037, 2736, 98, 0, 70, "Text",ExpressionUUID->"a0d4a274-0b1e-9942-83d3-b27f6f8f6b79"],
+Cell[98138, 2738, 596, 20, 70, "Text",ExpressionUUID->"89e439f6-4462-8c47-845e-24f14ab68fa6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[98771, 2763, 105, 0, 70, "Section",ExpressionUUID->"4f15e6c3-5190-ee4c-b319-7e98a91f5442"],
+Cell[98879, 2765, 104, 0, 70, "Text",ExpressionUUID->"383015f1-0297-cf49-9251-03b9ee9feec9"],
+Cell[98986, 2767, 187, 4, 70, "Item",ExpressionUUID->"02b1b062-9873-664b-8d5f-45f28a862c62"],
+Cell[99176, 2773, 186, 4, 70, "Item",ExpressionUUID->"87edc66b-8492-da4a-b1b1-0b1cf9cf603e"],
+Cell[99365, 2779, 168, 4, 70, "Item",ExpressionUUID->"3e7ab479-5767-7143-a416-aa27dd5880aa"],
+Cell[99536, 2785, 161, 4, 70, "Item",ExpressionUUID->"19d67411-9b48-0247-b3f2-afea746e39fc"],
+Cell[99700, 2791, 197, 4, 70, "Item",ExpressionUUID->"1a50def1-0be3-e149-854a-7871427d920b"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
